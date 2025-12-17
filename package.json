@@ -7,7 +7,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "deploy": "scp -r .output/* j53779400@c64869e17b97.hosting.myjino.ru:~/domains/okna.mixers-adalin.ru/ && ssh j53779400@c64869e17b97.hosting.myjino.ru \"mkdir -p ~/domains/okna.mixers-adalin.ru/tmp && touch ~/domains/okna.mixers-adalin.ru/tmp/restart.txt && chmod -R 777 ~/domains/okna.mixers-adalin.ru/\""
   },
   "dependencies": {
     "nuxt": "^4.2.1",
