@@ -1,2 +1,24 @@
-User-Agent: *
-Disallow:
+# robots.txt для okna-brn.ru
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://okna-brn.ru/sitemap.xml
+
+# Разрешить все основные страницы
+Allow: /*.html$
+Allow: /*.css$
+Allow: /*.js$
+
+# Запретить технические директории (если есть)
+Disallow: /api/
+Disallow: /_nuxt/
+Disallow: /.git/
+
+# Параметры поиска
+User-agent: Yandex
+Allow: /
+
+User-agent: Googlebot
+Allow: /
