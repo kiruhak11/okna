@@ -1,5 +1,17 @@
 <template>
   <div class="min-h-screen bg-gradient">
+    <!-- Снежинки -->
+    <div class="snowflakes" aria-hidden="true">
+      <div v-for="i in 50" :key="i" class="snowflake" :style="getSnowflakeStyle(i)">
+        {{ ['❅', '❆', '❄'][i % 3] }}
+      </div>
+    </div>
+
+    <!-- Новогодние огоньки -->
+    <div class="christmas-lights">
+      <div v-for="i in 20" :key="i" class="light" :style="getLightStyle(i)"></div>
+    </div>
+
     <!-- Шапка -->
     <header class="header">
       <nav class="nav" :class="{ 'nav-open': isMenuOpen }">
@@ -62,12 +74,12 @@
     <!-- Героическая секция -->
     <section class="hero">
       <div class="hero-badge">
-        {{ siteData.city }} · {{ siteData.masterName }}
+        🎄 {{ siteData.city }} · {{ siteData.masterName }} 🎄
       </div>
-      <h1>Современный сервис по окнам с эффектом «вау»</h1>
+      <h1>Современный сервис по окнам с эффектом «вау» 🎁</h1>
       <p>
-        Выезд в день обращения, решение любой проблемы с окнами и балконами.
-        Работаю лично, без посредников, с гарантией и честной сметой.
+        ❄️ Выезд в день обращения, решение любой проблемы с окнами и балконами.
+        Работаю лично, без посредников, с гарантией и честной сметой. ⭐
       </p>
       <div class="hero-actions">
         <a href="#contact" class="cta-button"> Оставить заявку </a>
@@ -316,11 +328,13 @@
             v-for="service in siteData.services"
             :key="service.title"
             :class="['price-item', { highlight: service.highlight }]"
+            @click="selectService(service.title)"
           >
             <span class="price-title">{{ service.title }}</span>
             <span class="price-value">{{ service.fromPrice }}</span>
           </li>
         </ul>
+        <p class="price-list-hint">💡 Нажмите на услугу, чтобы быстро оставить заявку</p>
       </div>
     </section>
 
@@ -684,11 +698,86 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { siteData } from "@/data";
 
 const phoneHref = `tel:${siteData.phone.replace(/[^+\d]/g, "")}`;
 const isMenuOpen = ref(false);
+
+// Генерация случайных стилей для снежинок
+const getSnowflakeStyle = (i: number) => {
+  const randomLeft = Math.random() * 100;
+  const randomDelay = Math.random() * 5;
+  const randomDuration = 10 + Math.random() * 20;
+  const randomSize = 0.5 + Math.random() * 1;
+  
+  return {
+    left: `${randomLeft}%`,
+    animationDelay: `${randomDelay}s`,
+    animationDuration: `${randomDuration}s`,
+    fontSize: `${randomSize}rem`,
+    opacity: 0.3 + Math.random() * 0.7,
+  };
+};
+
+// Генерация случайных стилей для огоньков
+const getLightStyle = (i: number) => {
+  const randomLeft = (i * 5) % 100;
+  const randomDelay = Math.random() * 2;
+  const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#ffd700'];
+  const randomColor = colors[i % colors.length];
+  
+  return {
+    left: `${randomLeft}%`,
+    animationDelay: `${randomDelay}s`,
+    backgroundColor: randomColor,
+    boxShadow: `0 0 20px ${randomColor}`,
+  };
+};
+
+// Intersection Observer для анимации при скролле
+onMounted(() => {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Наблюдаем за всеми секциями и карточками
+  const elements = document.querySelectorAll('.feature-card, .service-card, .about, .contact, .price-list, .stats-card');
+  elements.forEach((el) => observer.observe(el));
+
+  // Параллакс эффект для героической секции
+  let ticking = false;
+  const parallaxElements = document.querySelectorAll('.hero, .hero-badge');
+  
+  const updateParallax = () => {
+    const scrolled = window.pageYOffset;
+    parallaxElements.forEach((el, index) => {
+      const speed = 0.5 + (index * 0.1);
+      const yPos = -(scrolled * speed);
+      el.style.transform = `translateY(${yPos}px)`;
+    });
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking && window.innerWidth > 768) {
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  });
+
+  // Пользовательский курсор отключен по запросу пользователя
+});
 
 const form = ref({
   name: "",
@@ -702,6 +791,37 @@ const formStatus = ref({
   success: false,
   message: "",
 });
+
+// Функция выбора услуги из прайс-листа
+const selectService = (serviceTitle: string) => {
+  // Устанавливаем выбранную услугу в форму
+  form.value.service = serviceTitle;
+  
+  // Плавно скроллим к форме
+  const contactForm = document.querySelector('#contact');
+  if (contactForm) {
+    contactForm.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+    
+    // Через небольшую задержку фокусируемся на поле имени
+    setTimeout(() => {
+      const nameInput = document.querySelector('#name') as HTMLInputElement;
+      if (nameInput) {
+        nameInput.focus();
+        // Добавляем визуальную подсветку выбранной услуги
+        const serviceSelect = document.querySelector('#service') as HTMLSelectElement;
+        if (serviceSelect) {
+          serviceSelect.style.animation = 'pulse 0.5s ease-in-out';
+          setTimeout(() => {
+            serviceSelect.style.animation = '';
+          }, 500);
+        }
+      }
+    }, 800);
+  }
+};
 
 const submitForm = async () => {
   formStatus.value.loading = true;

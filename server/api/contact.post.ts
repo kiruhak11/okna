@@ -1,12 +1,17 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
 
-  // Получаем переменные окружения
-  const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN
-  const telegramChatId = process.env.TELEGRAM_CHAT_ID
+  // Получаем переменные окружения через runtimeConfig
+  const config = useRuntimeConfig(event)
+  const telegramBotToken = config.telegramBotToken
+  const telegramChatId = config.telegramChatId
 
   // Проверяем наличие обязательных переменных
   if (!telegramBotToken || !telegramChatId) {
+    console.error('Telegram configuration missing:', {
+      hasToken: !!telegramBotToken,
+      hasChatId: !!telegramChatId
+    })
     return {
       success: false,
       message: 'Telegram бот не настроен. Пожалуйста, свяжитесь с администратором.'
@@ -38,12 +43,23 @@ ${body.message || 'Без сообщения'}
       },
       body: JSON.stringify({
         chat_id: telegramChatId,
-        text: message,
-        parse_mode: 'HTML'
+        text: message
       })
     })
 
     const data = await response.json()
+
+    if (!response.ok) {
+      console.error('Telegram API HTTP error:', {
+        status: response.status,
+        statusText: response.statusText,
+        data: data
+      })
+      return {
+        success: false,
+        message: data.description || 'Ошибка при отправке сообщения в Telegram. Проверьте настройки бота.'
+      }
+    }
 
     if (data.ok) {
       return {
@@ -54,14 +70,18 @@ ${body.message || 'Без сообщения'}
       console.error('Telegram API error:', data)
       return {
         success: false,
-        message: 'Ошибка при отправке сообщения в Telegram'
+        message: data.description || 'Ошибка при отправке сообщения в Telegram'
       }
     }
   } catch (error: any) {
-    console.error('Error sending to Telegram:', error)
+    console.error('Error sending to Telegram:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    })
     return {
       success: false,
-      message: 'Произошла ошибка при отправке заявки'
+      message: 'Произошла ошибка при отправке заявки. Попробуйте позже или позвоните нам.'
     }
   }
 })

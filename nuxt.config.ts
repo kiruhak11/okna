@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
     telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
+    telegramChatId: process.env.TELEGRAM_CHAT_ID,
     secretRegistrationCode: process.env.SECRET_REGISTRATION_CODE,
     public: {
       apiBase: process.env.API_BASE_URL || "http://localhost:3000",
@@ -33,6 +34,7 @@ export default defineNuxtConfig({
     // Переменные окружения доступны напрямую в серверных роутах
     runtimeConfig: {
       telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
+      telegramChatId: process.env.TELEGRAM_CHAT_ID,
     },
   },
 });
