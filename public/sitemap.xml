@@ -36,5 +36,21 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- XML фид услуг -->
+  <url>
+    <loc>https://okna-brn.ru/services.xml</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Яндекс фид услуг -->
+  <url>
+    <loc>https://okna-brn.ru/yandex-services.xml</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
 

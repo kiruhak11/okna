@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services>
+  <company>
+    <name>Ремонт Окон Барнаул</name>
+    <description>Профессиональный ремонт и обслуживание пластиковых и деревянных окон в Барнауле. Выезд мастера в день обращения.</description>
+    <city>Барнаул</city>
+    <phone>+79635758301</phone>
+    <phone2>+79133603152</phone2>
+    <email>info@okna-barnaul.ru</email>
+    <website>https://okna-barnaul.ru</website>
+    <work_hours>Ежедневно 8:00 — 20:00</work_hours>
+    <response_time>Выезд за 30 минут по городу</response_time>
+    <service_area>Барнаул и пригород</service_area>
+  </company>
+  
+  <service_list>
+    <service id="1">
+      <name>Консультация и выезд</name>
+      <category>Консультация</category>
+      <price>0</price>
+      <price_display>Бесплатно</price_display>
+      <currency>RUB</currency>
+      <description>Бесплатный выезд мастера для осмотра и консультации. Оценка работ на месте, рекомендации по ремонту.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+      <featured>true</featured>
+    </service>
+    
+    <service id="2">
+      <name>Ремонт окон любой сложности</name>
+      <category>Ремонт окон</category>
+      <price>450</price>
+      <price_display>от 450 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Комплексный ремонт пластиковых и деревянных окон любой сложности. Устранение продуваний, замена поврежденных элементов, восстановление функциональности.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="3">
+      <name>Ремонт балконных дверей</name>
+      <category>Ремонт дверей</category>
+      <price>500</price>
+      <price_display>от 500 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Ремонт балконных пластиковых дверей. Регулировка, замена фурнитуры, устранение провисаний и заеданий.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="4">
+      <name>Регулировка механизмов</name>
+      <category>Регулировка</category>
+      <price>350</price>
+      <price_display>от 350 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Профессиональная регулировка оконных механизмов и фурнитуры. Настройка прижима, устранение люфтов, плавность хода створок.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="5">
+      <name>Замена уплотнителя</name>
+      <category>Замена комплектующих</category>
+      <price>500</price>
+      <price_display>от 500 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Замена резиновых уплотнителей на окнах. Устранение продуваний, улучшение тепло- и звукоизоляции. Используем качественные уплотнители.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="6">
+      <name>Ремонт/замена фурнитуры</name>
+      <category>Ремонт фурнитуры</category>
+      <price>450</price>
+      <price_display>от 450 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Ремонт и замена оконной фурнитуры: ручки, замки, механизмы открывания. Работаем с любыми брендами фурнитуры.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="7">
+      <name>Ремонт/замена петель</name>
+      <category>Ремонт фурнитуры</category>
+      <price>650</price>
+      <price_display>от 650 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Ремонт и замена оконных петель. Устранение провисания створок, замена изношенных петель на новые.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="8">
+      <name>Замена стеклопакета</name>
+      <category>Замена комплектующих</category>
+      <price>700</price>
+      <price_display>от 700 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Замена разбитых или запотевших стеклопакетов. Подбор и установка новых стеклопакетов с гарантией качества.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="9">
+      <name>Регулировка створок</name>
+      <category>Регулировка</category>
+      <price>350</price>
+      <price_display>от 350 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Точная регулировка оконных створок по всем осям. Устранение провисаний, перекосов, улучшение плотности прижима.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="10">
+      <name>Установка ограничителей</name>
+      <category>Установка</category>
+      <price>450</price>
+      <price_display>от 450 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Установка ограничителей открывания окон. Безопасность для детей, контроль проветривания.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="11">
+      <name>Установка детских замков</name>
+      <category>Установка</category>
+      <price>350</price>
+      <price_display>от 350 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Установка детских замков безопасности на окна. Надежная защита от несанкционированного открывания окон детьми.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="12">
+      <name>Утепление и запенивание</name>
+      <category>Утепление</category>
+      <price>450</price>
+      <price_display>от 450 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Профессиональное утепление окон монтажной пеной. Устранение промерзаний, улучшение теплоизоляции.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="13">
+      <name>Герметизация уличных швов</name>
+      <category>Утепление</category>
+      <price>600</price>
+      <price_display>от 600 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Герметизация наружных швов качественными герметиками. Защита от влаги, ветра и промерзания.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="14">
+      <name>Установка/замена подоконников</name>
+      <category>Установка</category>
+      <price>600</price>
+      <price_display>от 600 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Установка и замена пластиковых подоконников. Точная подгонка, герметизация стыков, профессиональный монтаж.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="15">
+      <name>Установка/замена отливов</name>
+      <category>Установка</category>
+      <price>550</price>
+      <price_display>от 550 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Установка и замена наружных отливов. Защита фасада от осадков, правильный отвод воды.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="16">
+      <name>Ремонт офисных дверей</name>
+      <category>Ремонт дверей</category>
+      <price>600</price>
+      <price_display>от 600 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Ремонт пластиковых и алюминиевых офисных дверей. Замена доводчиков, ремонт замков, регулировка.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+    
+    <service id="17">
+      <name>Иные работы с окнами</name>
+      <category>Прочие услуги</category>
+      <price>450</price>
+      <price_display>от 450 ₽</price_display>
+      <currency>RUB</currency>
+      <description>Другие виды работ с пластиковыми и деревянными окнами. Индивидуальный подход к каждой задаче.</description>
+      <url>https://okna-barnaul.ru/#services</url>
+      <availability>available</availability>
+    </service>
+  </service_list>
+  
+  <categories>
+    <category id="consultation">Консультация</category>
+    <category id="repair">Ремонт окон</category>
+    <category id="doors">Ремонт дверей</category>
+    <category id="adjustment">Регулировка</category>
+    <category id="replacement">Замена комплектующих</category>
+    <category id="hardware">Ремонт фурнитуры</category>
+    <category id="installation">Установка</category>
+    <category id="insulation">Утепление</category>
+    <category id="other">Прочие услуги</category>
+  </categories>
+  
+  <generated_at>2025-01-04T12:00:00+07:00</generated_at>
+</services>
+
