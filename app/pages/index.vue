@@ -91,7 +91,7 @@
               <a
                 :href="phoneHref"
                 class="call-dropdown-item"
-                @click="closeAllDropdowns"
+                @click="handleCallClick"
               >
                 <svg
                   class="phone-icon"
@@ -111,7 +111,7 @@
               <a
                 :href="phone2Href"
                 class="call-dropdown-item"
-                @click="closeAllDropdowns"
+                @click="handleCallClick"
               >
                 <svg
                   class="phone-icon"
@@ -146,7 +146,11 @@
         прозрачная смета на все виды работ.
       </p>
       <div class="hero-actions">
-        <a href="#contact" class="cta-button cta-primary">
+        <a
+          href="#contact"
+          class="cta-button cta-primary"
+          @click="trackInviteGoal"
+        >
           <svg
             class="cta-icon"
             fill="none"
@@ -202,7 +206,7 @@
               <a
                 :href="phoneHref"
                 class="hero-call-dropdown-item"
-                @click="closeAllDropdowns"
+                @click="handleCallClick"
               >
                 <svg
                   class="phone-icon"
@@ -222,7 +226,7 @@
               <a
                 :href="phone2Href"
                 class="hero-call-dropdown-item"
-                @click="closeAllDropdowns"
+                @click="handleCallClick"
               >
                 <svg
                   class="phone-icon"
@@ -802,7 +806,7 @@
                     <a
                       :href="phoneHref"
                       class="quick-call-dropdown-item"
-                      @click="closeAllDropdowns"
+                      @click="handleCallClick"
                     >
                       <svg
                         class="phone-icon"
@@ -822,7 +826,7 @@
                     <a
                       :href="phone2Href"
                       class="quick-call-dropdown-item"
-                      @click="closeAllDropdowns"
+                      @click="handleCallClick"
                     >
                       <svg
                         class="phone-icon"
@@ -1018,6 +1022,23 @@ const toggleQuickDropdown = () => {
   isHeroCallDropdownOpen.value = false;
 };
 
+// Яндекс.Метрика: отслеживание цели "Оставить заявку"
+const trackInviteGoal = () => {
+  if (typeof window !== "undefined" && (window as any).ym) {
+    (window as any).ym(106110599, "reachGoal", "invite");
+    console.log('📊 Яндекс.Метрика: цель "invite" достигнута');
+  }
+};
+
+// Яндекс.Метрика: отслеживание цели "Позвонить"
+const handleCallClick = () => {
+  if (typeof window !== "undefined" && (window as any).ym) {
+    (window as any).ym(106110599, "reachGoal", "call");
+    console.log('📊 Яндекс.Метрика: цель "call" достигнута');
+  }
+  closeAllDropdowns();
+};
+
 // Закрытие dropdown при клике вне его
 onMounted(() => {
   const handleClickOutside = (event: MouseEvent) => {
@@ -1179,6 +1200,15 @@ const submitForm = async () => {
       formStatus.value.success = true;
       formStatus.value.message =
         "Спасибо! Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.";
+
+      // Отслеживаем цель в Яндекс.Метрике
+      if (typeof window !== "undefined" && (window as any).ym) {
+        (window as any).ym(106110599, "reachGoal", "invite");
+        console.log(
+          '📊 Яндекс.Метрика: цель "invite" достигнута (форма отправлена)'
+        );
+      }
+
       // Очистка формы
       form.value = {
         name: "",
