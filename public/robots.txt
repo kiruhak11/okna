@@ -1,24 +1,55 @@
 # robots.txt для okna-brn.ru
+# Оптимизирован для максимальной видимости в поисковых системах
 
+# Основные правила для всех поисковых роботов
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://okna-brn.ru/sitemap.xml
-
-# Разрешить все основные страницы
-Allow: /*.html$
-Allow: /*.css$
-Allow: /*.js$
-
-# Запретить технические директории (если есть)
+# Запретить технические директории
 Disallow: /api/
 Disallow: /_nuxt/
 Disallow: /.git/
+Disallow: /node_modules/
 
-# Параметры поиска
+# Разрешить важные ресурсы
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.svg$
+Allow: /*.webp$
+Allow: /*.xml$
+Allow: /*.ico$
+Allow: /*.webmanifest$
+Allow: /favicon.ico
+Allow: /site.webmanifest
+
+# Специальные правила для Яндекс
 User-agent: Yandex
 Allow: /
+Crawl-delay: 0.5
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term
 
+# Специальные правила для Google
 User-agent: Googlebot
 Allow: /
+
+# Правила для Googlebot для изображений
+User-agent: Googlebot-Image
+Allow: /
+
+# Правила для Яндекс картинок
+User-agent: YandexImages
+Allow: /
+
+# Правила для мобильного Googlebot
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Sitemap - основной файл карты сайта
+Sitemap: https://okna-brn.ru/sitemap.xml
+Sitemap: https://okna-brn.ru/services.xml
+
+# Хост сайта (для Яндекса)
+Host: okna-brn.ru

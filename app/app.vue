@@ -27,9 +27,18 @@ useHead({
     { name: 'theme-color', content: '#8b5cf6' },
   ],
   link: [
+    // Основная фавиконка (ICO формат для старых браузеров)
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    // Современная фавиконка в SVG (масштабируемая)
     { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
+    // Фавиконка для iOS устройств
     { rel: 'apple-touch-icon', sizes: '180x180', href: '/logo.svg' },
+    // Shortcut icon для лучшей совместимости
+    { rel: 'shortcut icon', href: '/favicon.ico' },
+    // Web App Manifest для PWA и SEO
+    { rel: 'manifest', href: '/site.webmanifest' },
+    // Canonical URL
+    { rel: 'canonical', href: 'https://okna-brn.ru' },
   ],
   script: [
     {
