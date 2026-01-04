@@ -4,13 +4,15 @@ export default defineEventHandler(async (event) => {
   // Получаем переменные окружения через runtimeConfig
   const config = useRuntimeConfig(event)
   const telegramBotToken = config.telegramBotToken
-  const telegramChatId = config.telegramChatId
+  const telegramChatId1 = config.telegramChatId1
+  const telegramChatId2 = config.telegramChatId2
 
   // Проверяем наличие обязательных переменных
-  if (!telegramBotToken || !telegramChatId) {
+  if (!telegramBotToken || (!telegramChatId1 && !telegramChatId2)) {
     console.error('Telegram configuration missing:', {
       hasToken: !!telegramBotToken,
-      hasChatId: !!telegramChatId
+      hasChatId1: !!telegramChatId1,
+      hasChatId2: !!telegramChatId2
     })
     return {
       success: false,
@@ -32,49 +34,96 @@ ${body.message || 'Без сообщения'}
 ⏰ Время: ${new Date().toLocaleString('ru-RU')}
   `.trim()
 
+  const telegramUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`
+  const results = []
+  let allSuccessful = true
+
   try {
-    // Отправляем сообщение в Telegram
-    const telegramUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`
-    
-    const response = await fetch(telegramUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        chat_id: telegramChatId,
-        text: message
+    // Отправляем в первый чат
+    if (telegramChatId1) {
+      console.log(`📤 Отправка заявки в чат ${telegramChatId1}...`)
+      
+      const response1 = await fetch(telegramUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: telegramChatId1,
+          text: message,
+          parse_mode: 'HTML'
+        })
       })
-    })
 
-    const data = await response.json()
+      const data1 = await response1.json()
 
-    if (!response.ok) {
-      console.error('Telegram API HTTP error:', {
-        status: response.status,
-        statusText: response.statusText,
-        data: data
-      })
-      return {
-        success: false,
-        message: data.description || 'Ошибка при отправке сообщения в Telegram. Проверьте настройки бота.'
+      if (response1.ok && data1.ok) {
+        console.log(`✅ Отправлено в чат ${telegramChatId1}`)
+        results.push({ chatId: telegramChatId1, success: true })
+      } else {
+        console.error(`❌ Ошибка отправки в чат ${telegramChatId1}:`, data1)
+        results.push({ chatId: telegramChatId1, success: false, error: data1.description })
+        allSuccessful = false
       }
     }
 
-    if (data.ok) {
+    // Отправляем во второй чат
+    if (telegramChatId2) {
+      console.log(`📤 Отправка заявки в чат ${telegramChatId2}...`)
+      
+      const response2 = await fetch(telegramUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: telegramChatId2,
+          text: message,
+          parse_mode: 'HTML'
+        })
+      })
+
+      const data2 = await response2.json()
+
+      if (response2.ok && data2.ok) {
+        console.log(`✅ Отправлено в чат ${telegramChatId2}`)
+        results.push({ chatId: telegramChatId2, success: true })
+      } else {
+        console.error(`❌ Ошибка отправки в чат ${telegramChatId2}:`, data2)
+        results.push({ chatId: telegramChatId2, success: false, error: data2.description })
+        allSuccessful = false
+      }
+    }
+
+    // Итоговое логирование
+    console.log('📊 Результат отправки:', {
+      total: results.length,
+      successful: results.filter(r => r.success).length,
+      failed: results.filter(r => !r.success).length,
+      details: results
+    })
+
+    if (allSuccessful && results.length > 0) {
       return {
         success: true,
-        message: 'Заявка успешно отправлена!'
+        message: 'Заявка успешно отправлена!',
+        details: results
+      }
+    } else if (results.some(r => r.success)) {
+      return {
+        success: true,
+        message: 'Заявка частично отправлена. Мы получили ваше обращение.',
+        details: results
       }
     } else {
-      console.error('Telegram API error:', data)
       return {
         success: false,
-        message: data.description || 'Ошибка при отправке сообщения в Telegram'
+        message: 'Ошибка при отправке заявки. Попробуйте позвонить нам.',
+        details: results
       }
     }
   } catch (error: any) {
-    console.error('Error sending to Telegram:', {
+    console.error('❌ Критическая ошибка при отправке в Telegram:', {
       message: error.message,
       stack: error.stack,
       name: error.name

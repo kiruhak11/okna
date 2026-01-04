@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Новогодние переменные
 $christmas-red: #c41e3a;
 $christmas-red-hover: #a01829;
@@ -47,9 +49,12 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 600;
   border: 2px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  transition: all 0.3s $ease-out-quart, transform 0.2s $ease-out-quart;
+  transition: all 0.4s $ease-out-quart, transform 0.3s $ease-out-quart,
+    box-shadow 0.4s $ease-out-quart;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
   box-shadow: 0 8px 25px rgba(196, 30, 58, 0.4);
@@ -70,13 +75,13 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
     background: linear-gradient(135deg, #d32f2f, $christmas-red);
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 15px 40px rgba(196, 30, 58, 0.6);
-    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 18px 45px rgba(196, 30, 58, 0.65);
+    border-color: rgba(255, 255, 255, 0.5);
 
     &::before {
-      width: 300px;
-      height: 300px;
+      width: 350px;
+      height: 350px;
     }
   }
 
@@ -97,7 +102,8 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 1.25rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   padding: 2rem;
-  transition: all 0.35s $ease-out-quart, transform 0.3s $ease-out-quart;
+  transition: all 0.45s $ease-out-quart, transform 0.4s $ease-out-quart,
+    box-shadow 0.4s $ease-out-quart;
   border: 2px solid rgba(196, 30, 58, 0.1);
   position: relative;
   overflow: hidden;
@@ -117,12 +123,12 @@ $ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
       $christmas-green
     );
     opacity: 0;
-    transition: opacity 0.3s $ease-smooth;
+    transition: opacity 0.5s $ease-out-quart;
   }
 
   &:hover {
-    box-shadow: 0 20px 50px rgba(196, 30, 58, 0.2);
-    transform: translateY(-10px) scale(1.01);
+    box-shadow: 0 25px 60px rgba(196, 30, 58, 0.25);
+    transform: translateY(-12px) scale(1.02);
     border-color: rgba(196, 30, 58, 0.3);
 
     &::before {
@@ -241,12 +247,12 @@ a {
     height: 60%;
     background: radial-gradient(
       circle,
-      rgba(196, 30, 58, 0.12),
-      transparent 60%
+      rgba(196, 30, 58, 0.08),
+      transparent 70%
     );
-    filter: blur(80px);
+    filter: blur(100px);
     z-index: 0;
-    animation: float 20s ease-in-out infinite;
+    animation: float 25s ease-in-out infinite;
   }
 
   &::after {
@@ -258,12 +264,12 @@ a {
     height: 60%;
     background: radial-gradient(
       circle,
-      rgba(22, 91, 51, 0.15),
-      transparent 60%
+      rgba(22, 91, 51, 0.08),
+      transparent 70%
     );
-    filter: blur(80px);
+    filter: blur(100px);
     z-index: 0;
-    animation: float 25s ease-in-out infinite reverse;
+    animation: float 30s ease-in-out infinite reverse;
   }
 }
 
@@ -272,11 +278,14 @@ a {
   100% {
     transform: translate(0, 0) rotate(0deg);
   }
-  33% {
-    transform: translate(30px, -30px) rotate(5deg);
+  25% {
+    transform: translate(20px, -20px) rotate(3deg);
   }
-  66% {
-    transform: translate(-20px, 20px) rotate(-5deg);
+  50% {
+    transform: translate(-15px, 15px) rotate(-3deg);
+  }
+  75% {
+    transform: translate(15px, -10px) rotate(2deg);
   }
 }
 
@@ -333,10 +342,10 @@ a {
 
 @keyframes shimmer {
   0% {
-    background-position: -200% 0;
+    background-position: -300% 0;
   }
   100% {
-    background-position: 200% 0;
+    background-position: 300% 0;
   }
 }
 
@@ -358,7 +367,7 @@ a {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
   }
 }
 
@@ -446,6 +455,7 @@ a {
 
       &:hover {
         color: $christmas-red;
+        transform: translateY(-2px);
 
         &::after {
           width: 100%;
@@ -454,9 +464,157 @@ a {
     }
   }
 
+  .call-dropdown {
+    position: relative;
+  }
+
   .call-button {
     @include button-primary;
     white-space: nowrap;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .dropdown-icon {
+      width: 1.2rem;
+      height: 1.2rem;
+      transition: transform 0.3s $ease-out-quart;
+
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .call-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    min-width: 280px;
+    z-index: 1000;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        $christmas-red,
+        $christmas-gold,
+        $christmas-green
+      );
+    }
+  }
+
+  @keyframes dropdownSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-12px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  // Vue transition для dropdown
+  .dropdown-fade-enter-active,
+  .dropdown-fade-leave-active {
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .dropdown-fade-enter-from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+
+  .dropdown-fade-leave-to {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.98);
+  }
+
+  .call-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 1.125rem 1.5rem;
+    color: #1f2937;
+    font-weight: 500;
+    font-size: 0.975rem;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    background: white;
+    position: relative;
+    z-index: 1;
+
+    > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(196, 30, 58, 0.05) 0%,
+        rgba(196, 30, 58, 0.08) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .phone-icon {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      color: $christmas-red;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      filter: drop-shadow(0 2px 4px rgba(196, 30, 58, 0.2));
+    }
+
+    &:last-child {
+      border-bottom: none;
+      border-radius: 0 0 12px 12px;
+    }
+
+    &:first-child {
+      border-radius: 12px 12px 0 0;
+    }
+
+    &:hover {
+      color: $christmas-red;
+      font-weight: 600;
+      padding-left: 1.75rem;
+
+      &::before {
+        opacity: 1;
+      }
+
+      .phone-icon {
+        transform: scale(1.15) rotate(-5deg);
+        filter: drop-shadow(0 4px 8px rgba(196, 30, 58, 0.4));
+      }
+    }
+
+    &:active {
+      background: rgba(196, 30, 58, 0.1);
+      transform: scale(0.98);
+    }
   }
 
   .menu-toggle {
@@ -527,23 +685,37 @@ a {
       }
     }
 
-    .call-button {
+    .call-dropdown {
       margin-left: auto;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .call-button {
+      width: 100%;
+      justify-content: center;
+      display: inline-flex;
+    }
+
+    .call-dropdown-menu {
+      position: relative;
+      top: 0.5rem;
+      right: auto;
+      width: 100%;
+      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
     }
   }
 
   // Раскладка по умолчанию на мобильном
   @media (max-width: 767px) {
-    .call-button {
+    .call-dropdown {
       display: none;
     }
 
     &.nav-open {
-      .call-button {
-        display: inline-flex;
-        width: 100%;
-        justify-content: center;
-        margin-top: 0.5rem;
+      .call-dropdown {
+        display: block;
       }
     }
   }
@@ -555,7 +727,6 @@ a {
   padding: 5.5rem 1rem 4rem;
   text-align: center;
   position: relative;
-  z-index: 1;
   animation: fadeInUp 0.7s $ease-out-quart;
 
   h1 {
@@ -596,7 +767,7 @@ a {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px) scale(0.98);
+    transform: translateY(30px) scale(0.95);
   }
   to {
     opacity: 1;
@@ -619,10 +790,11 @@ a {
   font-weight: 700;
   border: 2px solid rgba(196, 30, 58, 0.3);
   margin-bottom: 1.25rem;
-  animation: fadeInUp 0.8s ease-out both, pulse 3s ease-in-out infinite;
+  animation: fadeInUp 0.8s ease-out both;
   box-shadow: 0 4px 15px rgba(196, 30, 58, 0.2);
   position: relative;
   overflow: hidden;
+  transition: all 0.4s $ease-out-quart;
 
   &::before {
     content: "";
@@ -634,62 +806,332 @@ a {
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.4),
       transparent
     );
-    animation: shine 3s infinite;
+    animation: shine 4s infinite;
+  }
+
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(196, 30, 58, 0.3);
+    border-color: rgba(196, 30, 58, 0.5);
   }
 }
 
 @keyframes shine {
   0% {
-    left: -100%;
+    left: -120%;
   }
   50%,
   100% {
-    left: 100%;
+    left: 120%;
   }
 }
 
 .hero-actions {
   display: flex;
   justify-content: center;
+  align-items: stretch;
   gap: 1rem;
   flex-wrap: wrap;
   margin-bottom: 1.25rem;
   animation: fadeInUp 0.8s ease-out 0.6s both;
+  position: relative;
+  z-index: 10;
 }
 
 .cta-button {
-  @include button-primary;
-  padding: 1.2rem 2.5rem;
-  font-size: 1.1rem;
-  box-shadow: 0 20px 45px -12px rgba(196, 30, 58, 0.5);
+  padding: 1rem 2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 56px;
+  position: relative;
+  overflow: hidden;
+  font-family: inherit;
+  flex-shrink: 0;
 
-  &::after {
-    content: "🎄";
-    margin-left: 0.5rem;
-    display: inline-block;
-    animation: bounce 2s infinite;
+  .cta-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-text {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    position: relative;
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  &:hover .cta-icon {
+    transform: scale(1.15) translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.97) translateY(1px);
+    transition: all 0.1s ease;
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(196, 30, 58, 0.4);
+    outline-offset: 2px;
   }
 }
 
-.cta-secondary {
-  padding: 1.2rem 2rem;
-  border-radius: 0.75rem;
-  border: 2px solid $christmas-green;
-  color: $christmas-green;
-  background: rgba(255, 255, 255, 0.9);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(22, 91, 51, 0.2);
+.hero-call-dropdown {
+  position: relative;
+  display: inline-flex;
+  z-index: 100;
+}
+
+// Глобальные Vue transitions для dropdown
+.dropdown-fade-enter-active,
+.dropdown-fade-leave-active {
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dropdown-fade-enter-from {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+}
+
+.dropdown-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-5px) scale(0.98);
+}
+
+// Первичная кнопка (Оставить заявку)
+.cta-primary {
+  background: linear-gradient(135deg, #c41e3a 0%, #e53e3e 100%);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(196, 30, 58, 0.4),
+    0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cta-icon,
+  .cta-text {
+    position: relative;
+    z-index: 1;
+  }
 
   &:hover {
-    border-color: $christmas-green;
-    color: white;
-    background: $christmas-green;
+    background: linear-gradient(135deg, #e53e3e 0%, #c41e3a 100%);
+    box-shadow: 0 8px 28px 0 rgba(196, 30, 58, 0.5),
+      0 4px 8px 0 rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(22, 91, 51, 0.4);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.96);
+    box-shadow: 0 2px 8px 0 rgba(196, 30, 58, 0.4);
+  }
+}
+
+// Вторичная кнопка (Позвонить)
+.cta-secondary {
+  background: white;
+  color: #1f2937;
+  border: 2px solid rgba(196, 30, 58, 0.2);
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1), 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(196, 30, 58, 0.05) 0%,
+      rgba(196, 30, 58, 0) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cta-icon,
+  .cta-text,
+  .dropdown-icon {
+    position: relative;
+    z-index: 2;
+  }
+
+  .dropdown-icon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: #c41e3a;
+    margin-left: 0.25rem;
+    flex-shrink: 0;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &:hover {
+    background: rgba(196, 30, 58, 0.05);
+    border-color: rgba(196, 30, 58, 0.4);
+    box-shadow: 0 8px 28px 0 rgba(196, 30, 58, 0.2),
+      0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .dropdown-icon {
+      transform: scale(1.1);
+
+      &.open {
+        transform: rotate(180deg) scale(1.1);
+      }
+    }
+  }
+
+  &:active {
+    transform: scale(0.97) translateY(0);
+    box-shadow: 0 2px 8px 0 rgba(196, 30, 58, 0.2);
+  }
+}
+
+.hero-call-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  min-width: 280px;
+  z-index: 1000;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      $christmas-red,
+      $christmas-gold,
+      $christmas-green
+    );
+  }
+}
+
+.hero-call-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1.125rem 1.5rem;
+  color: #1f2937;
+  font-weight: 500;
+  font-size: 0.975rem;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: white;
+  position: relative;
+  z-index: 1;
+
+  > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(196, 30, 58, 0.05) 0%,
+      rgba(196, 30, 58, 0.08) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .phone-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: $christmas-red;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 2px 4px rgba(196, 30, 58, 0.2));
+  }
+
+  &:last-child {
+    border-bottom: none;
+    border-radius: 0 0 12px 12px;
+  }
+
+  &:first-child {
+    border-radius: 12px 12px 0 0;
+  }
+
+  &:hover {
+    color: $christmas-red;
+    font-weight: 600;
+    padding-left: 1.75rem;
+
+    &::before {
+      opacity: 1;
+    }
+
+    .phone-icon {
+      transform: scale(1.15) rotate(-5deg);
+      filter: drop-shadow(0 4px 8px rgba(196, 30, 58, 0.4));
+    }
+  }
+
+  &:active {
+    background: rgba(196, 30, 58, 0.1);
+    transform: scale(0.98);
   }
 }
 
@@ -699,6 +1141,8 @@ a {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 0.75rem;
+  position: relative;
+  z-index: 1;
   animation: fadeInUp 0.8s ease-out 0.8s both;
 
   span {
@@ -709,17 +1153,17 @@ a {
     color: $text-dark;
     font-size: 0.95rem;
     font-weight: 600;
-    transition: all 0.25s $ease-smooth;
+    transition: all 0.35s $ease-out-quart;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
     &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(196, 30, 58, 0.2);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(196, 30, 58, 0.25);
       border-color: $christmas-red;
       background: linear-gradient(
         135deg,
-        rgba(196, 30, 58, 0.1),
-        rgba(255, 215, 0, 0.1)
+        rgba(196, 30, 58, 0.12),
+        rgba(255, 215, 0, 0.12)
       );
     }
 
@@ -753,16 +1197,16 @@ a {
   .feature-card {
     @include card;
     text-align: center;
-    animation: fadeInUp 0.6s $ease-out-quart both;
+    animation: fadeInUp 0.7s $ease-out-quart both;
 
     &:nth-child(1) {
-      animation-delay: 0.1s;
+      animation-delay: 0.15s;
     }
     &:nth-child(2) {
-      animation-delay: 0.2s;
+      animation-delay: 0.25s;
     }
     &:nth-child(3) {
-      animation-delay: 0.3s;
+      animation-delay: 0.35s;
     }
 
     .feature-icon {
@@ -772,7 +1216,7 @@ a {
       @include flex-center;
       margin: 0 auto 1.5rem;
       position: relative;
-      transition: all 0.3s $ease-out-quart;
+      transition: all 0.4s $ease-out-quart;
 
       &::after {
         content: "";
@@ -792,7 +1236,7 @@ a {
       font-weight: 700;
       margin-bottom: 0.75rem;
       color: $text-dark;
-      transition: color 0.3s ease;
+      transition: all 0.35s $ease-out-quart;
     }
 
     p {
@@ -802,16 +1246,18 @@ a {
 
     &:hover {
       .feature-icon {
-        transform: scale(1.1) rotate(5deg);
+        transform: scale(1.15) rotate(8deg);
 
         &::after {
-          inset: -10px;
-          opacity: 0.5;
+          inset: -12px;
+          opacity: 0.6;
+          filter: blur(15px);
         }
       }
 
       h3 {
         color: $christmas-red;
+        transform: translateY(-2px);
       }
     }
   }
@@ -832,13 +1278,6 @@ a {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     position: relative;
-
-    &::after {
-      content: "❄️";
-      display: inline-block;
-      margin-left: 0.5rem;
-      animation: spin 4s linear infinite;
-    }
   }
 
   @keyframes spin {
@@ -868,11 +1307,11 @@ a {
     @include card;
     padding: 0;
     overflow: hidden;
-    animation: fadeInUp 0.5s $ease-out-quart both;
+    animation: fadeInUp 0.7s $ease-out-quart both;
 
     @for $i from 1 through 6 {
       &:nth-child(#{$i}) {
-        animation-delay: #{$i * 0.1}s;
+        animation-delay: #{$i * 0.12}s;
       }
     }
 
@@ -880,7 +1319,7 @@ a {
       height: 12rem;
       @include flex-center;
       position: relative;
-      transition: all 0.3s $ease-out-quart;
+      transition: all 0.45s $ease-out-quart;
 
       &::before {
         content: "";
@@ -896,7 +1335,7 @@ a {
       }
 
       svg {
-        transition: all 0.3s $ease-out-quart;
+        transition: all 0.45s $ease-out-quart;
         filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
       }
     }
@@ -910,7 +1349,7 @@ a {
         font-weight: 700;
         margin-bottom: 0.75rem;
         color: $text-dark;
-        transition: color 0.3s ease;
+        transition: all 0.35s $ease-out-quart;
       }
 
       p {
@@ -930,20 +1369,20 @@ a {
           rgba(196, 30, 58, 0.1),
           rgba(255, 215, 0, 0.1)
         );
-        transition: all 0.25s $ease-smooth;
+        transition: all 0.35s $ease-out-quart;
       }
     }
 
     &:hover {
       .service-image {
-        transform: scale(1.05);
+        transform: scale(1.08);
 
         &::before {
           opacity: 1;
         }
 
         svg {
-          transform: scale(1.1) translateY(-5px);
+          transform: scale(1.15) translateY(-8px) rotate(5deg);
         }
       }
 
@@ -958,7 +1397,7 @@ a {
             rgba(196, 30, 58, 0.2),
             rgba(255, 215, 0, 0.2)
           );
-          transform: scale(1.05);
+          transform: scale(1.08);
         }
       }
     }
@@ -1005,7 +1444,7 @@ a {
       border-radius: 0.75rem;
       color: $text-dark;
       font-size: 1rem;
-      transition: all 0.25s $ease-smooth;
+      transition: all 0.4s $ease-out-quart;
       border: 1px solid transparent;
       cursor: pointer;
       position: relative;
@@ -1015,31 +1454,33 @@ a {
         position: absolute;
         right: 1rem;
         opacity: 0;
-        transform: translateX(-10px);
-        transition: all 0.25s $ease-smooth;
+        transform: translateX(-15px);
+        transition: all 0.35s $ease-out-quart;
         color: $christmas-red;
         font-weight: 700;
+        font-size: 1.2rem;
       }
 
       &:hover {
         background: linear-gradient(
           135deg,
-          rgba(196, 30, 58, 0.08),
-          rgba(255, 215, 0, 0.08)
+          rgba(196, 30, 58, 0.1),
+          rgba(255, 215, 0, 0.1)
         );
-        border-color: rgba(196, 30, 58, 0.3);
-        transform: translateX(8px);
+        border-color: rgba(196, 30, 58, 0.35);
+        transform: translateX(10px) scale(1.01);
         padding-right: 2.5rem;
+        box-shadow: 0 4px 15px rgba(196, 30, 58, 0.15);
 
         &::after {
           opacity: 1;
-          transform: translateX(0);
+          transform: translateX(0) scale(1.1);
         }
       }
 
       &:active {
-        transform: translateX(4px) scale(0.98);
-        transition-duration: 0.1s;
+        transform: translateX(6px) scale(0.99);
+        transition-duration: 0.15s;
       }
 
       &.highlight {
@@ -1051,16 +1492,6 @@ a {
         );
         border: 2px solid $christmas-green;
         position: relative;
-
-        &::before {
-          content: "⭐";
-          position: absolute;
-          left: -15px;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 1.2rem;
-          animation: twinkle 2s ease-in-out infinite;
-        }
 
         .price-value {
           color: $christmas-green;
@@ -1084,11 +1515,12 @@ a {
         white-space: nowrap;
         font-weight: 700;
         color: $christmas-red;
-        transition: transform 0.25s $ease-smooth;
+        transition: all 0.35s $ease-out-quart;
       }
 
       &:hover .price-value {
-        transform: scale(1.08);
+        transform: scale(1.1);
+        text-shadow: 0 2px 8px rgba(196, 30, 58, 0.3);
       }
     }
 
@@ -1124,26 +1556,6 @@ a {
   );
   padding: 5rem 0;
   position: relative;
-
-  &::before {
-    content: "🎁";
-    position: absolute;
-    top: 10%;
-    left: 5%;
-    font-size: 3rem;
-    opacity: 0.1;
-    animation: float 6s ease-in-out infinite;
-  }
-
-  &::after {
-    content: "⭐";
-    position: absolute;
-    bottom: 10%;
-    right: 5%;
-    font-size: 3rem;
-    opacity: 0.1;
-    animation: float 8s ease-in-out infinite reverse;
-  }
 
   .about-content {
     @include container;
@@ -1205,7 +1617,7 @@ a {
         margin-bottom: 1rem;
         padding: 0.75rem;
         border-radius: 0.75rem;
-        transition: all 0.25s $ease-smooth;
+        transition: all 0.35s $ease-out-quart;
         font-weight: 500;
 
         svg {
@@ -1214,11 +1626,17 @@ a {
           color: $christmas-green;
           margin-right: 1rem;
           flex-shrink: 0;
+          transition: all 0.35s $ease-out-quart;
         }
 
         &:hover {
-          background: rgba(22, 91, 51, 0.1);
-          transform: translateX(5px);
+          background: rgba(22, 91, 51, 0.12);
+          transform: translateX(8px);
+          box-shadow: 0 2px 10px rgba(22, 91, 51, 0.15);
+
+          svg {
+            transform: scale(1.2) rotate(5deg);
+          }
         }
       }
     }
@@ -1272,14 +1690,15 @@ a {
           border-radius: 1rem;
           background: rgba(255, 255, 255, 0.1);
           backdrop-filter: blur(10px);
-          transition: all 0.25s $ease-smooth;
+          transition: all 0.4s $ease-out-quart;
           border: 2px solid rgba(255, 255, 255, 0.2);
+          cursor: pointer;
 
           &:hover {
-            transform: translateY(-10px) scale(1.05);
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-15px) scale(1.1);
+            background: rgba(255, 255, 255, 0.28);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
           }
 
           .stat-number {
@@ -1287,13 +1706,27 @@ a {
             font-weight: 800;
             margin-bottom: 0.5rem;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            animation: fadeInUp 0.6s $ease-out-quart both;
+            transition: all 0.3s $ease-out-quart;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.02em;
           }
 
           .stat-label {
             font-size: 1rem;
             opacity: 0.95;
             font-weight: 600;
+            transition: all 0.3s $ease-out-quart;
+          }
+
+          &:hover {
+            .stat-number {
+              transform: scale(1.1);
+              text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            .stat-label {
+              opacity: 1;
+            }
           }
 
           &:nth-child(1) .stat-number {
@@ -1345,7 +1778,7 @@ a {
   }
 
   .contact-wrapper {
-    max-width: 42rem;
+    max-width: 1200px;
     margin: 0 auto;
   }
 
@@ -1355,6 +1788,7 @@ a {
     flex-direction: column;
     gap: 1.5rem;
     animation: fadeInUp 0.6s $ease-out-quart both;
+    margin-bottom: 3rem;
 
     .form-group {
       label {
@@ -1430,7 +1864,6 @@ a {
   }
 
   .contact-info {
-    margin-top: 3rem;
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -1478,7 +1911,7 @@ a {
           margin-right: 1rem;
           margin-top: 0.25rem;
           flex-shrink: 0;
-          transition: transform 0.3s ease;
+          transition: all 0.4s $ease-out-quart;
         }
 
         .info-content {
@@ -1492,15 +1925,17 @@ a {
           .info-value {
             color: #555;
             line-height: 1.7;
-
+            flex-direction: column;
             a {
               color: $christmas-red;
               font-weight: 600;
-              transition: all 0.25s $ease-smooth;
+              transition: all 0.35s $ease-out-quart;
+              display: inline-block;
 
               &:hover {
                 color: $christmas-green;
                 text-decoration: underline;
+                transform: translateX(3px);
               }
             }
           }
@@ -1509,12 +1944,13 @@ a {
         &:hover {
           background: linear-gradient(
             135deg,
-            rgba(196, 30, 58, 0.05),
-            rgba(255, 215, 0, 0.05)
+            rgba(196, 30, 58, 0.08),
+            rgba(255, 215, 0, 0.08)
           );
+          transform: translateX(5px);
 
           svg {
-            transform: scale(1.2) rotate(5deg);
+            transform: scale(1.25) rotate(8deg);
           }
         }
       }
@@ -1535,16 +1971,6 @@ a {
       position: relative;
       overflow: hidden;
       animation: fadeInUp 0.8s ease-out 0.4s both;
-
-      &::before {
-        content: "❄️";
-        position: absolute;
-        top: 10%;
-        right: 10%;
-        font-size: 4rem;
-        opacity: 0.15;
-        animation: spin 20s linear infinite;
-      }
 
       &::after {
         content: "";
@@ -1629,13 +2055,17 @@ a {
         gap: 0.75rem;
       }
 
+      .quick-call-dropdown {
+        position: relative;
+      }
+
       .quick-button {
         padding: 1rem 1.5rem;
         border-radius: 1rem;
         font-weight: 600;
         border: 2px solid rgba(255, 255, 255, 0.5);
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.4s $ease-out-quart;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -1648,6 +2078,8 @@ a {
         width: 100%;
         box-sizing: border-box;
         overflow: hidden;
+        font-family: inherit;
+        font-size: inherit;
 
         &::before {
           content: "";
@@ -1663,14 +2095,14 @@ a {
         }
 
         &:hover {
-          transform: translateY(-3px);
+          transform: translateY(-5px) scale(1.02);
           background: white;
           border-color: white;
-          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
 
           &::before {
-            width: 300px;
-            height: 300px;
+            width: 350px;
+            height: 350px;
           }
         }
 
@@ -1723,7 +2155,134 @@ a {
         }
 
         &:hover .quick-btn-icon {
-          transform: scale(1.1) rotate(5deg);
+          transform: scale(1.15) rotate(8deg);
+        }
+
+        .quick-dropdown-icon {
+          width: 1.25rem;
+          height: 1.25rem;
+          transition: transform 0.35s $ease-out-quart;
+          opacity: 0.9;
+          margin-left: auto;
+
+          &.open {
+            transform: rotate(180deg);
+          }
+        }
+
+        &:hover .quick-dropdown-icon {
+          opacity: 1;
+        }
+      }
+
+      .quick-call-dropdown-menu {
+        position: absolute;
+        top: calc(100% + 0.75rem);
+        left: 0;
+        right: 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3),
+          0 0 0 1px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        z-index: 1000;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(
+            90deg,
+            $christmas-red,
+            $christmas-gold,
+            $christmas-green
+          );
+        }
+      }
+
+      .quick-call-dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+        padding: 1.125rem 1.5rem;
+        color: #1f2937;
+        font-weight: 500;
+        font-size: 0.975rem;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        background: white;
+        position: relative;
+        z-index: 1;
+
+        > * {
+          position: relative;
+          z-index: 2;
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            135deg,
+            rgba(196, 30, 58, 0.05) 0%,
+            rgba(196, 30, 58, 0.08) 100%
+          );
+          opacity: 0;
+          transition: opacity 0.25s ease;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .phone-icon {
+          width: 22px;
+          height: 22px;
+          flex-shrink: 0;
+          color: $christmas-red;
+          transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+          filter: drop-shadow(0 2px 4px rgba(196, 30, 58, 0.2));
+        }
+
+        &:last-child {
+          border-bottom: none;
+          border-radius: 0 0 12px 12px;
+        }
+
+        &:first-child {
+          border-radius: 12px 12px 0 0;
+        }
+
+        &:hover {
+          color: $christmas-red;
+          font-weight: 600;
+          padding-left: 1.75rem;
+
+          &::before {
+            opacity: 1;
+          }
+
+          .phone-icon {
+            transform: scale(1.15) rotate(-5deg);
+            filter: drop-shadow(0 4px 8px rgba(196, 30, 58, 0.4));
+          }
+        }
+
+        &:active {
+          background: rgba(196, 30, 58, 0.1);
+          transform: scale(0.98);
+        }
+
+        animation: itemFadeIn 0.3s $ease-out-quart both;
+
+        &:nth-child(1) {
+          animation-delay: 0.05s;
+        }
+        &:nth-child(2) {
+          animation-delay: 0.1s;
         }
       }
     }
@@ -1757,15 +2316,6 @@ a {
     animation: shimmer 3s linear infinite;
   }
 
-  &::after {
-    content: "🎄";
-    position: absolute;
-    top: 20%;
-    right: 10%;
-    font-size: 8rem;
-    opacity: 0.03;
-  }
-
   .footer-content {
     @include container;
     display: grid;
@@ -1795,10 +2345,12 @@ a {
           margin-bottom: 0.5rem;
 
           a {
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            display: inline-block;
 
             &:hover {
               color: white;
+              transform: translateX(3px);
             }
           }
         }
@@ -1841,24 +2393,6 @@ a {
     text-align: center;
     color: rgba(255, 255, 255, 0.7);
     position: relative;
-
-    &::before {
-      content: "✨ С Новым Годом! ✨";
-      display: block;
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      background: linear-gradient(
-        90deg,
-        $christmas-gold,
-        white,
-        $christmas-gold
-      );
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: shimmer 3s linear infinite;
-    }
   }
 }
 
@@ -2021,13 +2555,32 @@ a {
     width: 100%;
     gap: 0.75rem !important;
 
-    .cta-button,
+    .cta-button {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+      padding: 1rem 1.5rem !important;
+      font-size: 1rem !important;
+    }
+
+    .hero-call-dropdown {
+      width: 100%;
+    }
+
     .cta-secondary {
       width: 100%;
       text-align: center;
       justify-content: center;
       padding: 1rem 1.5rem !important;
       font-size: 1rem !important;
+    }
+
+    .hero-call-dropdown-menu {
+      left: 0;
+      right: 0;
+      transform: none;
+      width: 100%;
+      min-width: auto;
     }
   }
 
@@ -2249,7 +2802,6 @@ a {
 
   > * {
     position: relative;
-    z-index: 1;
   }
 }
 
@@ -2321,18 +2873,20 @@ input[type="submit"],
   }
 }
 
-// Пульсация для важных элементов
+// Плавная пульсация для важных элементов
 @keyframes pulse-glow {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(196, 30, 58, 0.4);
+    box-shadow: 0 4px 14px 0 rgba(196, 30, 58, 0.4),
+      0 2px 4px 0 rgba(0, 0, 0, 0.1);
   }
   50% {
-    box-shadow: 0 0 40px rgba(196, 30, 58, 0.8);
+    box-shadow: 0 6px 20px 0 rgba(196, 30, 58, 0.5),
+      0 3px 6px 0 rgba(0, 0, 0, 0.12);
   }
 }
 
-.cta-button {
+.cta-button.cta-primary {
   animation: pulse-glow 3s ease-in-out infinite;
 }
 
@@ -2352,35 +2906,6 @@ input[type="submit"],
 
 // Пользовательский курсор отключен - используется стандартный
 
-// Эффект "гирлянда" для навигации
-.nav-links {
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: repeating-linear-gradient(
-      90deg,
-      $christmas-red 0px,
-      $christmas-red 20px,
-      $christmas-gold 20px,
-      $christmas-gold 40px,
-      $christmas-green 40px,
-      $christmas-green 60px
-    );
-    border-radius: 999px;
-    opacity: 0.6;
-
-    @media (max-width: 767px) {
-      display: none;
-    }
-  }
-}
-
 // Анимация мерцания для звезд
 @keyframes twinkle {
   0%,
@@ -2392,14 +2917,6 @@ input[type="submit"],
     opacity: 0.3;
     transform: scale(0.8);
   }
-}
-
-// Добавляем звезды в заголовки
-h2::before {
-  content: "⭐";
-  display: inline-block;
-  margin-right: 0.5rem;
-  animation: twinkle 2s ease-in-out infinite;
 }
 
 // Улучшенная тень для карточек

@@ -2,14 +2,24 @@
   <div class="min-h-screen bg-gradient">
     <!-- Снежинки -->
     <div class="snowflakes" aria-hidden="true">
-      <div v-for="i in 50" :key="i" class="snowflake" :style="getSnowflakeStyle(i)">
-        {{ ['❅', '❆', '❄'][i % 3] }}
+      <div
+        v-for="i in 50"
+        :key="i"
+        class="snowflake"
+        :style="getSnowflakeStyle(i)"
+      >
+        {{ ["❅", "❆", "❄"][i % 3] }}
       </div>
     </div>
 
     <!-- Новогодние огоньки -->
     <div class="christmas-lights">
-      <div v-for="i in 20" :key="i" class="light" :style="getLightStyle(i)"></div>
+      <div
+        v-for="i in 20"
+        :key="i"
+        class="light"
+        :style="getLightStyle(i)"
+      ></div>
     </div>
 
     <!-- Шапка -->
@@ -54,30 +64,189 @@
           <li><a href="#about" @click="isMenuOpen = false">О нас</a></li>
           <li><a href="#contact" @click="isMenuOpen = false">Контакты</a></li>
         </ul>
-        <a :href="phoneHref" class="call-button"> Позвонить мастеру </a>
+        <div class="call-dropdown">
+          <button
+            class="call-button"
+            type="button"
+            @click="toggleHeaderDropdown"
+          >
+            Позвонить
+            <svg
+              class="dropdown-icon"
+              :class="{ open: isCallDropdownOpen }"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+          <transition name="dropdown-fade">
+            <div v-if="isCallDropdownOpen" class="call-dropdown-menu">
+              <a
+                :href="phoneHref"
+                class="call-dropdown-item"
+                @click="closeAllDropdowns"
+              >
+                <svg
+                  class="phone-icon"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+                {{ siteData.phoneDisplay }}
+              </a>
+              <a
+                :href="phone2Href"
+                class="call-dropdown-item"
+                @click="closeAllDropdowns"
+              >
+                <svg
+                  class="phone-icon"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+                {{ siteData.phone2Display }}
+              </a>
+            </div>
+          </transition>
+        </div>
       </nav>
     </header>
 
     <!-- Героическая секция -->
     <section class="hero">
       <div class="hero-badge">
-        🎄 {{ siteData.city }} · {{ siteData.masterName }} 🎄
+        {{ siteData.city }} · {{ siteData.masterName }}
       </div>
-      <h1>Современный сервис по окнам с эффектом «вау» 🎁</h1>
+      <h1>Профессиональный ремонт и обслуживание окон в Барнауле</h1>
       <p>
-        ❄️ Выезд в день обращения, решение любой проблемы с окнами и балконами.
-        Работаю лично, без посредников, с гарантией и честной сметой. ⭐
+        Выезд мастера в день обращения. Решаем любые задачи с пластиковыми и
+        деревянными окнами. Работаю лично, без посредников. Гарантия качества и
+        прозрачная смета на все виды работ.
       </p>
       <div class="hero-actions">
-        <a href="#contact" class="cta-button"> Оставить заявку </a>
-        <a :href="phoneHref" class="cta-secondary">
-          Позвонить: {{ siteData.phoneDisplay }}
+        <a href="#contact" class="cta-button cta-primary">
+          <svg
+            class="cta-icon"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
+          <span class="cta-text">Оставить заявку</span>
         </a>
+        <div class="hero-call-dropdown">
+          <button
+            class="cta-button cta-secondary"
+            type="button"
+            @click="toggleHeroDropdown"
+          >
+            <svg
+              class="cta-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+            <span class="cta-text">Позвонить</span>
+            <svg
+              class="dropdown-icon"
+              :class="{ open: isHeroCallDropdownOpen }"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+          <transition name="dropdown-fade">
+            <div v-if="isHeroCallDropdownOpen" class="hero-call-dropdown-menu">
+              <a
+                :href="phoneHref"
+                class="hero-call-dropdown-item"
+                @click="closeAllDropdowns"
+              >
+                <svg
+                  class="phone-icon"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+                {{ siteData.phoneDisplay }}
+              </a>
+              <a
+                :href="phone2Href"
+                class="hero-call-dropdown-item"
+                @click="closeAllDropdowns"
+              >
+                <svg
+                  class="phone-icon"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+                {{ siteData.phone2Display }}
+              </a>
+            </div>
+          </transition>
+        </div>
       </div>
       <div class="hero-tags">
         <span>{{ siteData.response }}</span>
-        <span>10+ лет опыта</span>
-        <span>Без скрытых доплат</span>
+        <span>Более 10 лет опыта</span>
+        <span>Прозрачное ценообразование</span>
       </div>
     </section>
 
@@ -321,7 +490,9 @@
             <span class="price-value">{{ service.fromPrice }}</span>
           </li>
         </ul>
-        <p class="price-list-hint">💡 Нажмите на услугу, чтобы быстро оставить заявку</p>
+        <p class="price-list-hint">
+          Нажмите на услугу, чтобы быстро оставить заявку
+        </p>
       </div>
     </section>
 
@@ -399,22 +570,22 @@
             </li>
           </ul>
         </div>
-        <div class="stats-card">
+        <div class="stats-card" ref="statsCard">
           <div class="stats-grid">
             <div class="stat">
-              <div class="stat-number">10+</div>
+              <div class="stat-number" data-target="10">0</div>
               <div class="stat-label">Лет опыта</div>
             </div>
             <div class="stat">
-              <div class="stat-number">5000+</div>
+              <div class="stat-number" data-target="5000">0</div>
               <div class="stat-label">Довольных клиентов</div>
             </div>
             <div class="stat">
-              <div class="stat-number">24/7</div>
-              <div class="stat-label">Поддержка</div>
+              <div class="stat-number" data-target="24">0</div>
+              <div class="stat-label">Часа в сутках</div>
             </div>
             <div class="stat">
-              <div class="stat-number">100%</div>
+              <div class="stat-number" data-target="100">0</div>
               <div class="stat-label">Гарантия качества</div>
             </div>
           </div>
@@ -506,9 +677,13 @@
                 />
               </svg>
               <div class="info-content">
-                <div class="info-label">Телефон</div>
-                <div class="info-value">
+                <div class="info-label">Телефоны</div>
+                <div
+                  class="info-value"
+                  style="display: flex; flex-direction: column; gap: 0.5rem"
+                >
                   <a :href="phoneHref">{{ siteData.phoneDisplay }}</a>
+                  <a :href="phone2Href">{{ siteData.phone2Display }}</a>
                 </div>
               </div>
             </div>
@@ -584,24 +759,89 @@
             </ul>
 
             <div class="quick-actions">
-              <a :href="phoneHref" class="quick-button">
-                <span class="quick-btn-icon">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="quick-call-dropdown">
+                <button
+                  class="quick-button"
+                  type="button"
+                  @click="toggleQuickDropdown"
+                >
+                  <span class="quick-btn-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498A1 1 0 0121 16.72V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      />
+                    </svg>
+                  </span>
+                  <span class="quick-btn-text">
+                    <span class="quick-btn-main">Позвонить Дмитрию</span>
+                    <span class="quick-btn-sub">Выберите удобный номер</span>
+                  </span>
+                  <svg
+                    class="quick-dropdown-icon"
+                    :class="{ open: isQuickCallDropdownOpen }"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width="2"
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498A1 1 0 0121 16.72V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      d="M19 9l-7 7-7-7"
                     />
                   </svg>
-                </span>
-                <span class="quick-btn-text">
-                  <span class="quick-btn-main">Позвонить Дмитрию</span>
-                  <span class="quick-btn-sub"
-                    >Быстрее всего связаться по телефону</span
+                </button>
+                <transition name="dropdown-fade">
+                  <div
+                    v-if="isQuickCallDropdownOpen"
+                    class="quick-call-dropdown-menu"
                   >
-                </span>
-              </a>
+                    <a
+                      :href="phoneHref"
+                      class="quick-call-dropdown-item"
+                      @click="closeAllDropdowns"
+                    >
+                      <svg
+                        class="phone-icon"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                        />
+                      </svg>
+                      {{ siteData.phoneDisplay }}
+                    </a>
+                    <a
+                      :href="phone2Href"
+                      class="quick-call-dropdown-item"
+                      @click="closeAllDropdowns"
+                    >
+                      <svg
+                        class="phone-icon"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                        />
+                      </svg>
+                      {{ siteData.phone2Display }}
+                    </a>
+                  </div>
+                </transition>
+              </div>
               <a
                 :href="siteData.whatsapp"
                 target="_blank"
@@ -649,6 +889,9 @@
             <li>
               <a :href="phoneHref">{{ siteData.phoneDisplay }}</a>
             </li>
+            <li>
+              <a :href="phone2Href">{{ siteData.phone2Display }}</a>
+            </li>
             <li>{{ siteData.address }}</li>
             <li>{{ siteData.workHours }}</li>
           </ul>
@@ -677,7 +920,12 @@ import { ref, onMounted } from "vue";
 import { siteData } from "@/data";
 
 const phoneHref = `tel:${siteData.phone.replace(/[^+\d]/g, "")}`;
+const phone2Href = `tel:${siteData.phone2.replace(/[^+\d]/g, "")}`;
 const isMenuOpen = ref(false);
+const isCallDropdownOpen = ref(false);
+const isHeroCallDropdownOpen = ref(false);
+const isQuickCallDropdownOpen = ref(false);
+const statsCard = ref<HTMLElement | null>(null);
 
 // Генерация случайных стилей для снежинок
 const getSnowflakeStyle = (i: number) => {
@@ -685,7 +933,7 @@ const getSnowflakeStyle = (i: number) => {
   const randomDelay = Math.random() * 5;
   const randomDuration = 10 + Math.random() * 20;
   const randomSize = 0.5 + Math.random() * 1;
-  
+
   return {
     left: `${randomLeft}%`,
     animationDelay: `${randomDelay}s`,
@@ -699,9 +947,16 @@ const getSnowflakeStyle = (i: number) => {
 const getLightStyle = (i: number) => {
   const randomLeft = (i * 5) % 100;
   const randomDelay = Math.random() * 2;
-  const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#ffd700'];
+  const colors = [
+    "#ff0000",
+    "#00ff00",
+    "#0000ff",
+    "#ffff00",
+    "#ff00ff",
+    "#ffd700",
+  ];
   const randomColor = colors[i % colors.length];
-  
+
   return {
     left: `${randomLeft}%`,
     animationDelay: `${randomDelay}s`,
@@ -710,41 +965,148 @@ const getLightStyle = (i: number) => {
   };
 };
 
-// Intersection Observer для анимации при скролле
+// Функция анимации подсчета чисел
+const animateNumber = (
+  element: HTMLElement,
+  target: number,
+  suffix: string = ""
+) => {
+  const duration = 2000; // 2 секунды
+  const steps = 60;
+  const increment = target / steps;
+  let current = 0;
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+    if (suffix === "+") {
+      element.textContent = Math.floor(current) + suffix;
+    } else if (suffix === "%") {
+      element.textContent = Math.floor(current) + suffix;
+    } else if (suffix === "/7") {
+      element.textContent = Math.floor(current) + suffix;
+    } else {
+      element.textContent = Math.floor(current).toString();
+    }
+  }, duration / steps);
+};
+
+// Функции управления dropdown
+const closeAllDropdowns = () => {
+  isCallDropdownOpen.value = false;
+  isHeroCallDropdownOpen.value = false;
+  isQuickCallDropdownOpen.value = false;
+};
+
+const toggleHeaderDropdown = () => {
+  isCallDropdownOpen.value = !isCallDropdownOpen.value;
+  isHeroCallDropdownOpen.value = false;
+  isQuickCallDropdownOpen.value = false;
+};
+
+const toggleHeroDropdown = () => {
+  isHeroCallDropdownOpen.value = !isHeroCallDropdownOpen.value;
+  isCallDropdownOpen.value = false;
+  isQuickCallDropdownOpen.value = false;
+};
+
+const toggleQuickDropdown = () => {
+  isQuickCallDropdownOpen.value = !isQuickCallDropdownOpen.value;
+  isCallDropdownOpen.value = false;
+  isHeroCallDropdownOpen.value = false;
+};
+
+// Закрытие dropdown при клике вне его
 onMounted(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (
+      !target.closest(".call-dropdown") &&
+      !target.closest(".hero-call-dropdown") &&
+      !target.closest(".quick-call-dropdown")
+    ) {
+      closeAllDropdowns();
+    }
+  };
+
+  document.addEventListener("click", handleClickOutside);
+
+  const handleEscape = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      closeAllDropdowns();
+    }
+  };
+
+  document.addEventListener("keydown", handleEscape);
+
+  // Intersection Observer для анимации при скролле
   const observerOptions = {
     threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
+    rootMargin: "0px 0px -100px 0px",
   };
+
+  let statsAnimated = false;
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('animate-in');
+        entry.target.classList.add("animate-in");
+
+        // Анимация статистики
+        if (entry.target.classList.contains("stats-card") && !statsAnimated) {
+          statsAnimated = true;
+          const statNumbers = entry.target.querySelectorAll(".stat-number");
+          statNumbers.forEach((statNumber) => {
+            const target = parseInt(
+              (statNumber as HTMLElement).getAttribute("data-target") || "0"
+            );
+            const element = statNumber as HTMLElement;
+
+            // Определяем суффикс в зависимости от значения
+            let suffix = "";
+            if (target === 10) {
+              suffix = "+";
+            } else if (target === 5000) {
+              suffix = "+";
+            } else if (target === 24) {
+              suffix = "/7";
+            } else if (target === 100) {
+              suffix = "%";
+            }
+
+            animateNumber(element, target, suffix);
+          });
+        }
+
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
   // Наблюдаем за всеми секциями и карточками
-  const elements = document.querySelectorAll('.feature-card, .service-card, .about, .contact, .price-list, .stats-card');
+  const elements = document.querySelectorAll(
+    ".feature-card, .service-card, .about, .contact, .price-list, .stats-card"
+  );
   elements.forEach((el) => observer.observe(el));
 
   // Параллакс эффект для героической секции
   let ticking = false;
-  const parallaxElements = document.querySelectorAll('.hero, .hero-badge');
-  
+  const parallaxElements =
+    document.querySelectorAll<HTMLElement>(".hero, .hero-badge");
+
   const updateParallax = () => {
     const scrolled = window.pageYOffset;
     parallaxElements.forEach((el, index) => {
-      const speed = 0.5 + (index * 0.1);
+      const speed = 0.5 + index * 0.1;
       const yPos = -(scrolled * speed);
       el.style.transform = `translateY(${yPos}px)`;
     });
     ticking = false;
   };
 
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     if (!ticking && window.innerWidth > 768) {
       window.requestAnimationFrame(updateParallax);
       ticking = true;
@@ -771,26 +1133,28 @@ const formStatus = ref({
 const selectService = (serviceTitle: string) => {
   // Устанавливаем выбранную услугу в форму
   form.value.service = serviceTitle;
-  
+
   // Плавно скроллим к форме
-  const contactForm = document.querySelector('#contact');
+  const contactForm = document.querySelector("#contact");
   if (contactForm) {
-    contactForm.scrollIntoView({ 
-      behavior: 'smooth', 
-      block: 'start' 
+    contactForm.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
     });
-    
+
     // Через небольшую задержку фокусируемся на поле имени
     setTimeout(() => {
-      const nameInput = document.querySelector('#name') as HTMLInputElement;
+      const nameInput = document.querySelector("#name") as HTMLInputElement;
       if (nameInput) {
         nameInput.focus();
         // Добавляем визуальную подсветку выбранной услуги
-        const serviceSelect = document.querySelector('#service') as HTMLSelectElement;
+        const serviceSelect = document.querySelector(
+          "#service"
+        ) as HTMLSelectElement;
         if (serviceSelect) {
-          serviceSelect.style.animation = 'pulse 0.5s ease-in-out';
+          serviceSelect.style.animation = "pulse 0.5s ease-in-out";
           setTimeout(() => {
-            serviceSelect.style.animation = '';
+            serviceSelect.style.animation = "";
           }, 500);
         }
       }
@@ -803,10 +1167,13 @@ const submitForm = async () => {
   formStatus.value.message = "";
 
   try {
-    const response = await $fetch("/api/contact", {
-      method: "POST",
-      body: form.value,
-    });
+    const response = await $fetch<{ success: boolean; message: string }>(
+      "/api/contact",
+      {
+        method: "POST",
+        body: form.value,
+      }
+    );
 
     if (response.success) {
       formStatus.value.success = true;

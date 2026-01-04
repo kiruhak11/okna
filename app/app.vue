@@ -12,18 +12,81 @@ useHead({
     { name: 'description', content: 'Профессиональный ремонт и обслуживание пластиковых окон в Барнауле. Выезд в день обращения. Опыт более 10 лет. Гарантия качества.' },
     { name: 'keywords', content: 'ремонт окон, окна Барнаул, ремонт пластиковых окон, регулировка окон, замена фурнитуры, утепление окон' },
     { name: 'author', content: 'Дмитрий, частный мастер' },
+    // Гео-теги для Яндекса
+    { name: 'geo.region', content: 'RU-ALT' },
+    { name: 'geo.placename', content: 'Барнаул' },
+    { name: 'geo.position', content: '53.356176;83.763199' },
+    // Open Graph
     { property: 'og:title', content: 'Ремонт окон в Барнауле | Оконный Мастер' },
     { property: 'og:description', content: 'Профессиональный ремонт и обслуживание окон. Выезд в день обращения. Опыт 10+ лет.' },
     { property: 'og:type', content: 'website' },
     { property: 'og:url', content: 'https://okna-brn.ru' },
     { property: 'og:image', content: 'https://okna-brn.ru/logo.svg' },
+    { property: 'og:locale', content: 'ru_RU' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { name: 'theme-color', content: '#8b5cf6' },
   ],
   link: [
-    { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-    { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+    { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
+    { rel: 'apple-touch-icon', sizes: '180x180', href: '/logo.svg' },
+  ],
+  script: [
+    {
+      type: 'text/javascript',
+      innerHTML: `(function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106110599', 'ym');
+      
+      ym(106110599, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});`
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Ремонт окон в Барнауле",
+        "description": "Профессиональный ремонт и обслуживание пластиковых окон в Барнауле",
+        "url": "https://okna-brn.ru",
+        "telephone": "+7-903-912-75-92",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Барнаул",
+          "addressRegion": "Алтайский край",
+          "addressCountry": "RU"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "53.356176",
+          "longitude": "83.763199"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "08:00",
+          "closes": "20:00"
+        },
+        "priceRange": "$$",
+        "image": "https://okna-brn.ru/logo.svg",
+        "sameAs": []
+      })
+    }
+  ],
+  noscript: [
+    {
+      innerHTML: '<div><img src="https://mc.yandex.ru/watch/106110599" style="position:absolute; left:-9999px;" alt="" /></div>'
+    }
   ],
   htmlAttrs: {
     lang: 'ru',
