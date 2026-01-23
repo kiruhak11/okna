@@ -49,7 +49,6 @@ Allow: /
 
 # Sitemap - основной файл карты сайта
 Sitemap: https://okna-brn.ru/sitemap.xml
-Sitemap: https://okna-brn.ru/services.xml
 
 # Хост сайта (для Яндекса)
 Host: okna-brn.ru

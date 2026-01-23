@@ -1,7 +1,7 @@
 import { siteData } from '~/data'
 
 export default defineEventHandler((event) => {
-  const baseUrl = 'https://okna-barnaul.ru'
+  const baseUrl = 'https://okna-brn.ru'
   const currentDate = new Date().toISOString().split('T')[0]
   
   // Генерируем офферы (услуги) для Яндекса

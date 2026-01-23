@@ -8,7 +8,7 @@
   <!-- Главная страница - максимальный приоритет -->
   <url>
     <loc>https://okna-brn.ru/</loc>
-    <lastmod>2026-01-04</lastmod>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -16,7 +16,7 @@
   <!-- XML фид услуг для Яндекс.Услуг и других агрегаторов -->
   <url>
     <loc>https://okna-brn.ru/services.xml</loc>
-    <lastmod>2026-01-04</lastmod>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -24,7 +24,7 @@
   <!-- Яндекс фид услуг -->
   <url>
     <loc>https://okna-brn.ru/yandex-services.xml</loc>
-    <lastmod>2026-01-04</lastmod>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -32,7 +32,7 @@
   <!-- Web App Manifest для PWA -->
   <url>
     <loc>https://okna-brn.ru/site.webmanifest</loc>
-    <lastmod>2026-01-04</lastmod>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

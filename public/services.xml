@@ -6,8 +6,8 @@
     <city>Барнаул</city>
     <phone>+79635758301</phone>
     <phone2>+79133603152</phone2>
-    <email>info@okna-barnaul.ru</email>
-    <website>https://okna-barnaul.ru</website>
+    <email>info@okna-brn.ru</email>
+    <website>https://okna-brn.ru</website>
     <work_hours>Ежедневно 8:00 — 20:00</work_hours>
     <response_time>Выезд за 30 минут по городу</response_time>
     <service_area>Барнаул и пригород</service_area>
@@ -21,7 +21,7 @@
       <price_display>Бесплатно</price_display>
       <currency>RUB</currency>
       <description>Бесплатный выезд мастера для осмотра и консультации. Оценка работ на месте, рекомендации по ремонту.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
       <featured>true</featured>
     </service>
@@ -33,7 +33,7 @@
       <price_display>от 450 ₽</price_display>
       <currency>RUB</currency>
       <description>Комплексный ремонт пластиковых и деревянных окон любой сложности. Устранение продуваний, замена поврежденных элементов, восстановление функциональности.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -44,7 +44,7 @@
       <price_display>от 500 ₽</price_display>
       <currency>RUB</currency>
       <description>Ремонт балконных пластиковых дверей. Регулировка, замена фурнитуры, устранение провисаний и заеданий.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -55,7 +55,7 @@
       <price_display>от 350 ₽</price_display>
       <currency>RUB</currency>
       <description>Профессиональная регулировка оконных механизмов и фурнитуры. Настройка прижима, устранение люфтов, плавность хода створок.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -66,7 +66,7 @@
       <price_display>от 500 ₽</price_display>
       <currency>RUB</currency>
       <description>Замена резиновых уплотнителей на окнах. Устранение продуваний, улучшение тепло- и звукоизоляции. Используем качественные уплотнители.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -77,7 +77,7 @@
       <price_display>от 450 ₽</price_display>
       <currency>RUB</currency>
       <description>Ремонт и замена оконной фурнитуры: ручки, замки, механизмы открывания. Работаем с любыми брендами фурнитуры.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -88,7 +88,7 @@
       <price_display>от 650 ₽</price_display>
       <currency>RUB</currency>
       <description>Ремонт и замена оконных петель. Устранение провисания створок, замена изношенных петель на новые.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -99,7 +99,7 @@
       <price_display>от 700 ₽</price_display>
       <currency>RUB</currency>
       <description>Замена разбитых или запотевших стеклопакетов. Подбор и установка новых стеклопакетов с гарантией качества.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -110,7 +110,7 @@
       <price_display>от 350 ₽</price_display>
       <currency>RUB</currency>
       <description>Точная регулировка оконных створок по всем осям. Устранение провисаний, перекосов, улучшение плотности прижима.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -121,7 +121,7 @@
       <price_display>от 450 ₽</price_display>
       <currency>RUB</currency>
       <description>Установка ограничителей открывания окон. Безопасность для детей, контроль проветривания.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -132,7 +132,7 @@
       <price_display>от 350 ₽</price_display>
       <currency>RUB</currency>
       <description>Установка детских замков безопасности на окна. Надежная защита от несанкционированного открывания окон детьми.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -143,7 +143,7 @@
       <price_display>от 450 ₽</price_display>
       <currency>RUB</currency>
       <description>Профессиональное утепление окон монтажной пеной. Устранение промерзаний, улучшение теплоизоляции.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -154,7 +154,7 @@
       <price_display>от 600 ₽</price_display>
       <currency>RUB</currency>
       <description>Герметизация наружных швов качественными герметиками. Защита от влаги, ветра и промерзания.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -165,7 +165,7 @@
       <price_display>от 600 ₽</price_display>
       <currency>RUB</currency>
       <description>Установка и замена пластиковых подоконников. Точная подгонка, герметизация стыков, профессиональный монтаж.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -176,7 +176,7 @@
       <price_display>от 550 ₽</price_display>
       <currency>RUB</currency>
       <description>Установка и замена наружных отливов. Защита фасада от осадков, правильный отвод воды.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -187,7 +187,7 @@
       <price_display>от 600 ₽</price_display>
       <currency>RUB</currency>
       <description>Ремонт пластиковых и алюминиевых офисных дверей. Замена доводчиков, ремонт замков, регулировка.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
     
@@ -198,7 +198,7 @@
       <price_display>от 450 ₽</price_display>
       <currency>RUB</currency>
       <description>Другие виды работ с пластиковыми и деревянными окнами. Индивидуальный подход к каждой задаче.</description>
-      <url>https://okna-barnaul.ru/#services</url>
+      <url>https://okna-brn.ru/#services</url>
       <availability>available</availability>
     </service>
   </service_list>
