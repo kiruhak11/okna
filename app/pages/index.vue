@@ -330,13 +330,25 @@
     <section id="services" class="services">
       <h2>Что могу для вас сделать</h2>
       <div class="services-grid">
-        <div class="service-card">
-          <div class="service-image gradient-blue">
+        <div
+          v-for="(service, index) in siteData.services"
+          :key="service.title"
+          class="service-card"
+        >
+          <div class="service-image" :class="getServiceGradient(index)">
+            <img
+              v-if="service.icon"
+              :src="service.icon"
+              :alt="service.title"
+              class="service-icon-image"
+              loading="lazy"
+            />
             <svg
+              v-else
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              style="width: 5rem; height: 5rem; color: white"
+              class="service-fallback-icon"
             >
               <path
                 stroke-linecap="round"
@@ -353,129 +365,11 @@
             </svg>
           </div>
           <div class="service-content">
-            <h3>Регулировка окон</h3>
-            <p>
-              Настройка фурнитуры, устранение продуваний, правильная работа
-              створок
-            </p>
-            <div class="price" style="color: #2563eb">От 500 ₽</div>
-          </div>
-        </div>
-
-        <div class="service-card">
-          <div class="service-image gradient-green">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              style="width: 5rem; height: 5rem; color: white"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              />
-            </svg>
-          </div>
-          <div class="service-content">
-            <h3>Замена уплотнителей</h3>
-            <p>
-              Установка новых уплотнителей для герметичности и защиты от шума
-            </p>
-            <div class="price" style="color: #10b981">От 800 ₽</div>
-          </div>
-        </div>
-
-        <div class="service-card">
-          <div class="service-image gradient-purple">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              style="width: 5rem; height: 5rem; color: white"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-              />
-            </svg>
-          </div>
-          <div class="service-content">
-            <h3>Ремонт фурнитуры</h3>
-            <p>Замена и ремонт ручек, петель, механизмов открывания</p>
-            <div class="price" style="color: #9333ea">От 600 ₽</div>
-          </div>
-        </div>
-
-        <div class="service-card">
-          <div class="service-image gradient-orange">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              style="width: 5rem; height: 5rem; color: white"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
-              />
-            </svg>
-          </div>
-          <div class="service-content">
-            <h3>Установка москитных сеток</h3>
-            <p>Изготовление и установка москитных сеток на окна</p>
-            <div class="price" style="color: #ea580c">От 1200 ₽</div>
-          </div>
-        </div>
-
-        <div class="service-card">
-          <div class="service-image gradient-red">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              style="width: 5rem; height: 5rem; color: white"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-              />
-            </svg>
-          </div>
-          <div class="service-content">
-            <h3>Замена стекол</h3>
-            <p>Замена разбитых или поврежденных стекол в окнах</p>
-            <div class="price" style="color: #ef4444">От 1500 ₽</div>
-          </div>
-        </div>
-
-        <div class="service-card">
-          <div class="service-image gradient-teal">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              style="width: 5rem; height: 5rem; color: white"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-              />
-            </svg>
-          </div>
-          <div class="service-content">
-            <h3>Утепление окон</h3>
-            <p>Комплексное утепление окон для максимальной теплоизоляции</p>
-            <div class="price" style="color: #0d9488">От 1000 ₽</div>
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.description }}</p>
+            <div class="price" :style="{ color: getServiceColor(index) }">
+              {{ service.fromPrice }}
+            </div>
           </div>
         </div>
       </div>
@@ -1227,5 +1121,31 @@ const submitForm = async () => {
   } finally {
     formStatus.value.loading = false;
   }
+};
+
+const gradients = [
+  "gradient-blue",
+  "gradient-green",
+  "gradient-purple",
+  "gradient-orange",
+  "gradient-red",
+  "gradient-teal",
+];
+
+const priceColors = [
+  "#2563eb",
+  "#10b981",
+  "#9333ea",
+  "#ea580c",
+  "#ef4444",
+  "#0d9488",
+];
+
+const getServiceGradient = (index: number) => {
+  return gradients[index % gradients.length];
+};
+
+const getServiceColor = (index: number) => {
+  return priceColors[index % priceColors.length];
 };
 </script>

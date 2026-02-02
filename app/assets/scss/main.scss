@@ -1320,6 +1320,7 @@ a {
       @include flex-center;
       position: relative;
       transition: all 0.45s $ease-out-quart;
+      overflow: hidden;
 
       &::before {
         content: "";
@@ -1332,11 +1333,28 @@ a {
         );
         opacity: 0;
         transition: opacity 0.3s ease;
+        z-index: 1;
       }
 
-      svg {
+      .service-icon-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
         transition: all 0.45s $ease-out-quart;
-        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        position: relative;
+        z-index: 0;
+      }
+
+      .service-fallback-icon {
+        width: 10rem;
+        height: 10rem;
+        color: white;
+        transition: all 0.45s $ease-out-quart;
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+        position: relative;
+        z-index: 0;
       }
     }
 
@@ -1381,7 +1399,11 @@ a {
           opacity: 1;
         }
 
-        svg {
+        .service-icon-image {
+          transform: scale(1.15) translateY(-8px) rotate(5deg);
+        }
+
+        .service-fallback-icon {
           transform: scale(1.15) translateY(-8px) rotate(5deg);
         }
       }
@@ -2616,6 +2638,18 @@ a {
   .service-card {
     .service-image {
       height: 10rem !important;
+
+      .service-icon-image {
+        width: 8rem !important;
+        height: 8rem !important;
+        min-width: 8rem !important;
+        min-height: 8rem !important;
+      }
+
+      .service-fallback-icon {
+        width: 8rem !important;
+        height: 8rem !important;
+      }
     }
 
     .service-content {
