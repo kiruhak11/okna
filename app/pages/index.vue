@@ -579,8 +579,8 @@
                   class="info-value"
                   style="display: flex; flex-direction: column; gap: 0.5rem"
                 >
-                  <a :href="phoneHref">{{ siteData.phoneDisplay }}</a>
-                  <a :href="phone2Href">{{ siteData.phone2Display }}</a>
+                  <a :href="phoneHref" @click="handleCallClick">{{ siteData.phoneDisplay }}</a>
+                  <a :href="phone2Href" @click="handleCallClick">{{ siteData.phone2Display }}</a>
                 </div>
               </div>
             </div>
@@ -784,10 +784,10 @@
           <h4>Контакты</h4>
           <ul>
             <li>
-              <a :href="phoneHref">{{ siteData.phoneDisplay }}</a>
+              <a :href="phoneHref" @click="handleCallClick">{{ siteData.phoneDisplay }}</a>
             </li>
             <li>
-              <a :href="phone2Href">{{ siteData.phone2Display }}</a>
+              <a :href="phone2Href" @click="handleCallClick">{{ siteData.phone2Display }}</a>
             </li>
             <li>{{ siteData.address }}</li>
             <li>{{ siteData.workHours }}</li>
@@ -916,7 +916,11 @@ const toggleQuickDropdown = () => {
 };
 
 // Яндекс.Метрика: отслеживание цели "Оставить заявку"
+let lastInviteGoalAt = 0;
 const trackInviteGoal = () => {
+  const now = Date.now();
+  if (now - lastInviteGoalAt < 2000) return;
+  lastInviteGoalAt = now;
   if (typeof window !== "undefined" && (window as any).ym) {
     (window as any).ym(106110599, "reachGoal", "invite");
     console.log('📊 Яндекс.Метрика: цель "invite" достигнута');
@@ -1077,6 +1081,7 @@ const selectService = (serviceTitle: string) => {
 };
 
 const submitForm = async () => {
+  if (formStatus.value.loading) return;
   formStatus.value.loading = true;
   formStatus.value.message = "";
 
@@ -1095,12 +1100,7 @@ const submitForm = async () => {
         "Спасибо! Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.";
 
       // Отслеживаем цель в Яндекс.Метрике
-      if (typeof window !== "undefined" && (window as any).ym) {
-        (window as any).ym(106110599, "reachGoal", "invite");
-        console.log(
-          '📊 Яндекс.Метрика: цель "invite" достигнута (форма отправлена)'
-        );
-      }
+      trackInviteGoal();
 
       // Очистка формы
       form.value = {
