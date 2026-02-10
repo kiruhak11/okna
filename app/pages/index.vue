@@ -149,7 +149,6 @@
         <a
           href="#contact"
           class="cta-button cta-primary"
-          @click="trackInviteGoal"
         >
           <svg
             class="cta-icon"

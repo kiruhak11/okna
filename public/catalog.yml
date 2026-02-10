@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yml_catalog date="2026-02-02 12:00">
+<shop>
+<categories>
+<category id="1">Консультация</category>
+<category id="2">Ремонт окон</category>
+<category id="3">Ремонт дверей</category>
+<category id="4">Регулировка</category>
+<category id="5">Замена комплектующих</category>
+<category id="6">Ремонт фурнитуры</category>
+<category id="7">Установка</category>
+<category id="8">Утепление</category>
+<category id="9">Прочие услуги</category>
+</categories>
+<offers>
+<offer id="1">
+<name>Консультация и выезд</name>
+<vendor>Оконный Мастер</vendor>
+<price>0</price>
+<currencyId>RUR</currencyId>
+<categoryId>1</categoryId>
+<picture>https://okna-brn.ru/icons/consultation.jpg</picture>
+<description>Бесплатный выезд мастера для осмотра и консультации. Оценка работ на месте, рекомендации по ремонту.</description>
+<shortDescription>Бесплатный выезд мастера для осмотра и консультации</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="2">
+<name>Ремонт окон любой сложности</name>
+<vendor>Оконный Мастер</vendor>
+<price>450</price>
+<currencyId>RUR</currencyId>
+<categoryId>2</categoryId>
+<picture>https://okna-brn.ru/icons/window-repair.jpg</picture>
+<description>Комплексный ремонт пластиковых и деревянных окон: устранение продуваний, перекосов, замена изношенных элементов.</description>
+<shortDescription>Комплексный ремонт пластиковых и деревянных окон</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="3">
+<name>Ремонт балконных дверей</name>
+<vendor>Оконный Мастер</vendor>
+<price>500</price>
+<currencyId>RUR</currencyId>
+<categoryId>3</categoryId>
+<picture>https://okna-brn.ru/icons/balcony-door.jpg</picture>
+<description>Ремонт балконных дверей: регулировка, замена фурнитуры, устранение провисаний и заеданий.</description>
+<shortDescription>Ремонт балконных дверей: регулировка, замена фурнитуры</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="4">
+<name>Регулировка механизмов</name>
+<vendor>Оконный Мастер</vendor>
+<price>350</price>
+<currencyId>RUR</currencyId>
+<categoryId>4</categoryId>
+<picture>https://okna-brn.ru/icons/adjustment.jpg</picture>
+<description>Точная регулировка фурнитуры и механизмов, настройка прижима створок, устранение люфтов.</description>
+<shortDescription>Точная регулировка фурнитуры и механизмов</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="5">
+<name>Замена уплотнителя</name>
+<vendor>Оконный Мастер</vendor>
+<price>500</price>
+<currencyId>RUR</currencyId>
+<categoryId>5</categoryId>
+<picture>https://okna-brn.ru/icons/seal.jpg</picture>
+<description>Замена резиновых уплотнителей для устранения продуваний и улучшения тепло- и шумоизоляции.</description>
+<shortDescription>Замена резиновых уплотнителей</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="6">
+<name>Ремонт/замена фурнитуры</name>
+<vendor>Оконный Мастер</vendor>
+<price>450</price>
+<currencyId>RUR</currencyId>
+<categoryId>6</categoryId>
+<picture>https://okna-brn.ru/icons/hardware.jpg</picture>
+<description>Ремонт и замена ручек, замков и других элементов фурнитуры с подбором надёжных комплектующих.</description>
+<shortDescription>Ремонт и замена ручек, замков и других элементов фурнитуры</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="7">
+<name>Ремонт/замена петель</name>
+<vendor>Оконный Мастер</vendor>
+<price>650</price>
+<currencyId>RUR</currencyId>
+<categoryId>6</categoryId>
+<picture>https://okna-brn.ru/icons/hinges.jpg</picture>
+<description>Ремонт и замена петель, устранение провисаний створок, лёгкое и плавное открывание.</description>
+<shortDescription>Ремонт и замена петель, устранение провисаний створок</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="8">
+<name>Замена стеклопакета</name>
+<vendor>Оконный Мастер</vendor>
+<price>700</price>
+<currencyId>RUR</currencyId>
+<categoryId>5</categoryId>
+<picture>https://okna-brn.ru/icons/double-glazing.jpg</picture>
+<description>Замена треснувших, запотевших или разбитых стеклопакетов с аккуратным демонтажем и установкой.</description>
+<shortDescription>Замена треснувших, запотевших или разбитых стеклопакетов</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="9">
+<name>Регулировка створок</name>
+<vendor>Оконный Мастер</vendor>
+<price>350</price>
+<currencyId>RUR</currencyId>
+<categoryId>4</categoryId>
+<picture>https://okna-brn.ru/icons/sash-adjustment.jpg</picture>
+<description>Регулировка створок по всем осям для плотного прилегания, без перекосов и сквозняков.</description>
+<shortDescription>Регулировка створок по всем осям</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="10">
+<name>Установка ограничителей</name>
+<vendor>Оконный Мастер</vendor>
+<price>450</price>
+<currencyId>RUR</currencyId>
+<categoryId>7</categoryId>
+<picture>https://okna-brn.ru/icons/stopper.jpg</picture>
+<description>Установка ограничителей открывания для безопасного проветривания и защиты от захлопываний.</description>
+<shortDescription>Установка ограничителей открывания</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="11">
+<name>Установка детских замков</name>
+<vendor>Оконный Мастер</vendor>
+<price>350</price>
+<currencyId>RUR</currencyId>
+<categoryId>7</categoryId>
+<picture>https://okna-brn.ru/icons/child-lock.jpg</picture>
+<description>Монтаж детских замков безопасности на окна, защита детей от случайного открывания створок.</description>
+<shortDescription>Монтаж детских замков безопасности на окна</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="12">
+<name>Утепление и запенивание</name>
+<vendor>Оконный Мастер</vendor>
+<price>450</price>
+<currencyId>RUR</currencyId>
+<categoryId>8</categoryId>
+<picture>https://okna-brn.ru/icons/insulation.jpg</picture>
+<description>Утепление откосов и швов монтажной пеной и герметиками для максимальной теплоизоляции.</description>
+<shortDescription>Утепление откосов и швов монтажной пеной</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="13">
+<name>Герметизация уличных швов</name>
+<vendor>Оконный Мастер</vendor>
+<price>600</price>
+<currencyId>RUR</currencyId>
+<categoryId>8</categoryId>
+<picture>https://okna-brn.ru/icons/seam-sealing.jpg</picture>
+<description>Герметизация наружных монтажных швов для защиты от влаги, ветра и промерзания.</description>
+<shortDescription>Герметизация наружных монтажных швов</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="14">
+<name>Установка/замена подоконников</name>
+<vendor>Оконный Мастер</vendor>
+<price>600</price>
+<currencyId>RUR</currencyId>
+<categoryId>7</categoryId>
+<picture>https://okna-brn.ru/icons/windowsill.jpg</picture>
+<description>Монтаж и замена подоконников с точной подгонкой, выравниванием и аккуратной герметизацией.</description>
+<shortDescription>Монтаж и замена подоконников</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="15">
+<name>Установка/замена отливов</name>
+<vendor>Оконный Мастер</vendor>
+<price>550</price>
+<currencyId>RUR</currencyId>
+<categoryId>7</categoryId>
+<picture>https://okna-brn.ru/icons/drip-edge.jpg</picture>
+<description>Установка и замена водоотливов для правильного отвода воды и защиты фасада от потёков.</description>
+<shortDescription>Установка и замена водоотливов</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="16">
+<name>Ремонт офисных дверей</name>
+<vendor>Оконный Мастер</vendor>
+<price>600</price>
+<currencyId>RUR</currencyId>
+<categoryId>3</categoryId>
+<picture>https://okna-brn.ru/icons/office-door.jpg</picture>
+<description>Ремонт пластиковых и алюминиевых офисных дверей: доводчики, замки, регулировка полотна.</description>
+<shortDescription>Ремонт пластиковых и алюминиевых офисных дверей</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+<offer id="17">
+<name>Иные работы с окнами</name>
+<vendor>Оконный Мастер</vendor>
+<price>450</price>
+<currencyId>RUR</currencyId>
+<categoryId>9</categoryId>
+<picture>https://okna-brn.ru/icons/more.jpg</picture>
+<description>Любые нестандартные задачи по окнам и балконам. Подберу решение под вашу ситуацию.</description>
+<shortDescription>Любые нестандартные задачи по окнам и балконам</shortDescription>
+<url>https://okna-brn.ru/#services</url>
+</offer>
+</offers>
+</shop>
+</yml_catalog>
