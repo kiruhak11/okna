@@ -247,8 +247,8 @@
     <!-- Преимущества -->
     <section class="features">
       <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon" style="background: #dbeafe; color: #2563eb">
+        <div class="feature-card">
+          <div class="feature-icon" style="background: #dbeafe; color: #2563eb">
             <svg
               fill="none"
               stroke="currentColor"
@@ -428,21 +428,27 @@
               <span class="step-number">1</span>
               <div>
                 <div class="step-title">Диагностика</div>
-                <div class="step-text">Осмотр и объяснение вариантов ремонта.</div>
+                <div class="step-text">
+                  Осмотр и объяснение вариантов ремонта.
+                </div>
               </div>
             </li>
             <li>
               <span class="step-number">2</span>
               <div>
                 <div class="step-title">Смета</div>
-                <div class="step-text">Фиксируем стоимость и сроки до начала.</div>
+                <div class="step-text">
+                  Фиксируем стоимость и сроки до начала.
+                </div>
               </div>
             </li>
             <li>
               <span class="step-number">3</span>
               <div>
                 <div class="step-title">Ремонт</div>
-                <div class="step-text">Аккуратная работа и сдача результата.</div>
+                <div class="step-text">
+                  Аккуратная работа и сдача результата.
+                </div>
               </div>
             </li>
           </ol>
@@ -571,8 +577,12 @@
                   class="info-value"
                   style="display: flex; flex-direction: column; gap: 0.5rem"
                 >
-                  <a :href="phoneHref" @click="handleCallClick">{{ siteData.phoneDisplay }}</a>
-                  <a :href="phone2Href" @click="handleCallClick">{{ siteData.phone2Display }}</a>
+                  <a :href="phoneHref" @click="handleCallClick">{{
+                    siteData.phoneDisplay
+                  }}</a>
+                  <a :href="phone2Href" @click="handleCallClick">{{
+                    siteData.phone2Display
+                  }}</a>
                 </div>
               </div>
             </div>
@@ -643,7 +653,9 @@
                 Консультация и ориентировочная стоимость по телефону или
                 WhatsApp
               </li>
-              <li>Можно отправить фото окна — сразу предложу варианты ремонта</li>
+              <li>
+                Можно отправить фото окна — сразу предложу варианты ремонта
+              </li>
               <li>Выезд мастера в удобное для вас время</li>
             </ul>
 
@@ -781,10 +793,14 @@
           <h4>Контакты</h4>
           <ul>
             <li>
-              <a :href="phoneHref" @click="handleCallClick">{{ siteData.phoneDisplay }}</a>
+              <a :href="phoneHref" @click="handleCallClick">{{
+                siteData.phoneDisplay
+              }}</a>
             </li>
             <li>
-              <a :href="phone2Href" @click="handleCallClick">{{ siteData.phone2Display }}</a>
+              <a :href="phone2Href" @click="handleCallClick">{{
+                siteData.phone2Display
+              }}</a>
             </li>
             <li>{{ siteData.address }}</li>
             <li>{{ siteData.workHours }}</li>
@@ -875,21 +891,6 @@ const toggleQuickDropdown = () => {
   isHeroCallDropdownOpen.value = false;
 };
 
-<<<<<<< HEAD
-=======
-// Яндекс.Метрика: отслеживание цели "Оставить заявку"
-let lastInviteGoalAt = 0;
-const trackInviteGoal = () => {
-  const now = Date.now();
-  if (now - lastInviteGoalAt < 2000) return;
-  lastInviteGoalAt = now;
-  if (typeof window !== "undefined" && (window as any).ym) {
-    (window as any).ym(106110599, "reachGoal", "invite");
-    console.log('📊 Яндекс.Метрика: цель "invite" достигнута');
-  }
-};
-
->>>>>>> 6e4f5a9f5712eb60d6b4d0503a35375c49ef395a
 // Яндекс.Метрика: отслеживание цели "Позвонить"
 const handleCallClick = () => {
   if (typeof window !== "undefined" && (window as any).ym) {
@@ -1067,13 +1068,9 @@ const submitForm = async () => {
         "Спасибо! Заявка отправлена. Я свяжусь с вами в ближайшее время.";
 
       // Отслеживаем цель в Яндекс.Метрике
-<<<<<<< HEAD
       if (typeof window !== "undefined" && (window as any).ym) {
         (window as any).ym(106110599, "reachGoal", "invite");
       }
-=======
-      trackInviteGoal();
->>>>>>> 6e4f5a9f5712eb60d6b4d0503a35375c49ef395a
 
       // Очистка формы
       form.value = {
