@@ -1,27 +1,6 @@
 <template>
   <div class="min-h-screen bg-gradient">
-    <!-- Снежинки -->
-    <div class="snowflakes" aria-hidden="true">
-      <div
-        v-for="i in 50"
-        :key="i"
-        class="snowflake"
-        :style="getSnowflakeStyle(i)"
-      >
-        {{ ["❅", "❆", "❄"][i % 3] }}
-      </div>
-    </div>
-
-    <!-- Новогодние огоньки -->
-    <div class="christmas-lights">
-      <div
-        v-for="i in 20"
-        :key="i"
-        class="light"
-        :style="getLightStyle(i)"
-      ></div>
-    </div>
-
+    <div class="bg-particles" aria-hidden="true"></div>
     <!-- Шапка -->
     <header class="header">
       <nav class="nav" :class="{ 'nav-open': isMenuOpen }">
@@ -36,6 +15,8 @@
           type="button"
           @click="isMenuOpen = !isMenuOpen"
           aria-label="Открыть меню"
+          :aria-expanded="isMenuOpen"
+          aria-controls="primary-navigation"
         >
           <span v-if="!isMenuOpen">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,7 +40,7 @@
           </span>
         </button>
 
-        <ul class="nav-links">
+        <ul class="nav-links" id="primary-navigation">
           <li><a href="#services" @click="isMenuOpen = false">Услуги</a></li>
           <li><a href="#about" @click="isMenuOpen = false">О нас</a></li>
           <li><a href="#contact" @click="isMenuOpen = false">Контакты</a></li>
@@ -69,6 +50,9 @@
             class="call-button"
             type="button"
             @click="toggleHeaderDropdown"
+            :aria-expanded="isCallDropdownOpen"
+            aria-controls="header-call-menu"
+            aria-haspopup="true"
           >
             Позвонить
             <svg
@@ -87,7 +71,11 @@
             </svg>
           </button>
           <transition name="dropdown-fade">
-            <div v-if="isCallDropdownOpen" class="call-dropdown-menu">
+            <div
+              v-if="isCallDropdownOpen"
+              id="header-call-menu"
+              class="call-dropdown-menu"
+            >
               <a
                 :href="phoneHref"
                 class="call-dropdown-item"
@@ -139,17 +127,13 @@
       <div class="hero-badge">
         {{ siteData.city }} · {{ siteData.masterName }}
       </div>
-      <h1>Профессиональный ремонт и обслуживание окон в Барнауле</h1>
+      <h1>Ремонт и обслуживание окон в Барнауле</h1>
       <p>
-        Выезд мастера в день обращения. Решаем любые задачи с пластиковыми и
-        деревянными окнами. Работаю лично, без посредников. Гарантия качества и
-        прозрачная смета на все виды работ.
+        Выезд в день обращения. Работаю лично, без посредников — быстро,
+        аккуратно и с гарантией. Смета и рекомендации до начала работ.
       </p>
       <div class="hero-actions">
-        <a
-          href="#contact"
-          class="cta-button cta-primary"
-        >
+        <a href="#contact" class="cta-button cta-primary">
           <svg
             class="cta-icon"
             fill="none"
@@ -170,6 +154,9 @@
             class="cta-button cta-secondary"
             type="button"
             @click="toggleHeroDropdown"
+            :aria-expanded="isHeroCallDropdownOpen"
+            aria-controls="hero-call-menu"
+            aria-haspopup="true"
           >
             <svg
               class="cta-icon"
@@ -201,7 +188,11 @@
             </svg>
           </button>
           <transition name="dropdown-fade">
-            <div v-if="isHeroCallDropdownOpen" class="hero-call-dropdown-menu">
+            <div
+              v-if="isHeroCallDropdownOpen"
+              id="hero-call-menu"
+              class="hero-call-dropdown-menu"
+            >
               <a
                 :href="phoneHref"
                 class="hero-call-dropdown-item"
@@ -248,16 +239,16 @@
       </div>
       <div class="hero-tags">
         <span>{{ siteData.response }}</span>
-        <span>Более 10 лет опыта</span>
-        <span>Прозрачное ценообразование</span>
+        <span>Гарантия на работы</span>
+        <span>Смета до начала</span>
       </div>
     </section>
 
     <!-- Преимущества -->
     <section class="features">
       <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon" style="background: #dbeafe; color: #2563eb">
+      <div class="feature-card">
+        <div class="feature-icon" style="background: #dbeafe; color: #2563eb">
             <svg
               fill="none"
               stroke="currentColor"
@@ -272,10 +263,10 @@
               />
             </svg>
           </div>
-          <h3>Гарантия качества</h3>
+          <h3>Гарантия и аккуратность</h3>
           <p>
-            Все работы выполняются с гарантией качества и использованием
-            профессионального инструмента
+            Делаю работу так, чтобы окно служило долго: точная регулировка,
+            качественные материалы и аккуратная установка.
           </p>
         </div>
         <div class="feature-card">
@@ -294,10 +285,9 @@
               />
             </svg>
           </div>
-          <h3>Быстро и в срок</h3>
+          <h3>Быстро и по делу</h3>
           <p>
-            Выезд в день обращения. Работаем быстро, качественно и всегда
-            укладываемся в срок
+            Приезжаю в удобное время, сразу оцениваю объём работ и называю цену.
           </p>
         </div>
         <div class="feature-card">
@@ -316,10 +306,10 @@
               />
             </svg>
           </div>
-          <h3>Доступные цены</h3>
+          <h3>Честная стоимость</h3>
           <p>
-            Честные и прозрачные цены без скрытых доплат. Оплата только за
-            выполненную работу
+            Без скрытых доплат и навязанных услуг. Оплата только за выполненную
+            работу.
           </p>
         </div>
       </div>
@@ -327,7 +317,10 @@
 
     <!-- Услуги -->
     <section id="services" class="services">
-      <h2>Что могу для вас сделать</h2>
+      <h2>Услуги и ориентировочные цены</h2>
+      <p class="section-lead">
+        Подскажите задачу — предложу решение и точную стоимость после осмотра.
+      </p>
       <div class="services-grid">
         <div
           v-for="(service, index) in siteData.services"
@@ -341,6 +334,7 @@
               :alt="service.title"
               class="service-icon-image"
               loading="lazy"
+              decoding="async"
             />
             <svg
               v-else
@@ -388,17 +382,24 @@
           </li>
         </ul>
         <p class="price-list-hint">
-          Нажмите на услугу, чтобы быстро оставить заявку
+          Нажмите на услугу, чтобы она автоматически подставилась в заявку.
         </p>
       </div>
     </section>
 
     <!-- О нас -->
     <section id="about" class="about">
-      <div class="about-content">
+      <div class="about-header">
         <h2>Почему выбирают частного мастера</h2>
-        <div class="about-text">
-          <h3>Опыт и профессионализм</h3>
+        <p class="section-lead">
+          Один исполнитель отвечает за результат — от диагностики до сдачи
+          работы.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <article class="about-card">
+          <h3>Опыт и ответственность</h3>
           <p>
             Более 10 лет решаю задачи по пластиковым, деревянным и алюминиевым
             окнам. Приезжаю лично, работаю аккуратно и оставляю порядок после
@@ -408,83 +409,63 @@
             Использую качественные материалы и современный инструмент. Объясняю,
             что было сделано, и даю понятную гарантию.
           </p>
-          <ul>
-            <li>
-              <svg
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                style="width: 1.25rem; height: 1.25rem"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              Гарантия на все виды работ
-            </li>
-            <li>
-              <svg
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                style="width: 1.25rem; height: 1.25rem"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              Выезд в день обращения
-            </li>
-            <li>
-              <svg
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                style="width: 1.25rem; height: 1.25rem"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              Честные и прозрачные цены
-            </li>
-            <li>
-              <svg
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                style="width: 1.25rem; height: 1.25rem"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              Опыт работы более 10 лет
-            </li>
+        </article>
+
+        <article class="about-card">
+          <h3>Что вы получаете</h3>
+          <ul class="about-list">
+            <li>Гарантия на все виды работ</li>
+            <li>Выезд в день обращения</li>
+            <li>Смета и рекомендации до начала</li>
+            <li>Честная стоимость без доплат</li>
           </ul>
-        </div>
-        <div class="stats-card" ref="statsCard">
-          <div class="stats-grid">
-            <div class="stat">
-              <div class="stat-number" data-target="10">0</div>
-              <div class="stat-label">Лет опыта</div>
-            </div>
-            <div class="stat">
-              <div class="stat-number" data-target="5000">0</div>
-              <div class="stat-label">Довольных клиентов</div>
-            </div>
-            <div class="stat">
-              <div class="stat-number" data-target="24">0</div>
-              <div class="stat-label">Часа в сутках</div>
-            </div>
-            <div class="stat">
-              <div class="stat-number" data-target="100">0</div>
-              <div class="stat-label">Гарантия качества</div>
-            </div>
+        </article>
+
+        <article class="about-card">
+          <h3>Как проходит работа</h3>
+          <ol class="about-steps">
+            <li>
+              <span class="step-number">1</span>
+              <div>
+                <div class="step-title">Диагностика</div>
+                <div class="step-text">Осмотр и объяснение вариантов ремонта.</div>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">2</span>
+              <div>
+                <div class="step-title">Смета</div>
+                <div class="step-text">Фиксируем стоимость и сроки до начала.</div>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">3</span>
+              <div>
+                <div class="step-title">Ремонт</div>
+                <div class="step-text">Аккуратная работа и сдача результата.</div>
+              </div>
+            </li>
+          </ol>
+        </article>
+      </div>
+
+      <div class="stats-card">
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-number" data-target="10">0</div>
+            <div class="stat-label">Лет опыта</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="5000">0</div>
+            <div class="stat-label">Довольных клиентов</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="24">0</div>
+            <div class="stat-label">Часа в сутках</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="100">0</div>
+            <div class="stat-label">Гарантия качества</div>
           </div>
         </div>
       </div>
@@ -492,12 +473,16 @@
 
     <!-- Форма обратной связи -->
     <section id="contact" class="contact">
-      <h2>Свяжитесь с нами</h2>
+      <h2>Свяжитесь со мной</h2>
+      <p class="section-lead">
+        Оставьте заявку — отвечу, уточню детали и предложу удобное время.
+      </p>
       <div class="contact-wrapper">
         <form @submit.prevent="submitForm" class="contact-form">
           <div
             v-if="formStatus.message"
             :class="['form-message', formStatus.success ? 'success' : 'error']"
+            aria-live="polite"
           >
             {{ formStatus.message }}
           </div>
@@ -509,6 +494,8 @@
               v-model="form.name"
               type="text"
               required
+              autocomplete="name"
+              maxlength="80"
               placeholder="Иван Иванов"
             />
           </div>
@@ -520,6 +507,10 @@
               v-model="form.phone"
               type="tel"
               required
+              autocomplete="tel"
+              inputmode="tel"
+              maxlength="30"
+              spellcheck="false"
               placeholder="+7 (999) 123-45-67"
             />
           </div>
@@ -546,6 +537,7 @@
               v-model="form.message"
               required
               rows="5"
+              maxlength="1000"
               placeholder="Опишите вашу проблему или задайте вопрос..."
             ></textarea>
           </div>
@@ -651,8 +643,8 @@
                 Консультация и ориентировочная стоимость по телефону или
                 WhatsApp
               </li>
-              <li>Можете отправить фото окна — сразу скажу варианты ремонта</li>
-              <li>Выезд мастера Дмитрия в удобное для вас время</li>
+              <li>Можно отправить фото окна — сразу предложу варианты ремонта</li>
+              <li>Выезд мастера в удобное для вас время</li>
             </ul>
 
             <div class="quick-actions">
@@ -661,6 +653,9 @@
                   class="quick-button"
                   type="button"
                   @click="toggleQuickDropdown"
+                  :aria-expanded="isQuickCallDropdownOpen"
+                  aria-controls="quick-call-menu"
+                  aria-haspopup="true"
                 >
                   <span class="quick-btn-icon">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -673,7 +668,7 @@
                     </svg>
                   </span>
                   <span class="quick-btn-text">
-                    <span class="quick-btn-main">Позвонить Дмитрию</span>
+                    <span class="quick-btn-main">Позвонить мастеру</span>
                     <span class="quick-btn-sub">Выберите удобный номер</span>
                   </span>
                   <svg
@@ -694,6 +689,7 @@
                 <transition name="dropdown-fade">
                   <div
                     v-if="isQuickCallDropdownOpen"
+                    id="quick-call-menu"
                     class="quick-call-dropdown-menu"
                   >
                     <a
@@ -744,6 +740,7 @@
                 target="_blank"
                 rel="noopener"
                 class="quick-button ghost"
+                aria-label="Написать в WhatsApp"
               >
                 <span class="quick-btn-icon">
                   <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -806,14 +803,14 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 Оконный Мастер. Все права защищены.</p>
+        <p>&copy; 2026 Оконный Мастер. Все права защищены.</p>
       </div>
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { siteData } from "@/data";
 
 const phoneHref = `tel:${siteData.phone.replace(/[^+\d]/g, "")}`;
@@ -822,57 +819,19 @@ const isMenuOpen = ref(false);
 const isCallDropdownOpen = ref(false);
 const isHeroCallDropdownOpen = ref(false);
 const isQuickCallDropdownOpen = ref(false);
-const statsCard = ref<HTMLElement | null>(null);
-
-// Генерация случайных стилей для снежинок
-const getSnowflakeStyle = (i: number) => {
-  const randomLeft = Math.random() * 100;
-  const randomDelay = Math.random() * 5;
-  const randomDuration = 10 + Math.random() * 20;
-  const randomSize = 0.5 + Math.random() * 1;
-
-  return {
-    left: `${randomLeft}%`,
-    animationDelay: `${randomDelay}s`,
-    animationDuration: `${randomDuration}s`,
-    fontSize: `${randomSize}rem`,
-    opacity: 0.3 + Math.random() * 0.7,
-  };
-};
-
-// Генерация случайных стилей для огоньков
-const getLightStyle = (i: number) => {
-  const randomLeft = (i * 5) % 100;
-  const randomDelay = Math.random() * 2;
-  const colors = [
-    "#ff0000",
-    "#00ff00",
-    "#0000ff",
-    "#ffff00",
-    "#ff00ff",
-    "#ffd700",
-  ];
-  const randomColor = colors[i % colors.length];
-
-  return {
-    left: `${randomLeft}%`,
-    animationDelay: `${randomDelay}s`,
-    backgroundColor: randomColor,
-    boxShadow: `0 0 20px ${randomColor}`,
-  };
-};
 
 // Функция анимации подсчета чисел
+const activeIntervals: number[] = [];
 const animateNumber = (
   element: HTMLElement,
   target: number,
-  suffix: string = ""
+  suffix: string = "",
 ) => {
   const duration = 2000; // 2 секунды
   const steps = 60;
   const increment = target / steps;
   let current = 0;
-  const timer = setInterval(() => {
+  const timer = window.setInterval(() => {
     current += increment;
     if (current >= target) {
       current = target;
@@ -888,6 +847,7 @@ const animateNumber = (
       element.textContent = Math.floor(current).toString();
     }
   }, duration / steps);
+  activeIntervals.push(timer);
 };
 
 // Функции управления dropdown
@@ -915,26 +875,25 @@ const toggleQuickDropdown = () => {
   isHeroCallDropdownOpen.value = false;
 };
 
-// Яндекс.Метрика: отслеживание цели "Оставить заявку"
-const trackInviteGoal = () => {
-  if (typeof window !== "undefined" && (window as any).ym) {
-    (window as any).ym(106110599, "reachGoal", "invite");
-    console.log('📊 Яндекс.Метрика: цель "invite" достигнута');
-  }
-};
-
 // Яндекс.Метрика: отслеживание цели "Позвонить"
 const handleCallClick = () => {
   if (typeof window !== "undefined" && (window as any).ym) {
     (window as any).ym(106110599, "reachGoal", "call");
-    console.log('📊 Яндекс.Метрика: цель "call" достигнута');
   }
   closeAllDropdowns();
 };
 
+let handleClickOutside: ((event: MouseEvent) => void) | null = null;
+let handleEscape: ((event: KeyboardEvent) => void) | null = null;
+let observer: IntersectionObserver | null = null;
+
 // Закрытие dropdown при клике вне его
 onMounted(() => {
-  const handleClickOutside = (event: MouseEvent) => {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  handleClickOutside = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
     if (
       !target.closest(".call-dropdown") &&
@@ -947,7 +906,7 @@ onMounted(() => {
 
   document.addEventListener("click", handleClickOutside);
 
-  const handleEscape = (event: KeyboardEvent) => {
+  handleEscape = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
       closeAllDropdowns();
     }
@@ -963,71 +922,67 @@ onMounted(() => {
 
   let statsAnimated = false;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("animate-in");
+  if (!prefersReducedMotion) {
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-in");
 
-        // Анимация статистики
-        if (entry.target.classList.contains("stats-card") && !statsAnimated) {
-          statsAnimated = true;
-          const statNumbers = entry.target.querySelectorAll(".stat-number");
-          statNumbers.forEach((statNumber) => {
-            const target = parseInt(
-              (statNumber as HTMLElement).getAttribute("data-target") || "0"
-            );
-            const element = statNumber as HTMLElement;
+          // Анимация статистики
+          if (entry.target.classList.contains("stats-card") && !statsAnimated) {
+            statsAnimated = true;
+            const statNumbers = entry.target.querySelectorAll(".stat-number");
+            statNumbers.forEach((statNumber) => {
+              const target = parseInt(
+                (statNumber as HTMLElement).getAttribute("data-target") || "0",
+              );
+              const element = statNumber as HTMLElement;
 
-            // Определяем суффикс в зависимости от значения
-            let suffix = "";
-            if (target === 10) {
-              suffix = "+";
-            } else if (target === 5000) {
-              suffix = "+";
-            } else if (target === 24) {
-              suffix = "/7";
-            } else if (target === 100) {
-              suffix = "%";
-            }
+              // Определяем суффикс в зависимости от значения
+              let suffix = "";
+              if (target === 10) {
+                suffix = "+";
+              } else if (target === 5000) {
+                suffix = "+";
+              } else if (target === 24) {
+                suffix = "/7";
+              } else if (target === 100) {
+                suffix = "%";
+              }
 
-            animateNumber(element, target, suffix);
-          });
+              animateNumber(element, target, suffix);
+            });
+          }
+
+          observer?.unobserve(entry.target);
         }
-
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
+      });
+    }, observerOptions);
+  }
 
   // Наблюдаем за всеми секциями и карточками
   const elements = document.querySelectorAll(
-    ".feature-card, .service-card, .about, .contact, .price-list, .stats-card"
+    ".feature-card, .service-card, .about-card, .contact, .price-list, .stats-card",
   );
-  elements.forEach((el) => observer.observe(el));
-
-  // Параллакс эффект для героической секции
-  let ticking = false;
-  const parallaxElements =
-    document.querySelectorAll<HTMLElement>(".hero, .hero-badge");
-
-  const updateParallax = () => {
-    const scrolled = window.pageYOffset;
-    parallaxElements.forEach((el, index) => {
-      const speed = 0.5 + index * 0.1;
-      const yPos = -(scrolled * speed);
-      el.style.transform = `translateY(${yPos}px)`;
-    });
-    ticking = false;
-  };
-
-  window.addEventListener("scroll", () => {
-    if (!ticking && window.innerWidth > 768) {
-      window.requestAnimationFrame(updateParallax);
-      ticking = true;
-    }
-  });
+  if (observer) {
+    elements.forEach((el) => observer?.observe(el));
+  }
 
   // Пользовательский курсор отключен по запросу пользователя
+});
+
+onBeforeUnmount(() => {
+  if (handleClickOutside) {
+    document.removeEventListener("click", handleClickOutside);
+  }
+  if (handleEscape) {
+    document.removeEventListener("keydown", handleEscape);
+  }
+  if (observer) {
+    observer.disconnect();
+  }
+  activeIntervals.forEach((timer) => clearInterval(timer));
+  activeIntervals.length = 0;
 });
 
 const form = ref({
@@ -1063,7 +1018,7 @@ const selectService = (serviceTitle: string) => {
         nameInput.focus();
         // Добавляем визуальную подсветку выбранной услуги
         const serviceSelect = document.querySelector(
-          "#service"
+          "#service",
         ) as HTMLSelectElement;
         if (serviceSelect) {
           serviceSelect.style.animation = "pulse 0.5s ease-in-out";
@@ -1078,6 +1033,7 @@ const selectService = (serviceTitle: string) => {
 
 const submitForm = async () => {
   formStatus.value.loading = true;
+  formStatus.value.success = false;
   formStatus.value.message = "";
 
   try {
@@ -1086,20 +1042,17 @@ const submitForm = async () => {
       {
         method: "POST",
         body: form.value,
-      }
+      },
     );
 
     if (response.success) {
       formStatus.value.success = true;
       formStatus.value.message =
-        "Спасибо! Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.";
+        "Спасибо! Заявка отправлена. Я свяжусь с вами в ближайшее время.";
 
       // Отслеживаем цель в Яндекс.Метрике
       if (typeof window !== "undefined" && (window as any).ym) {
         (window as any).ym(106110599, "reachGoal", "invite");
-        console.log(
-          '📊 Яндекс.Метрика: цель "invite" достигнута (форма отправлена)'
-        );
       }
 
       // Очистка формы
@@ -1116,7 +1069,7 @@ const submitForm = async () => {
     formStatus.value.success = false;
     formStatus.value.message =
       error.data?.message ||
-      "Произошла ошибка при отправке заявки. Попробуйте позже или позвоните нам.";
+      "Произошла ошибка при отправке заявки. Попробуйте позже или позвоните мне.";
   } finally {
     formStatus.value.loading = false;
   }

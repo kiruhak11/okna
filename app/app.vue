@@ -6,25 +6,28 @@
 </template>
 
 <script setup lang="ts">
+import { siteData } from "@/data";
+
 useHead({
   title: 'Ремонт окон в Барнауле | Оконный Мастер',
   meta: [
-    { name: 'description', content: 'Профессиональный ремонт и обслуживание пластиковых окон в Барнауле. Выезд в день обращения. Опыт более 10 лет. Гарантия качества.' },
-    { name: 'keywords', content: 'ремонт окон, окна Барнаул, ремонт пластиковых окон, регулировка окон, замена фурнитуры, утепление окон' },
-    { name: 'author', content: 'Дмитрий, частный мастер' },
+    { name: 'description', content: 'Ремонт и обслуживание окон в Барнауле. Выезд в день обращения, гарантия, честная смета. Оставьте заявку — свяжусь с вами.' },
+    { name: 'keywords', content: 'ремонт окон Барнаул, ремонт пластиковых окон, регулировка окон, замена фурнитуры, утепление окон, мастер по окнам' },
+    { name: 'author', content: siteData.masterName },
     // Гео-теги для Яндекса
     { name: 'geo.region', content: 'RU-ALT' },
     { name: 'geo.placename', content: 'Барнаул' },
     { name: 'geo.position', content: '53.356176;83.763199' },
     // Open Graph
     { property: 'og:title', content: 'Ремонт окон в Барнауле | Оконный Мастер' },
-    { property: 'og:description', content: 'Профессиональный ремонт и обслуживание окон. Выезд в день обращения. Опыт 10+ лет.' },
+    { property: 'og:description', content: 'Ремонт и обслуживание окон. Выезд в день обращения. Гарантия и честная смета.' },
     { property: 'og:type', content: 'website' },
     { property: 'og:url', content: 'https://okna-brn.ru' },
     { property: 'og:image', content: 'https://okna-brn.ru/logo.svg' },
+    { property: 'og:site_name', content: 'Оконный Мастер Барнаул' },
     { property: 'og:locale', content: 'ru_RU' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-    { name: 'theme-color', content: '#8b5cf6' },
+    { name: 'theme-color', content: '#0f172a' },
   ],
   link: [
     // Основная фавиконка (ICO формат для старых браузеров)
@@ -50,7 +53,7 @@ useHead({
         k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
       })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106110599', 'ym');
       
-      ym(106110599, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});`
+      ym(106110599, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});`
     },
     {
       type: 'application/ld+json',
@@ -58,9 +61,9 @@ useHead({
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": "Ремонт окон в Барнауле",
-        "description": "Профессиональный ремонт и обслуживание пластиковых окон в Барнауле",
+        "description": "Ремонт и обслуживание окон в Барнауле. Выезд в день обращения, гарантия, честная смета.",
         "url": "https://okna-brn.ru",
-        "telephone": "+7-903-912-75-92",
+        "telephone": siteData.phone,
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Барнаул",
@@ -88,6 +91,7 @@ useHead({
         },
         "priceRange": "$$",
         "image": "https://okna-brn.ru/logo.svg",
+        "areaServed": "Барнаул и пригород",
         "sameAs": []
       })
     }

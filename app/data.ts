@@ -63,7 +63,7 @@ export const siteData = {
     {
       title: "Замена стеклопакета",
       fromPrice: "от 700 ₽",
-      icon: "/icons/double-glazing.jpg",
+      icon: "/icons/double-glazing.webp",
       description:
         "Замена треснувших, запотевших или разбитых стеклопакетов с аккуратным демонтажем и установкой.",
     },
@@ -77,7 +77,7 @@ export const siteData = {
     {
       title: "Установка ограничителей",
       fromPrice: "от 450 ₽",
-      icon: "/icons/stopper.jpg",
+      icon: "/icons/stopper.webp",
       description:
         "Установка ограничителей открывания для безопасного проветривания и защиты от захлопываний.",
     },

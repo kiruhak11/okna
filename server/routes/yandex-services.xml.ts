@@ -12,15 +12,16 @@ export default defineEventHandler((event) => {
       : service.fromPrice.replace(/[^\d]/g, '')
     
     // Определяем categoryId на основе названия
+    const title = service.title.toLowerCase()
     let categoryId = 9
-    if (service.title.includes('Консультация')) categoryId = 1
-    else if (service.title.includes('окон')) categoryId = 2
-    else if (service.title.includes('дверей')) categoryId = 3
-    else if (service.title.includes('Регулировка')) categoryId = 4
-    else if (service.title.includes('Замена') && !service.title.includes('петель')) categoryId = 5
-    else if (service.title.includes('фурнитур') || service.title.includes('петель')) categoryId = 6
-    else if (service.title.includes('Установка')) categoryId = 7
-    else if (service.title.includes('Утепление') || service.title.includes('Герметизация')) categoryId = 8
+    if (title.includes('консультац')) categoryId = 1
+    else if (title.includes('установка') || title.includes('монтаж')) categoryId = 7
+    else if (title.includes('гермет') || title.includes('утепл') || title.includes('запенив')) categoryId = 8
+    else if (title.includes('регулиров')) categoryId = 4
+    else if (title.includes('фурнитур') || title.includes('петель')) categoryId = 6
+    else if (title.includes('замена')) categoryId = 5
+    else if (title.includes('двер')) categoryId = 3
+    else if (title.includes('окон')) categoryId = 2
     
     const descriptions: Record<string, string> = {
       'Консультация и выезд': 'Бесплатный выезд мастера Дмитрия для осмотра окон и балконных дверей. Консультация по всем вопросам ремонта, оценка стоимости работ на месте.',
@@ -111,5 +112,4 @@ function escapeXml(unsafe: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;')
 }
-
 

@@ -7,6 +7,21 @@ export default defineEventHandler(async (event) => {
   const telegramChatId1 = config.telegramChatId1
   const telegramChatId2 = config.telegramChatId2
 
+  const data =
+    body && typeof body === 'object' ? (body as Record<string, unknown>) : {}
+  const name = normalizeString(data.name, 80)
+  const phone = normalizeString(data.phone, 30)
+  const service = normalizeString(data.service, 120)
+  const messageText = normalizeString(data.message, 1000)
+
+  if (!name || !phone || !messageText) {
+    setResponseStatus(event, 400)
+    return {
+      success: false,
+      message: 'Пожалуйста, заполните имя, телефон и сообщение.'
+    }
+  }
+
   // Проверяем наличие обязательных переменных
   if (!telegramBotToken || (!telegramChatId1 && !telegramChatId2)) {
     console.error('Telegram configuration missing:', {
@@ -24,12 +39,12 @@ export default defineEventHandler(async (event) => {
   const message = `
 🎯 Новая заявка с сайта
 
-👤 Имя: ${body.name || 'Не указано'}
-📞 Телефон: ${body.phone || 'Не указан'}
-🛠️ Услуга: ${body.service || 'Не указана'}
+👤 Имя: ${name}
+📞 Телефон: ${phone}
+🛠️ Услуга: ${service || 'Не указана'}
 
 💬 Сообщение:
-${body.message || 'Без сообщения'}
+${messageText}
 
 ⏰ Время: ${new Date().toLocaleString('ru-RU')}
   `.trim()
@@ -50,8 +65,7 @@ ${body.message || 'Без сообщения'}
         },
         body: JSON.stringify({
           chat_id: telegramChatId1,
-          text: message,
-          parse_mode: 'HTML'
+          text: message
         })
       })
 
@@ -78,8 +92,7 @@ ${body.message || 'Без сообщения'}
         },
         body: JSON.stringify({
           chat_id: telegramChatId2,
-          text: message,
-          parse_mode: 'HTML'
+          text: message
         })
       })
 
@@ -118,7 +131,7 @@ ${body.message || 'Без сообщения'}
     } else {
       return {
         success: false,
-        message: 'Ошибка при отправке заявки. Попробуйте позвонить нам.',
+        message: 'Ошибка при отправке заявки. Попробуйте позвонить мне.',
         details: results
       }
     }
@@ -130,9 +143,14 @@ ${body.message || 'Без сообщения'}
     })
     return {
       success: false,
-      message: 'Произошла ошибка при отправке заявки. Попробуйте позже или позвоните нам.'
+      message: 'Произошла ошибка при отправке заявки. Попробуйте позже или позвоните мне.'
     }
   }
 })
 
-
+function normalizeString(value: unknown, maxLength: number): string {
+  if (typeof value !== 'string') return ''
+  const trimmed = value.trim()
+  if (!trimmed) return ''
+  return trimmed.slice(0, maxLength)
+}

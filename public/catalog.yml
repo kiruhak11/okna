@@ -96,7 +96,7 @@
 <price>700</price>
 <currencyId>RUR</currencyId>
 <categoryId>5</categoryId>
-<picture>https://okna-brn.ru/icons/double-glazing.jpg</picture>
+    <picture>https://okna-brn.ru/icons/double-glazing.webp</picture>
 <description>Замена треснувших, запотевших или разбитых стеклопакетов с аккуратным демонтажем и установкой.</description>
 <shortDescription>Замена треснувших, запотевших или разбитых стеклопакетов</shortDescription>
 <url>https://okna-brn.ru/#services</url>
@@ -118,7 +118,7 @@
 <price>450</price>
 <currencyId>RUR</currencyId>
 <categoryId>7</categoryId>
-<picture>https://okna-brn.ru/icons/stopper.jpg</picture>
+    <picture>https://okna-brn.ru/icons/stopper.webp</picture>
 <description>Установка ограничителей открывания для безопасного проветривания и защиты от захлопываний.</description>
 <shortDescription>Установка ограничителей открывания</shortDescription>
 <url>https://okna-brn.ru/#services</url>

@@ -12,15 +12,16 @@ export default defineEventHandler((event) => {
       : service.fromPrice.replace(/[^\d]/g, '')
     
     // Определяем категорию на основе названия услуги
+    const title = service.title.toLowerCase()
     let category = 'Прочие услуги'
-    if (service.title.includes('Консультация')) category = 'Консультация'
-    else if (service.title.includes('окон')) category = 'Ремонт окон'
-    else if (service.title.includes('дверей') || service.title.includes('дверь')) category = 'Ремонт дверей'
-    else if (service.title.includes('Регулировка')) category = 'Регулировка'
-    else if (service.title.includes('Замена')) category = 'Замена комплектующих'
-    else if (service.title.includes('фурнитур') || service.title.includes('петель')) category = 'Ремонт фурнитуры'
-    else if (service.title.includes('Установка')) category = 'Установка'
-    else if (service.title.includes('Утепление') || service.title.includes('Герметизация')) category = 'Утепление'
+    if (title.includes('консультац')) category = 'Консультация'
+    else if (title.includes('установка') || title.includes('монтаж')) category = 'Установка'
+    else if (title.includes('гермет') || title.includes('утепл') || title.includes('запенив')) category = 'Утепление'
+    else if (title.includes('регулиров')) category = 'Регулировка'
+    else if (title.includes('фурнитур') || title.includes('петель')) category = 'Ремонт фурнитуры'
+    else if (title.includes('замена')) category = 'Замена комплектующих'
+    else if (title.includes('двер')) category = 'Ремонт дверей'
+    else if (title.includes('окон')) category = 'Ремонт окон'
     
     // Генерируем описание на основе названия
     const descriptions: Record<string, string> = {
@@ -44,7 +45,6 @@ export default defineEventHandler((event) => {
     }
     
     const description = descriptions[service.title] || service.title
-    const featured = service.highlight ? 'true' : 'false'
     
     return `    <service id="${id}">
       <name>${escapeXml(service.title)}</name>
@@ -109,5 +109,3 @@ function escapeXml(unsafe: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;')
 }
-
-
