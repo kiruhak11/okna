@@ -571,8 +571,8 @@
                   class="info-value"
                   style="display: flex; flex-direction: column; gap: 0.5rem"
                 >
-                  <a :href="phoneHref">{{ siteData.phoneDisplay }}</a>
-                  <a :href="phone2Href">{{ siteData.phone2Display }}</a>
+                  <a :href="phoneHref" @click="handleCallClick">{{ siteData.phoneDisplay }}</a>
+                  <a :href="phone2Href" @click="handleCallClick">{{ siteData.phone2Display }}</a>
                 </div>
               </div>
             </div>
@@ -781,10 +781,10 @@
           <h4>Контакты</h4>
           <ul>
             <li>
-              <a :href="phoneHref">{{ siteData.phoneDisplay }}</a>
+              <a :href="phoneHref" @click="handleCallClick">{{ siteData.phoneDisplay }}</a>
             </li>
             <li>
-              <a :href="phone2Href">{{ siteData.phone2Display }}</a>
+              <a :href="phone2Href" @click="handleCallClick">{{ siteData.phone2Display }}</a>
             </li>
             <li>{{ siteData.address }}</li>
             <li>{{ siteData.workHours }}</li>
@@ -875,6 +875,21 @@ const toggleQuickDropdown = () => {
   isHeroCallDropdownOpen.value = false;
 };
 
+<<<<<<< HEAD
+=======
+// Яндекс.Метрика: отслеживание цели "Оставить заявку"
+let lastInviteGoalAt = 0;
+const trackInviteGoal = () => {
+  const now = Date.now();
+  if (now - lastInviteGoalAt < 2000) return;
+  lastInviteGoalAt = now;
+  if (typeof window !== "undefined" && (window as any).ym) {
+    (window as any).ym(106110599, "reachGoal", "invite");
+    console.log('📊 Яндекс.Метрика: цель "invite" достигнута');
+  }
+};
+
+>>>>>>> 6e4f5a9f5712eb60d6b4d0503a35375c49ef395a
 // Яндекс.Метрика: отслеживание цели "Позвонить"
 const handleCallClick = () => {
   if (typeof window !== "undefined" && (window as any).ym) {
@@ -1032,6 +1047,7 @@ const selectService = (serviceTitle: string) => {
 };
 
 const submitForm = async () => {
+  if (formStatus.value.loading) return;
   formStatus.value.loading = true;
   formStatus.value.success = false;
   formStatus.value.message = "";
@@ -1051,9 +1067,13 @@ const submitForm = async () => {
         "Спасибо! Заявка отправлена. Я свяжусь с вами в ближайшее время.";
 
       // Отслеживаем цель в Яндекс.Метрике
+<<<<<<< HEAD
       if (typeof window !== "undefined" && (window as any).ym) {
         (window as any).ym(106110599, "reachGoal", "invite");
       }
+=======
+      trackInviteGoal();
+>>>>>>> 6e4f5a9f5712eb60d6b4d0503a35375c49ef395a
 
       // Очистка формы
       form.value = {
