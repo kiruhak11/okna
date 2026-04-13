@@ -1,156 +1,131 @@
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
+  const body = await readBody(event);
 
-  // Получаем переменные окружения через runtimeConfig
-  const config = useRuntimeConfig(event)
-  const telegramBotToken = config.telegramBotToken
-  const telegramChatId1 = config.telegramChatId1
-  const telegramChatId2 = config.telegramChatId2
+  const config = useRuntimeConfig(event);
+  const telegramBotToken = normalizeString(config.telegramBotToken, 200);
+  const chatIds = collectChatIds([
+    config.telegramChatId,
+    config.telegramChatId1,
+    config.telegramChatId2,
+  ]);
 
   const data =
-    body && typeof body === 'object' ? (body as Record<string, unknown>) : {}
-  const name = normalizeString(data.name, 80)
-  const phone = normalizeString(data.phone, 30)
-  const service = normalizeString(data.service, 120)
-  const messageText = normalizeString(data.message, 1000)
+    body && typeof body === "object" ? (body as Record<string, unknown>) : {};
+  const name = normalizeString(data.name, 80);
+  const phone = normalizeString(data.phone, 30);
+  const service = normalizeString(data.service, 120);
+  const messageText = normalizeString(data.message, 1000);
 
   if (!name || !phone || !messageText) {
-    setResponseStatus(event, 400)
+    setResponseStatus(event, 400);
     return {
       success: false,
-      message: 'Пожалуйста, заполните имя, телефон и сообщение.'
-    }
+      message: "Пожалуйста, заполните имя, телефон и сообщение.",
+    };
   }
 
-  // Проверяем наличие обязательных переменных
-  if (!telegramBotToken || (!telegramChatId1 && !telegramChatId2)) {
-    console.error('Telegram configuration missing:', {
+  if (!telegramBotToken || chatIds.length === 0) {
+    console.error("Telegram configuration missing:", {
       hasToken: !!telegramBotToken,
-      hasChatId1: !!telegramChatId1,
-      hasChatId2: !!telegramChatId2
-    })
+      chatIdsCount: chatIds.length,
+    });
     return {
       success: false,
-      message: 'Telegram бот не настроен. Пожалуйста, свяжитесь с администратором.'
-    }
+      message: "Сервис заявок временно недоступен. Позвоните по номеру на сайте.",
+    };
   }
 
-  // Формируем сообщение для Telegram
   const message = `
 🎯 Новая заявка с сайта
 
 👤 Имя: ${name}
 📞 Телефон: ${phone}
-🛠️ Услуга: ${service || 'Не указана'}
+🛠️ Услуга: ${service || "Не указана"}
 
 💬 Сообщение:
 ${messageText}
 
-⏰ Время: ${new Date().toLocaleString('ru-RU')}
-  `.trim()
+⏰ Время: ${new Date().toLocaleString("ru-RU")}
+  `.trim();
 
-  const telegramUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`
-  const results = []
-  let allSuccessful = true
+  const telegramUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
+  const results: Array<{ chatId: string; success: boolean; error?: string }> =
+    [];
 
-  try {
-    // Отправляем в первый чат
-    if (telegramChatId1) {
-      console.log(`📤 Отправка заявки в чат ${telegramChatId1}...`)
-      
-      const response1 = await fetch(telegramUrl, {
-        method: 'POST',
+  for (const chatId of chatIds) {
+    try {
+      const response = await fetch(telegramUrl, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          chat_id: telegramChatId1,
-          text: message
-        })
-      })
+          chat_id: chatId,
+          text: message,
+        }),
+      });
 
-      const data1 = await response1.json()
+      const responseData = await response.json();
 
-      if (response1.ok && data1.ok) {
-        console.log(`✅ Отправлено в чат ${telegramChatId1}`)
-        results.push({ chatId: telegramChatId1, success: true })
+      if (response.ok && responseData.ok) {
+        results.push({ chatId, success: true });
       } else {
-        console.error(`❌ Ошибка отправки в чат ${telegramChatId1}:`, data1)
-        results.push({ chatId: telegramChatId1, success: false, error: data1.description })
-        allSuccessful = false
+        const errorText =
+          typeof responseData?.description === "string"
+            ? responseData.description
+            : "Telegram API error";
+        results.push({ chatId, success: false, error: errorText });
       }
-    }
-
-    // Отправляем во второй чат
-    if (telegramChatId2) {
-      console.log(`📤 Отправка заявки в чат ${telegramChatId2}...`)
-      
-      const response2 = await fetch(telegramUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          chat_id: telegramChatId2,
-          text: message
-        })
-      })
-
-      const data2 = await response2.json()
-
-      if (response2.ok && data2.ok) {
-        console.log(`✅ Отправлено в чат ${telegramChatId2}`)
-        results.push({ chatId: telegramChatId2, success: true })
-      } else {
-        console.error(`❌ Ошибка отправки в чат ${telegramChatId2}:`, data2)
-        results.push({ chatId: telegramChatId2, success: false, error: data2.description })
-        allSuccessful = false
-      }
-    }
-
-    // Итоговое логирование
-    console.log('📊 Результат отправки:', {
-      total: results.length,
-      successful: results.filter(r => r.success).length,
-      failed: results.filter(r => !r.success).length,
-      details: results
-    })
-
-    if (allSuccessful && results.length > 0) {
-      return {
-        success: true,
-        message: 'Заявка успешно отправлена!',
-        details: results
-      }
-    } else if (results.some(r => r.success)) {
-      return {
-        success: true,
-        message: 'Заявка частично отправлена. Мы получили ваше обращение.',
-        details: results
-      }
-    } else {
-      return {
-        success: false,
-        message: 'Ошибка при отправке заявки. Попробуйте позвонить мне.',
-        details: results
-      }
-    }
-  } catch (error: any) {
-    console.error('❌ Критическая ошибка при отправке в Telegram:', {
-      message: error.message,
-      stack: error.stack,
-      name: error.name
-    })
-    return {
-      success: false,
-      message: 'Произошла ошибка при отправке заявки. Попробуйте позже или позвоните мне.'
+    } catch (error: any) {
+      const errorText =
+        error && typeof error.message === "string"
+          ? error.message
+          : "Network error";
+      results.push({ chatId, success: false, error: errorText });
     }
   }
-})
+
+  const successCount = results.filter((item) => item.success).length;
+  const failedCount = results.length - successCount;
+
+  console.log("📊 Результат отправки:", {
+    total: results.length,
+    successful: successCount,
+    failed: failedCount,
+    details: results,
+  });
+
+  if (successCount > 0) {
+    return {
+      success: true,
+      message: "Заявка успешно отправлена. Мы скоро свяжемся с вами.",
+    };
+  }
+
+  setResponseStatus(event, 502);
+  return {
+    success: false,
+    message:
+      "Не удалось отправить заявку автоматически. Позвоните по номеру на сайте.",
+  };
+});
 
 function normalizeString(value: unknown, maxLength: number): string {
-  if (typeof value !== 'string') return ''
-  const trimmed = value.trim()
-  if (!trimmed) return ''
-  return trimmed.slice(0, maxLength)
+  if (typeof value !== "string") return "";
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  return trimmed.slice(0, maxLength);
+}
+
+function collectChatIds(values: unknown[]): string[] {
+  const result: string[] = [];
+  for (const value of values) {
+    if (typeof value !== "string") continue;
+    const trimmed = value.trim();
+    if (!trimmed) continue;
+    if (!result.includes(trimmed)) {
+      result.push(trimmed);
+    }
+  }
+  return result;
 }

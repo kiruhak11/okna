@@ -1,69 +1,57 @@
-import { siteData } from '~/data'
+import { siteData } from "~/data";
 
 export default defineEventHandler((event) => {
-  const baseUrl = 'https://okna-brn.ru'
-  const currentDate = new Date().toISOString()
-  
-  // Генерируем XML для каждой услуги
-  const servicesXml = siteData.services.map((service, index) => {
-    const id = index + 1
-    const priceNumber = service.fromPrice === 'Бесплатно' 
-      ? '0' 
-      : service.fromPrice.replace(/[^\d]/g, '')
-    
-    // Определяем категорию на основе названия услуги
-    const title = service.title.toLowerCase()
-    let category = 'Прочие услуги'
-    if (title.includes('консультац')) category = 'Консультация'
-    else if (title.includes('установка') || title.includes('монтаж')) category = 'Установка'
-    else if (title.includes('гермет') || title.includes('утепл') || title.includes('запенив')) category = 'Утепление'
-    else if (title.includes('регулиров')) category = 'Регулировка'
-    else if (title.includes('фурнитур') || title.includes('петель')) category = 'Ремонт фурнитуры'
-    else if (title.includes('замена')) category = 'Замена комплектующих'
-    else if (title.includes('двер')) category = 'Ремонт дверей'
-    else if (title.includes('окон')) category = 'Ремонт окон'
-    
-    // Генерируем описание на основе названия
-    const descriptions: Record<string, string> = {
-      'Консультация и выезд': 'Бесплатный выезд мастера для осмотра и консультации. Оценка работ на месте, рекомендации по ремонту.',
-      'Ремонт окон любой сложности': 'Комплексный ремонт пластиковых и деревянных окон любой сложности. Устранение продуваний, замена поврежденных элементов.',
-      'Ремонт балконных дверей': 'Ремонт балконных пластиковых дверей. Регулировка, замена фурнитуры, устранение провисаний.',
-      'Регулировка механизмов': 'Профессиональная регулировка оконных механизмов и фурнитуры. Настройка прижима, устранение люфтов.',
-      'Замена уплотнителя': 'Замена резиновых уплотнителей на окнах. Устранение продуваний, улучшение тепло- и звукоизоляции.',
-      'Ремонт/замена фурнитуры': 'Ремонт и замена оконной фурнитуры: ручки, замки, механизмы открывания.',
-      'Ремонт/замена петель': 'Ремонт и замена оконных петель. Устранение провисания створок.',
-      'Замена стеклопакета': 'Замена разбитых или запотевших стеклопакетов с гарантией качества.',
-      'Регулировка створок': 'Точная регулировка оконных створок по всем осям. Устранение провисаний и перекосов.',
-      'Установка ограничителей': 'Установка ограничителей открывания окон. Безопасность для детей.',
-      'Установка детских замков': 'Установка детских замков безопасности на окна.',
-      'Утепление и запенивание': 'Профессиональное утепление окон монтажной пеной.',
-      'Герметизация уличных швов': 'Герметизация наружных швов качественными герметиками.',
-      'Установка/замена подоконников': 'Установка и замена пластиковых подоконников с профессиональным монтажом.',
-      'Установка/замена отливов': 'Установка и замена наружных отливов. Защита фасада от осадков.',
-      'Ремонт офисных дверей': 'Ремонт пластиковых и алюминиевых офисных дверей.',
-      'Иные работы с окнами': 'Другие виды работ с пластиковыми и деревянными окнами.'
-    }
-    
-    const description = descriptions[service.title] || service.title
-    
-    return `    <service id="${id}">
+  const baseUrl = "https://okna-brn.ru";
+  const currentDate = new Date().toISOString();
+
+  const servicesXml = siteData.services
+    .map((service, index) => {
+      const id = index + 1;
+      const priceNumber =
+        service.fromPrice === "Бесплатно"
+          ? "0"
+          : service.fromPrice.replace(/[^\d]/g, "") || "0";
+
+      const title = service.title.toLowerCase();
+      let category = "Общестроительные работы";
+
+      if (title.includes("осмотр") || title.includes("консультац")) {
+        category = "Консультация";
+      } else if (title.includes("космет")) {
+        category = "Косметический ремонт";
+      } else if (title.includes("капит")) {
+        category = "Капитальный ремонт";
+      } else if (title.includes("кров")) {
+        category = "Кровельные работы";
+      } else if (title.includes("фасад") || title.includes("утепл")) {
+        category = "Фасад и утепление";
+      } else if (title.includes("сантех")) {
+        category = "Сантехнические работы";
+      } else if (title.includes("электро")) {
+        category = "Электромонтаж";
+      } else if (title.includes("отдел")) {
+        category = "Отделочные работы";
+      }
+
+      return `    <service id="${id}">
       <name>${escapeXml(service.title)}</name>
       <category>${escapeXml(category)}</category>
       <price>${priceNumber}</price>
       <price_display>${escapeXml(service.fromPrice)}</price_display>
       <currency>RUB</currency>
-      <description>${escapeXml(description)}</description>
+      <description>${escapeXml(service.description)}</description>
       <url>${baseUrl}/#services</url>
       <availability>available</availability>
-      ${service.highlight ? '<featured>true</featured>' : ''}
-    </service>`
-  }).join('\n    \n')
-  
+      ${service.highlight ? "<featured>true</featured>" : ""}
+    </service>`;
+    })
+    .join("\n    \n");
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <services>
   <company>
-    <name>Ремонт Окон Барнаул</name>
-    <description>Профессиональный ремонт и обслуживание пластиковых и деревянных окон в Барнауле. Выезд мастера в день обращения.</description>
+    <name>Ремонт домов и коттеджей Барнаул</name>
+    <description>Профессиональный ремонт домов и коттеджей в Барнауле и пригороде. Косметический, капитальный и фасадный ремонт под ключ.</description>
     <city>${escapeXml(siteData.city)}</city>
     <phone>${escapeXml(siteData.phone)}</phone>
     <phone2>${escapeXml(siteData.phone2)}</phone2>
@@ -80,32 +68,30 @@ ${servicesXml}
   
   <categories>
     <category id="consultation">Консультация</category>
-    <category id="repair">Ремонт окон</category>
-    <category id="doors">Ремонт дверей</category>
-    <category id="adjustment">Регулировка</category>
-    <category id="replacement">Замена комплектующих</category>
-    <category id="hardware">Ремонт фурнитуры</category>
-    <category id="installation">Установка</category>
-    <category id="insulation">Утепление</category>
-    <category id="other">Прочие услуги</category>
+    <category id="cosmetic">Косметический ремонт</category>
+    <category id="capital">Капитальный ремонт</category>
+    <category id="roof">Кровельные работы</category>
+    <category id="facade">Фасад и утепление</category>
+    <category id="finish">Отделочные работы</category>
+    <category id="plumbing">Сантехнические работы</category>
+    <category id="electric">Электромонтаж</category>
+    <category id="general">Общестроительные работы</category>
   </categories>
   
   <generated_at>${currentDate}</generated_at>
-</services>`
-  
-  // Устанавливаем правильные заголовки для XML
-  setResponseHeader(event, 'Content-Type', 'application/xml; charset=utf-8')
-  setResponseHeader(event, 'Cache-Control', 'public, max-age=3600') // Кешируем на 1 час
-  
-  return xml
-})
+</services>`;
 
-// Функция для экранирования специальных символов XML
+  setResponseHeader(event, "Content-Type", "application/xml; charset=utf-8");
+  setResponseHeader(event, "Cache-Control", "public, max-age=3600");
+
+  return xml;
+});
+
 function escapeXml(unsafe: string): string {
   return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }

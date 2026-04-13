@@ -13,8 +13,6 @@ export default defineNuxtConfig({
     databaseUrl: process.env.DATABASE_URL,
     telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
     telegramChatId: process.env.TELEGRAM_CHAT_ID,
-    telegramChatId1: process.env.TELEGRAM_CHAT_ID_1 || '1919551727',
-    telegramChatId2: process.env.TELEGRAM_CHAT_ID_2 || '502773482',
     secretRegistrationCode: process.env.SECRET_REGISTRATION_CODE,
     public: {
       apiBase: process.env.API_BASE_URL || "http://localhost:3000",
@@ -37,18 +35,16 @@ export default defineNuxtConfig({
     runtimeConfig: {
       telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
       telegramChatId: process.env.TELEGRAM_CHAT_ID,
-      telegramChatId1: process.env.TELEGRAM_CHAT_ID_1 || '1919551727',
-      telegramChatId2: process.env.TELEGRAM_CHAT_ID_2 || '502773482',
     },
     prerender: {
-      routes: ['/sitemap.xml', '/robots.txt']
-    }
+      routes: ["/sitemap.xml", "/robots.txt"],
+    },
   },
 
   app: {
     head: {
-      charset: 'utf-8',
-      viewport: 'width=device-width, initial-scale=1',
-    }
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+    },
   },
 });
