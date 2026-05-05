@@ -1,7 +1,7 @@
 import { siteData } from "~/data";
 
 export default defineEventHandler((event) => {
-  const baseUrl = "https://okna-brn.ru";
+  const baseUrl = siteData.siteUrl;
   const currentDate = new Date().toISOString();
 
   const servicesXml = siteData.services
@@ -13,24 +13,26 @@ export default defineEventHandler((event) => {
           : service.fromPrice.replace(/[^\d]/g, "") || "0";
 
       const title = service.title.toLowerCase();
-      let category = "Общестроительные работы";
+      let category = "Строительные работы";
 
-      if (title.includes("осмотр") || title.includes("консультац")) {
+      if (
+        title.includes("осмотр") ||
+        title.includes("консультац") ||
+        title.includes("замер")
+      ) {
         category = "Консультация";
-      } else if (title.includes("космет")) {
-        category = "Косметический ремонт";
-      } else if (title.includes("капит")) {
-        category = "Капитальный ремонт";
-      } else if (title.includes("кров")) {
-        category = "Кровельные работы";
-      } else if (title.includes("фасад") || title.includes("утепл")) {
-        category = "Фасад и утепление";
-      } else if (title.includes("сантех")) {
-        category = "Сантехнические работы";
+      } else if (
+        title.includes("квартир") ||
+        title.includes("комнат") ||
+        title.includes("офис")
+      ) {
+        category = "Ремонт помещений";
+      } else if (title.includes("дизайн")) {
+        category = "Дизайн интерьера";
       } else if (title.includes("электро")) {
         category = "Электромонтаж";
-      } else if (title.includes("отдел")) {
-        category = "Отделочные работы";
+      } else if (title.includes("сануз")) {
+        category = "Санузел под ключ";
       }
 
       return `    <service id="${id}">
@@ -50,16 +52,14 @@ export default defineEventHandler((event) => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <services>
   <company>
-    <name>Ремонт домов и коттеджей Барнаул</name>
-    <description>Профессиональный ремонт домов и коттеджей в Барнауле и пригороде. Косметический, капитальный и фасадный ремонт под ключ.</description>
+    <name>${escapeXml(siteData.brandName)}</name>
+    <description>Профессиональный ремонт, дизайн и строительные работы в Барнауле и Алтайском крае.</description>
     <city>${escapeXml(siteData.city)}</city>
     <phone>${escapeXml(siteData.phone)}</phone>
-    <phone2>${escapeXml(siteData.phone2)}</phone2>
     <website>${baseUrl}</website>
     <work_hours>${escapeXml(siteData.workHours)}</work_hours>
     <response_time>${escapeXml(siteData.response)}</response_time>
     <service_area>${escapeXml(siteData.address)}</service_area>
-    <master>${escapeXml(siteData.masterName)}</master>
   </company>
   
   <service_list>
@@ -68,14 +68,11 @@ ${servicesXml}
   
   <categories>
     <category id="consultation">Консультация</category>
-    <category id="cosmetic">Косметический ремонт</category>
-    <category id="capital">Капитальный ремонт</category>
-    <category id="roof">Кровельные работы</category>
-    <category id="facade">Фасад и утепление</category>
-    <category id="finish">Отделочные работы</category>
-    <category id="plumbing">Сантехнические работы</category>
+    <category id="renovation">Ремонт помещений</category>
+    <category id="design">Дизайн интерьера</category>
     <category id="electric">Электромонтаж</category>
-    <category id="general">Общестроительные работы</category>
+    <category id="bathroom">Санузел под ключ</category>
+    <category id="general">Строительные работы</category>
   </categories>
   
   <generated_at>${currentDate}</generated_at>

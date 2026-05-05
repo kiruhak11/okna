@@ -8,11 +8,11 @@
 <script setup lang="ts">
 import { siteData } from "@/data";
 
-const siteTitle = "Ремонт комнат, квартир и офисов | remdom22.ru";
+const siteTitle = "Проф Ремонт Квартир | Ремонт, дизайн и строительство";
 const siteDescription =
-  "Выполняем комплекс работ по отделке: комнаты, квартиры, офисы. Выезд замерщика, смета, этапы, контроль качества.";
+  "Профессиональный ремонт квартир, домов и коммерческих помещений в Барнауле: прозрачная смета, договор, поэтапная оплата и гарантия на работы.";
 const siteKeywords =
-  "ремонт комнат Барнаул, ремонт квартир Барнаул, ремонт офисов Барнаул, отделка под ключ Барнаул";
+  "ремонт квартир Барнаул, отделка под ключ Барнаул, дизайн интерьера Барнаул, строительные работы Барнаул";
 const normalizedPhone = siteData.phone.replace(/[^+\d]/g, "");
 
 useHead({
@@ -28,10 +28,10 @@ useHead({
     { property: "og:description", content: siteDescription },
     { property: "og:type", content: "website" },
     { property: "og:url", content: siteData.siteUrl },
-    { property: "og:image", content: `${siteData.siteUrl}/logo.svg` },
+    { property: "og:image", content: `${siteData.siteUrl}/illustrations/hero-renovation.svg` },
     { property: "og:site_name", content: siteData.brandName },
     { property: "og:locale", content: "ru_RU" },
-    { name: "theme-color", content: "#050924" },
+    { name: "theme-color", content: "#121212" },
   ],
   link: [
     { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
@@ -39,7 +39,6 @@ useHead({
     { rel: "apple-touch-icon", sizes: "180x180", href: "/logo.svg" },
     { rel: "shortcut icon", href: "/favicon.ico" },
     { rel: "manifest", href: "/site.webmanifest" },
-    { rel: "canonical", href: siteData.siteUrl },
   ],
   script: [
     {
@@ -84,14 +83,8 @@ useHead({
           closes: "18:00",
         },
         areaServed: siteData.city,
-        image: `${siteData.siteUrl}/logo.svg`,
+        image: `${siteData.siteUrl}/illustrations/hero-renovation.svg`,
       }),
-    },
-  ],
-  noscript: [
-    {
-      innerHTML:
-        '<div><img src="https://mc.yandex.ru/watch/106110599" style="position:absolute; left:-9999px;" alt="" /></div>',
     },
   ],
   htmlAttrs: {

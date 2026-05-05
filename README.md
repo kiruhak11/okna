@@ -54,11 +54,16 @@ npm run preview
 - Режим работы
 - Услуги и цены
 
-### Telegram уведомления
+### Email уведомления о заявках
 Создайте файл `.env` по примеру `.env.example`:
 ```env
-TELEGRAM_BOT_TOKEN=your_bot_token
-TELEGRAM_CHAT_ID=your_chat_id
+SMTP_HOST=smtp.yandex.ru
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=user@yandex.ru
+SMTP_PASS=your_app_password
+SMTP_FROM=user@yandex.ru
+SMTP_TO=klim.05@mail.ru
 ```
 
 ## 🚢 Деплой

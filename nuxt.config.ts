@@ -11,8 +11,13 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
-    telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
-    telegramChatId: process.env.TELEGRAM_CHAT_ID,
+    smtpHost: process.env.SMTP_HOST || "smtp.yandex.ru",
+    smtpPort: Number(process.env.SMTP_PORT || 465),
+    smtpSecure: process.env.SMTP_SECURE || "true",
+    smtpUser: process.env.SMTP_USER,
+    smtpPass: process.env.SMTP_PASS,
+    smtpFrom: process.env.SMTP_FROM,
+    smtpTo: process.env.SMTP_TO || "klim.05@mail.ru",
     secretRegistrationCode: process.env.SECRET_REGISTRATION_CODE,
     public: {
       apiBase: process.env.API_BASE_URL || "http://localhost:3000",
@@ -27,14 +32,6 @@ export default defineNuxtConfig({
   nitro: {
     experimental: {
       openAPI: true,
-    },
-    // Настройки для работы с Nginx reverse proxy
-    // Приложение будет слушать на 0.0.0.0:3000 внутри контейнера
-    // Nginx будет проксировать с порта 3025 на порт 3000 контейнера
-    // Переменные окружения доступны напрямую в серверных роутах
-    runtimeConfig: {
-      telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
-      telegramChatId: process.env.TELEGRAM_CHAT_ID,
     },
     prerender: {
       routes: ["/sitemap.xml", "/robots.txt"],

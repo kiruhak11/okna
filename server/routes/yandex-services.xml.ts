@@ -1,7 +1,7 @@
 import { siteData } from "~/data";
 
 export default defineEventHandler((event) => {
-  const baseUrl = "https://okna-brn.ru";
+  const baseUrl = siteData.siteUrl;
   const currentDate = new Date().toISOString().split("T")[0];
 
   const offersXml = siteData.services
@@ -13,23 +13,25 @@ export default defineEventHandler((event) => {
           : service.fromPrice.replace(/[^\d]/g, "") || "0";
 
       const title = service.title.toLowerCase();
-      let categoryId = 9;
-      if (title.includes("осмотр") || title.includes("консультац")) {
+      let categoryId = 6;
+      if (
+        title.includes("осмотр") ||
+        title.includes("консультац") ||
+        title.includes("замер")
+      ) {
         categoryId = 1;
-      } else if (title.includes("космет")) {
+      } else if (
+        title.includes("квартир") ||
+        title.includes("комнат") ||
+        title.includes("офис")
+      ) {
         categoryId = 2;
-      } else if (title.includes("капит")) {
+      } else if (title.includes("дизайн")) {
         categoryId = 3;
-      } else if (title.includes("фасад") || title.includes("утепл")) {
-        categoryId = 4;
-      } else if (title.includes("кров")) {
-        categoryId = 5;
       } else if (title.includes("электро")) {
-        categoryId = 6;
-      } else if (title.includes("сантех")) {
-        categoryId = 7;
-      } else if (title.includes("отдел")) {
-        categoryId = 8;
+        categoryId = 4;
+      } else if (title.includes("сануз")) {
+        categoryId = 5;
       }
 
       return `      <offer id="${id}" available="true">
@@ -39,7 +41,7 @@ export default defineEventHandler((event) => {
         <currencyId>RUR</currencyId>
         <categoryId>${categoryId}</categoryId>
         <description>${escapeXml(service.description)}</description>
-        <vendor>Ремонт домов Барнаул</vendor>
+        <vendor>${escapeXml(siteData.brandName)}</vendor>
         <url>${baseUrl}/#services</url>
         <param name="Город">Барнаул</param>
         <param name="Выезд инженера">Бесплатно</param>
@@ -53,8 +55,8 @@ export default defineEventHandler((event) => {
 <!DOCTYPE yml_catalog SYSTEM "shops.dtd">
 <yml_catalog date="${currentDate}">
   <shop>
-    <name>Ремонт домов и коттеджей Барнаул</name>
-    <company>РемДом Барнаул</company>
+    <name>${escapeXml(siteData.brandName)}</name>
+    <company>Проф Ремонт Квартир</company>
     <url>${baseUrl}</url>
     <platform>Nuxt.js</platform>
     <version>1.0</version>
@@ -65,14 +67,11 @@ export default defineEventHandler((event) => {
     
     <categories>
       <category id="1">Осмотр и консультация</category>
-      <category id="2">Косметический ремонт</category>
-      <category id="3">Капитальный ремонт</category>
-      <category id="4">Фасад и утепление</category>
-      <category id="5">Кровельные работы</category>
-      <category id="6">Электромонтажные работы</category>
-      <category id="7">Сантехнические работы</category>
-      <category id="8">Отделочные работы</category>
-      <category id="9">Общестроительные работы</category>
+      <category id="2">Ремонт квартир и офисов</category>
+      <category id="3">Дизайн-проект интерьера</category>
+      <category id="4">Электромонтажные работы</category>
+      <category id="5">Ремонт санузла под ключ</category>
+      <category id="6">Строительные работы</category>
     </categories>
     
     <delivery-options>

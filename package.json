@@ -11,6 +11,7 @@
     "deploy": "scp -r .output/* j40068510@d562a1a402a2.hosting.myjino.ru:~/domains/remdom22.ru/ && ssh j40068510@d562a1a402a2.hosting.myjino.ru \"mkdir -p ~/domains/remdom22.ru/tmp && touch ~/domains/remdom22.ru/tmp/restart.txt && chmod -R 777 ~/domains/remdom22\""
   },
   "dependencies": {
+    "nodemailer": "^8.0.5",
     "nuxt": "^4.2.1",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"
