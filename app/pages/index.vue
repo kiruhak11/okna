@@ -12,7 +12,11 @@
 
             <div class="hero-actions">
               <a href="#contact" class="btn btn-primary">Оставить заявку</a>
-              <a :href="phoneHref" class="btn btn-outline" @click="handleCallClick">
+              <a
+                :href="phoneHref"
+                class="btn btn-outline"
+                @click="handleCallClick"
+              >
                 Позвонить специалисту
               </a>
             </div>
@@ -27,25 +31,19 @@
               <NuxtLink to="/o-kompanii">О компании</NuxtLink>
               <NuxtLink to="/dizain-i-remont">Наши проекты</NuxtLink>
               <NuxtLink to="/uslugi-po-remontu-i-dizainu">Все услуги</NuxtLink>
-              <NuxtLink to="/stroitelstvo-domov">Строительство</NuxtLink>
             </div>
           </div>
 
-          <aside class="hero-card" aria-label="Ключевые этапы">
-            <img
-              src="/illustrations/hero-renovation.svg"
-              alt="Иллюстрация ремонтного проекта"
-              class="hero-illustration"
-              loading="eager"
-              decoding="async"
-            />
-            <p class="card-eyebrow">Профессиональный подход</p>
+          <aside class="hero-card" aria-label="Преимущества">
+            <p class="card-eyebrow">Преимущества</p>
             <ol class="stage-list">
-              <li v-for="(stage, index) in siteData.stages" :key="stage.title">
-                <span class="stage-number">{{ formatStageNumber(index + 1) }}</span>
+              <li v-for="advantage in heroAdvantages" :key="advantage.title">
+                <span class="stage-number stage-icon" aria-hidden="true">
+                  {{ advantage.icon }}
+                </span>
                 <div>
-                  <h2>{{ stage.title }}</h2>
-                  <p>{{ stage.description }}</p>
+                  <h2>{{ advantage.title }}</h2>
+                  <p>{{ advantage.description }}</p>
                 </div>
               </li>
             </ol>
@@ -56,15 +54,17 @@
       <section class="metrics section-offset">
         <div class="container metrics-grid">
           <article class="metric-card">
-            <p class="metric-value">15+</p>
-            <p class="metric-label">лет на рынке</p>
+            <p class="metric-value">+15 лет</p>
+            <p class="metric-label">
+              опыт руководителя и мастеров в сфере ремонта
+            </p>
           </article>
           <article class="metric-card">
-            <p class="metric-value">500+</p>
+            <p class="metric-value">100+</p>
             <p class="metric-label">реализованных проектов</p>
           </article>
           <article class="metric-card">
-            <p class="metric-value">1000+</p>
+            <p class="metric-value">250+</p>
             <p class="metric-label">клиентов по Барнаулу и краю</p>
           </article>
           <article class="metric-card">
@@ -102,8 +102,36 @@
               <h3>{{ service.title }}</h3>
               <p>{{ service.description }}</p>
               <div class="service-price">{{ service.fromPrice }}</div>
+              <p class="service-price-note">{{ service.priceNote }}</p>
             </article>
           </div>
+          <p class="price-disclaimer">
+            Точную стоимость рассчитываем после замера и согласовываем в
+            договоре.
+          </p>
+        </div>
+      </section>
+
+      <section class="section-offset service-focus-section">
+        <div class="container service-focus-grid">
+          <article
+            v-for="item in serviceHighlights"
+            :id="item.id"
+            :key="item.id"
+            class="service-focus-card"
+          >
+            <p class="eyebrow">{{ item.eyebrow }}</p>
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.description }}</p>
+            <ul>
+              <li v-for="point in item.points" :key="point">{{ point }}</li>
+            </ul>
+            <div class="service-focus-price">
+              <span>{{ item.price }}</span>
+              <small>{{ item.priceNote }}</small>
+            </div>
+            <a href="#contact" class="btn btn-primary">Обсудить задачу</a>
+          </article>
         </div>
       </section>
 
@@ -121,14 +149,16 @@
               :to="`/dizain-i-remont/${project.slug}`"
               class="project-card"
             >
-              <img :src="project.image" :alt="project.title" loading="lazy" decoding="async" />
+              <BlurImage
+                :src="project.image"
+                :alt="project.title"
+                sizes="(max-width: 620px) calc(100vw - 1rem), (max-width: 1080px) calc((100vw - 2rem) / 2), 380px"
+                loading="lazy"
+                decoding="async"
+              />
               <div class="project-meta">
                 <h3>{{ project.title }}</h3>
-                <p>{{ project.summary }}</p>
-                <div class="project-tags">
-                  <span>{{ project.area }}</span>
-                  <span>{{ project.duration }}</span>
-                </div>
+                <p>Фото выполненного объекта из портфолио.</p>
               </div>
             </NuxtLink>
           </div>
@@ -149,10 +179,41 @@
           </div>
 
           <div class="card-grid reviews-grid">
-            <article v-for="item in topReviews" :key="`${item.name}-${item.date}`" class="info-card review-card">
-              <h3>{{ item.name }}</h3>
-              <p class="review-meta">{{ item.source }} · {{ item.date }}</p>
-              <p class="review-text">{{ item.text }}</p>
+            <article
+              v-for="item in topReviews"
+              :key="`${item.name}-${item.date}`"
+              class="info-card review-card"
+            >
+              <BlurImage
+                v-if="item.photo"
+                :src="item.photo"
+                :alt="`${item.workType}: фото после ремонта`"
+                class="review-photo"
+                sizes="(max-width: 620px) calc(100vw - 3rem), (max-width: 1080px) calc((100vw - 4rem) / 2), 360px"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="review-body">
+                <div class="review-head">
+                  <h3>{{ item.name }}</h3>
+                  <p class="review-meta">{{ item.date }}</p>
+                </div>
+                <dl class="review-facts">
+                  <div>
+                    <dt>Адрес</dt>
+                    <dd>{{ item.address }}</dd>
+                  </div>
+                  <div>
+                    <dt>Работы</dt>
+                    <dd>{{ item.workType }}</dd>
+                  </div>
+                </dl>
+                <p class="review-text">{{ item.text }}</p>
+                <div class="company-response">
+                  <span>Ответ компании</span>
+                  <p>{{ item.response }}</p>
+                </div>
+              </div>
             </article>
           </div>
         </div>
@@ -171,7 +232,9 @@
               :key="stage.title"
               class="process-card"
             >
-              <div class="process-index">{{ formatStageNumber(index + 1) }}</div>
+              <div class="process-index">
+                {{ formatStageNumber(index + 1) }}
+              </div>
               <h3>{{ stage.title }}</h3>
               <p>{{ stage.description }}</p>
             </article>
@@ -206,7 +269,10 @@
 
             <div
               v-if="formStatus.message"
-              :class="['form-message', formStatus.success ? 'success' : 'error']"
+              :class="[
+                'form-message',
+                formStatus.success ? 'success' : 'error',
+              ]"
               aria-live="polite"
             >
               {{ formStatus.message }}
@@ -277,12 +343,6 @@
                 <a :href="`mailto:${siteData.email}`">{{ siteData.email }}</a>
               </li>
               <li>
-                <span>WhatsApp</span>
-                <a :href="siteData.whatsapp" target="_blank" rel="noopener noreferrer">
-                  Написать в WhatsApp
-                </a>
-              </li>
-              <li>
                 <span>Адрес</span>
                 <p>{{ siteData.address }}</p>
               </li>
@@ -290,14 +350,30 @@
                 <span>Режим работы</span>
                 <p>{{ siteData.workHours }}</p>
               </li>
+              <li>
+                <span>Документы</span>
+                <NuxtLink to="/rekvizity"
+                  >Реквизиты ООО СК «ПРЕМИУМ-СТРОЙ»</NuxtLink
+                >
+              </li>
             </ul>
-            <img
-              src="/illustrations/contact.svg"
-              alt="Связь с компанией"
-              class="contact-illustration"
-              loading="lazy"
-              decoding="async"
-            />
+            <div class="contact-map-wrap">
+              <iframe
+                class="contact-map"
+                :src="mapSrc"
+                title="Мы на картах: г. Барнаул, ул. Победная, 112, офис Н-2/3"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <a
+              class="contact-map-open"
+              :href="mapExternalLink"
+              target="_blank"
+              rel="noopener"
+            >
+              Открыть в Яндекс Картах
+            </a>
           </aside>
         </div>
       </section>
@@ -311,9 +387,110 @@
 import { computed, ref } from "vue";
 import { projectCases, reviews, siteData } from "@/data";
 
-const phoneHref = computed(() => `tel:${siteData.phone.replace(/[^+\d]/g, "")}`);
+const phoneHref = computed(
+  () => `tel:${siteData.phone.replace(/[^+\d]/g, "")}`,
+);
 const featuredProjects = computed(() => projectCases.slice(0, 3));
-const topReviews = computed(() => reviews.slice(0, 4));
+const topReviews = computed(() => reviews.slice(0, 5));
+const heroAdvantages = [
+  {
+    icon: "-",
+    title: "2 года гарантии",
+    description: "На все виды работ",
+  },
+  {
+    icon: "-",
+    title: "Работаем без грязи",
+    description: "Защищаем соседние комнаты пленкой",
+  },
+  {
+    icon: "-",
+    title: "Бесплатный замер",
+    description: "Выезд за 1–2 дня",
+  },
+  {
+    icon: "-",
+    title: "Фиксируем цену",
+    description: "Без скрытых доплат в договоре",
+  },
+  {
+    icon: "-",
+    title: "Свой прораб",
+    description: "Контроль качества каждый день",
+  },
+  {
+    icon: "-",
+    title: "Поэтапная оплата",
+    description: "Платите только за выполненные работы",
+  },
+];
+const mapSrc = computed(() => {
+  const { lat, lon } = siteData.mapCoordinates;
+  const point = `${lon},${lat}`;
+  const params = new URLSearchParams({
+    ll: point,
+    mode: "whatshere",
+    z: "17",
+  });
+
+  params.set("whatshere[point]", point);
+  params.set("whatshere[zoom]", "17");
+
+  return `https://yandex.ru/map-widget/v1/?${params.toString()}`;
+});
+const mapExternalLink = computed(() => {
+  const { lat, lon } = siteData.mapCoordinates;
+  const point = `${lon},${lat}`;
+  const params = new URLSearchParams({
+    ll: point,
+    mode: "whatshere",
+    z: "17",
+  });
+
+  params.set("whatshere[point]", point);
+  params.set("whatshere[zoom]", "17");
+
+  return `https://yandex.ru/maps/197/barnaul/?${params.toString()}`;
+});
+const serviceHighlights = computed(() => {
+  const roomService = siteData.services.find(
+    (service) => service.title === "Ремонт одной комнаты",
+  );
+  const officeService = siteData.services.find(
+    (service) => service.title === "Ремонт квартир и офисов",
+  );
+
+  return [
+    {
+      id: "room-renovation",
+      eyebrow: "Ремонт комнат",
+      title: "Обновим одну комнату без ремонта всей квартиры",
+      description:
+        "Подходит, если нужно привести в порядок спальню, детскую, гостиную или кабинет и не растягивать работы на всю квартиру.",
+      points: [
+        "Фиксируем границы работ до старта",
+        "Защищаем проходные зоны и мебель",
+        "Согласовываем фиксированную стоимость комнаты",
+      ],
+      price: roomService?.fromPrice || "После замера",
+      priceNote: roomService?.priceNote || "Фиксированная цена за комнату",
+    },
+    {
+      id: "office-renovation",
+      eyebrow: "Ремонт офисов",
+      title: "Ремонтируем офисы и коммерческие помещения",
+      description:
+        "Планируем график так, чтобы ремонт меньше мешал работе команды, заранее считаем материалы и закрываем вопросы по электрике и отделке.",
+      points: [
+        "Работаем по этапам и согласованному графику",
+        "Учитываем нагрузку на электрику и освещение",
+        "Подбираем износостойкие материалы под бюджет",
+      ],
+      price: officeService?.fromPrice || "от 4 000 ₽/м²",
+      priceNote: officeService?.priceNote || "Цена указана за квадратный метр",
+    },
+  ];
+});
 
 const form = ref({
   name: "",
@@ -344,10 +521,13 @@ const submitForm = async () => {
   formStatus.value.message = "";
 
   try {
-    const response = await $fetch<{ success: boolean; message: string }>("/api/contact", {
-      method: "POST",
-      body: form.value,
-    });
+    const response = await $fetch<{ success: boolean; message: string }>(
+      "/api/contact",
+      {
+        method: "POST",
+        body: form.value,
+      },
+    );
 
     if (!response.success) {
       throw new Error(response.message || "Ошибка при отправке");

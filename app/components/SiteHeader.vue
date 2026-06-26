@@ -2,10 +2,17 @@
   <header class="topbar">
     <div class="container topbar-inner">
       <NuxtLink to="/" class="brand" @click="closeMenu">
-        <span class="brand-mark">{{ siteData.shortBrand }}</span>
+        <span class="brand-mark">
+          <img
+            src="/logo.png"
+            alt="Логотип Проф Ремонт Квартир"
+            class="brand-logo"
+          />
+        </span>
         <span class="brand-text">
           <strong>{{ siteData.brandName }}</strong>
-          <small>{{ siteData.city }} · ремонт и отделка</small>
+          <small>Ремонт квартир, комнат</small>
+          <small>и офисов в Барнауле</small>
         </span>
       </NuxtLink>
 
@@ -17,9 +24,27 @@
         aria-controls="primary-navigation"
         :aria-label="isMenuOpen ? 'Закрыть меню' : 'Открыть меню'"
       >
-        <span v-if="isMenuOpen">Закрыть</span>
-        <span v-else>Меню</span>
+        <span
+          class="menu-toggle-icon"
+          :class="{ open: isMenuOpen }"
+          aria-hidden="true"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span class="menu-toggle-text">{{
+          isMenuOpen ? "Закрыть" : "Меню"
+        }}</span>
       </button>
+
+      <button
+        v-if="isMenuOpen"
+        class="menu-backdrop"
+        type="button"
+        aria-label="Закрыть меню"
+        @click="closeMenu"
+      ></button>
 
       <nav id="primary-navigation" class="menu" :class="{ open: isMenuOpen }">
         <NuxtLink
@@ -31,13 +56,39 @@
         >
           {{ item.title }}
         </NuxtLink>
-        <NuxtLink to="/#contact" :class="{ active: route.hash === '#contact' }" @click="closeMenu">
+        <NuxtLink
+          to="/#contact"
+          :class="{ active: route.hash === '#contact' }"
+          @click="closeMenu"
+        >
           Контакты
         </NuxtLink>
+
+        <div class="menu-actions">
+          <NuxtLink
+            to="/#contact"
+            class="btn btn-primary btn-topbar"
+            @click="closeMenu"
+          >
+            Заказать звонок
+          </NuxtLink>
+          <a
+            :href="phoneHref"
+            class="phone-link"
+            aria-label="Позвонить в Проф Ремонт Квартир"
+            @click="closeMenu"
+          >
+            {{ siteData.phoneDisplay }}
+          </a>
+        </div>
       </nav>
 
       <div class="topbar-actions">
-        <NuxtLink to="/#contact" class="btn btn-primary btn-topbar" @click="closeMenu">
+        <NuxtLink
+          to="/#contact"
+          class="btn btn-primary btn-topbar"
+          @click="closeMenu"
+        >
           Заказать звонок
         </NuxtLink>
         <a
@@ -60,13 +111,20 @@ import { siteData } from "@/data";
 const route = useRoute();
 const isMenuOpen = ref(false);
 
-const phoneHref = computed(() => `tel:${siteData.phone.replace(/[^+\d]/g, "")}`);
+const phoneHref = computed(
+  () => `tel:${siteData.phone.replace(/[^+\d]/g, "")}`,
+);
 
 const closeMenu = () => {
   isMenuOpen.value = false;
 };
 
 const isActive = (to: string) => {
+  if (to.includes("#")) {
+    const [path, hash] = to.split("#");
+    return route.path === (path || "/") && route.hash === `#${hash}`;
+  }
+
   if (to === "/") {
     return route.path === "/";
   }
@@ -75,6 +133,12 @@ const isActive = (to: string) => {
 
 const handleResize = () => {
   if (typeof window !== "undefined" && window.innerWidth > 960) {
+    closeMenu();
+  }
+};
+
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === "Escape") {
     closeMenu();
   }
 };
@@ -92,10 +156,12 @@ if (import.meta.client) {
   });
 
   window.addEventListener("resize", handleResize, { passive: true });
+  window.addEventListener("keydown", handleKeydown);
 
   onBeforeUnmount(() => {
     document.body.style.overflow = "";
     window.removeEventListener("resize", handleResize);
+    window.removeEventListener("keydown", handleKeydown);
   });
 }
 </script>

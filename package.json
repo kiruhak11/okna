@@ -6,9 +6,10 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "optimize:photos": "node scripts/optimize-photo-gallery.mjs",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "scp -r .output/* j40068510@d562a1a402a2.hosting.myjino.ru:~/domains/remdom22.ru/ && ssh j40068510@d562a1a402a2.hosting.myjino.ru \"mkdir -p ~/domains/remdom22.ru/tmp && touch ~/domains/remdom22.ru/tmp/restart.txt && chmod -R 777 ~/domains/remdom22\""
+    "deploy": "node scripts/prune-build-original-photos.mjs && scp -r .output/* j40068510@d562a1a402a2.hosting.myjino.ru:~/domains/remdom22.ru/ && ssh j40068510@d562a1a402a2.hosting.myjino.ru \"mkdir -p ~/domains/remdom22.ru/tmp && touch ~/domains/remdom22.ru/tmp/restart.txt && chmod -R 777 ~/domains/remdom22.ru\""
   },
   "dependencies": {
     "nodemailer": "^8.0.5",

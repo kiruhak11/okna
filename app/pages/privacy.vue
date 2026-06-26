@@ -13,12 +13,14 @@
               оставленные пользователями на сайте.
             </p>
           </div>
-          <img
-            src="/illustrations/privacy-main.svg"
+          <BlurImage
+            src="/illustrations/photo_succ/collection-03/IMG_20201114_122510.jpg"
             alt="Политика конфиденциальности"
-            class="page-hero-image"
+            class="page-hero-image photo-cover"
+            sizes="(max-width: 1080px) calc(100vw - 1rem), 520px"
             loading="eager"
             decoding="async"
+            fetchpriority="high"
           />
         </div>
       </section>

@@ -9,7 +9,7 @@
       "type": "image/x-icon"
     },
     {
-      "src": "/logo.svg",
+      "src": "/logo.png",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
@@ -25,4 +25,3 @@
   "dir": "ltr",
   "categories": ["business", "services"]
 }
-

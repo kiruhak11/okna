@@ -13,12 +13,14 @@
               замера и проекта до финишной отделки.
             </p>
           </div>
-          <img
-            src="/illustrations/services-main.svg"
+          <BlurImage
+            src="/illustrations/photo_succ/collection-05/IMG_20200716_123026.jpg"
             alt="Услуги по ремонту"
-            class="page-hero-image"
+            class="page-hero-image photo-cover"
+            sizes="(max-width: 1080px) calc(100vw - 1rem), 520px"
             loading="eager"
             decoding="async"
+            fetchpriority="high"
           />
         </div>
       </section>
@@ -41,8 +43,12 @@
             <h2>{{ service.title }}</h2>
             <p>{{ service.description }}</p>
             <div class="service-price">{{ service.fromPrice }}</div>
+            <p class="service-price-note">{{ service.priceNote }}</p>
           </article>
         </div>
+        <p class="price-disclaimer">
+          Точную стоимость рассчитываем после замера и согласовываем в договоре.
+        </p>
       </section>
 
       <section class="section-offset">

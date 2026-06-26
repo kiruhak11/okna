@@ -9,17 +9,32 @@
       </div>
 
       <div class="footer-contacts">
-        <a :href="`tel:${normalizedPhone}`" class="footer-contact">
-          {{ siteData.phoneDisplay }}
-        </a>
         <a :href="`mailto:${siteData.email}`" class="footer-contact">
           {{ siteData.email }}
         </a>
-        <a :href="siteData.whatsapp" class="footer-contact" target="_blank" rel="noopener noreferrer">
+        <a
+          :href="siteData.whatsapp"
+          class="footer-contact"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           WhatsApp
         </a>
-        <a :href="siteData.telegram" class="footer-contact" target="_blank" rel="noopener noreferrer">
+        <a
+          :href="siteData.telegram"
+          class="footer-contact"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Telegram
+        </a>
+        <a
+          :href="siteData.max"
+          class="footer-contact"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Max
         </a>
       </div>
 
@@ -27,6 +42,8 @@
         <NuxtLink v-for="item in siteData.nav" :key="item.to" :to="item.to">
           {{ item.title }}
         </NuxtLink>
+        <NuxtLink to="/o-kompanii">О компании</NuxtLink>
+        <NuxtLink to="/rekvizity">Реквизиты</NuxtLink>
         <NuxtLink to="/privacy">Политика конфиденциальности</NuxtLink>
       </nav>
 

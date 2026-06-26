@@ -14,12 +14,14 @@
               ежедневным контролем качества.
             </p>
           </div>
-          <img
-            src="/illustrations/about-main.svg"
+          <BlurImage
+            src="/illustrations/photo_succ/collection-02/IMG_20241122_170122.jpg"
             alt="Команда и процесс работы"
-            class="page-hero-image"
+            class="page-hero-image photo-cover"
+            sizes="(max-width: 1080px) calc(100vw - 1rem), 520px"
             loading="eager"
             decoding="async"
+            fetchpriority="high"
           />
         </div>
       </section>
@@ -52,6 +54,18 @@
               <p>{{ stage.description }}</p>
             </article>
           </div>
+        </div>
+      </section>
+
+      <section class="section-offset">
+        <div class="container details-box">
+          <h2>Реквизиты и документы</h2>
+          <p class="details-text">
+            Работы выполняются силами нашей бригады. Договор и закрывающие
+            документы оформляются через партнерскую организацию; реквизиты
+            указываем в договоре перед стартом работ. Все обязательства перед
+            вами сохраняются в полном объеме.
+          </p>
         </div>
       </section>
 

@@ -18,8 +18,6 @@ const REVEAL_SELECTORS = [
   ".footer-inner > *",
 ] as const;
 
-let observer: IntersectionObserver | null = null;
-
 function collectTargets(): HTMLElement[] {
   const selector = REVEAL_SELECTORS.join(",");
   const nodes = Array.from(document.querySelectorAll<HTMLElement>(selector));
@@ -55,53 +53,16 @@ function revealImmediately(nodes: HTMLElement[]): void {
 }
 
 function setupReveal(): void {
-  if (observer) {
-    observer.disconnect();
-    observer = null;
-  }
-
   const nodes = collectTargets();
   if (!nodes.length) {
     return;
   }
 
   setDelays(nodes);
-
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    revealImmediately(nodes);
-    return;
-  }
-
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        const target = entry.target as HTMLElement;
-        target.classList.add("is-visible");
-        observer?.unobserve(target);
-      });
-    },
-    {
-      threshold: 0.18,
-      rootMargin: "0px 0px -10% 0px",
-    },
-  );
-
-  const fold = window.innerHeight * 0.92;
-
   nodes.forEach((node) => {
     node.dataset.reveal = "";
-
-    if (node.getBoundingClientRect().top <= fold) {
-      node.classList.add("is-visible");
-      return;
-    }
-
-    observer?.observe(node);
   });
+  revealImmediately(nodes);
 }
 
 export default defineNuxtPlugin((nuxtApp) => {

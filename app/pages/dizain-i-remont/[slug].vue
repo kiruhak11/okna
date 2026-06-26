@@ -8,31 +8,55 @@
           <div>
             <p class="eyebrow">Кейс проекта</p>
             <h1>{{ project.title }}</h1>
-            <p class="page-lead">{{ project.summary }}</p>
-
-            <div class="project-tags project-tags-large">
-              <span>Локация: {{ project.location }}</span>
-              <span>Площадь: {{ project.area }}</span>
-              <span>Бюджет: {{ project.budget }}</span>
-              <span>Срок: {{ project.duration }}</span>
-            </div>
+            <p class="page-lead">
+              {{ project.summary }}
+            </p>
           </div>
-          <img
+          <BlurImage
             :src="project.image"
             :alt="project.title"
-            class="page-hero-image"
+            class="page-hero-image photo-cover"
+            sizes="(max-width: 1080px) calc(100vw - 1rem), 520px"
             loading="eager"
             decoding="async"
+            fetchpriority="high"
           />
         </div>
       </section>
 
-      <section class="section-offset">
-        <div class="container details-box">
-          <h2>Что было сделано</h2>
-          <ul class="details-list">
-            <li v-for="item in project.highlights" :key="item">{{ item }}</li>
-          </ul>
+      <section id="collection" class="section-offset">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Коллекция</p>
+            <h2>{{ project.title }}</h2>
+            <p v-if="projectCollection">
+              {{ projectCollection.total }} фото из выбранного объекта. Реальные
+              материалы проекта из нашего портфолио.
+            </p>
+            <p v-else>
+              Коллекция для этого проекта скоро появится после передачи папки с
+              фотографиями.
+            </p>
+          </div>
+
+          <div v-if="projectPhotos.length" class="success-gallery">
+            <figure
+              v-for="(photo, index) in projectPhotos"
+              :key="photo.src"
+              class="success-gallery-item"
+            >
+              <BlurImage
+                :src="photo.src"
+                :alt="`${project.title}, фото ${index + 1}`"
+                :width="photo.width"
+                :height="photo.height"
+                sizes="(max-width: 760px) calc(100vw - 1rem), (max-width: 960px) calc((100vw - 2rem) / 2), 320px"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </div>
+          <p v-else class="gallery-empty">В этой коллекции пока нет фото.</p>
         </div>
       </section>
 
@@ -55,6 +79,22 @@
 import { computed } from "vue";
 import { projectCases, siteData } from "@/data";
 
+type GalleryPhoto = {
+  src: string;
+  alt: string;
+  fileName: string;
+  width?: number;
+  height?: number;
+};
+
+type GalleryCollection = {
+  id: string;
+  order: number;
+  title: string;
+  total: number;
+  photos: GalleryPhoto[];
+};
+
 const route = useRoute();
 const slug = computed(() => route.params.slug?.toString() || "");
 
@@ -66,9 +106,23 @@ const project = computed(() => {
   return found;
 });
 
+const { data: galleryCollections } = await useFetch<GalleryCollection[]>(
+  "/api/success-gallery",
+  {
+    default: () => [],
+  },
+);
+
+const projectCollection = computed(() =>
+  galleryCollections.value.find(
+    (collection) => collection.id === project.value.collectionId,
+  ),
+);
+const projectPhotos = computed(() => projectCollection.value?.photos || []);
+
 useSeoMeta(() => {
   const pageTitle = `${project.value.title} | remdom22.ru`;
-  const pageDescription = `${project.value.summary} Площадь: ${project.value.area}, срок: ${project.value.duration}, бюджет: ${project.value.budget}.`;
+  const pageDescription = `Фото выполненного объекта из портфолио remdom22.ru в Барнауле.`;
   const pageUrl = `${siteData.siteUrl}/dizain-i-remont/${slug.value}`;
 
   return {

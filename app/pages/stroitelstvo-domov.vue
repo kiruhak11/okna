@@ -13,12 +13,14 @@
               инженерии и благоустройства участка.
             </p>
           </div>
-          <img
-            src="/illustrations/build-main.svg"
+          <BlurImage
+            src="/illustrations/photo_succ/collection-06/IMG_20240530_143542.jpg"
             alt="Строительные работы"
-            class="page-hero-image"
+            class="page-hero-image photo-cover"
+            sizes="(max-width: 1080px) calc(100vw - 1rem), 520px"
             loading="eager"
             decoding="async"
+            fetchpriority="high"
           />
         </div>
       </section>
