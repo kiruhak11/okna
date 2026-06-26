@@ -56,7 +56,7 @@ export default defineEventHandler((event) => {
 <yml_catalog date="${currentDate}">
   <shop>
     <name>${escapeXml(siteData.brandName)}</name>
-    <company>Проф Ремонт Квартир</company>
+    <company>Ремонт Квартир</company>
     <url>${baseUrl}</url>
     <platform>Nuxt.js</platform>
     <version>1.0</version>

@@ -5,7 +5,7 @@
         <span class="brand-mark">
           <img
             src="/logo.png"
-            alt="Логотип Проф Ремонт Квартир"
+            alt="Логотип Ремонт Квартир"
             class="brand-logo"
           />
         </span>
@@ -75,7 +75,7 @@
           <a
             :href="phoneHref"
             class="phone-link"
-            aria-label="Позвонить в Проф Ремонт Квартир"
+            aria-label="Позвонить в Ремонт Квартир"
             @click="closeMenu"
           >
             {{ siteData.phoneDisplay }}
@@ -94,7 +94,7 @@
         <a
           :href="phoneHref"
           class="phone-link"
-          aria-label="Позвонить в Проф Ремонт Квартир"
+          aria-label="Позвонить в Ремонт Квартир"
           @click="closeMenu"
         >
           {{ siteData.phoneDisplay }}

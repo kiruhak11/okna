@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { siteData } from "@/data";
 
-const siteTitle = "Проф Ремонт Квартир | Ремонт, дизайн и строительство";
+const siteTitle = "Ремонт Квартир | Ремонт, дизайн и строительство";
 const siteDescription =
   "Профессиональный ремонт квартир, домов и коммерческих помещений в Барнауле: прозрачная смета, договор, поэтапная оплата и гарантия на работы.";
 const siteKeywords =
@@ -33,8 +33,7 @@ useHead({
     { property: "og:url", content: siteData.siteUrl },
     {
       property: "og:image",
-      content:
-        `${siteData.siteUrl}/illustrations/photo_succ_optimized/1400/collection-01/12345.jpg`,
+      content: `${siteData.siteUrl}/illustrations/photo_succ_optimized/1400/collection-01/12345.jpg`,
     },
     { property: "og:site_name", content: siteData.brandName },
     { property: "og:locale", content: "ru_RU" },
