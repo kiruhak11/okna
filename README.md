@@ -63,7 +63,7 @@ SMTP_SECURE=true
 SMTP_USER=user@yandex.ru
 SMTP_PASS=your_app_password
 SMTP_FROM=user@yandex.ru
-SMTP_TO=klim.05@mail.ru
+SMTP_TO=remdom.22@yandex.com
 ```
 
 ## 🚢 Деплой

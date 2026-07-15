@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 
 const DEFAULT_SMTP_HOST = "smtp.yandex.ru";
 const DEFAULT_SMTP_PORT = 465;
-const DEFAULT_RECEIVER_EMAIL = "klim.05@mail.ru";
+const DEFAULT_RECEIVER_EMAIL = "remdom.22@yandex.com";
 const MAX_EMAIL_LENGTH = 200;
 
 export default defineEventHandler(async (event) => {

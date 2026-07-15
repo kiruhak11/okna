@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     smtpUser: process.env.SMTP_USER,
     smtpPass: process.env.SMTP_PASS,
     smtpFrom: process.env.SMTP_FROM,
-    smtpTo: process.env.SMTP_TO || "klim.05@mail.ru",
+    smtpTo: process.env.SMTP_TO || "remdom.22@yandex.com",
     secretRegistrationCode: process.env.SECRET_REGISTRATION_CODE,
     public: {
       apiBase: process.env.API_BASE_URL || "http://localhost:3000",
