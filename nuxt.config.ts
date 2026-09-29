@@ -11,13 +11,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
-    smtpHost: process.env.SMTP_HOST || "smtp.yandex.ru",
-    smtpPort: Number(process.env.SMTP_PORT || 465),
-    smtpSecure: process.env.SMTP_SECURE || "true",
-    smtpUser: process.env.SMTP_USER,
-    smtpPass: process.env.SMTP_PASS,
-    smtpFrom: process.env.SMTP_FROM,
-    smtpTo: process.env.SMTP_TO || "remdom.22@yandex.com",
+    telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
+    telegramChatId: process.env.TELEGRAM_CHAT_ID,
+    telegramChatId1: process.env.TELEGRAM_CHAT_ID_1 || '1919551727',
+    telegramChatId2: process.env.TELEGRAM_CHAT_ID_2 || '502773482',
     secretRegistrationCode: process.env.SECRET_REGISTRATION_CODE,
     public: {
       apiBase: process.env.API_BASE_URL || "http://localhost:3000",
@@ -33,15 +30,25 @@ export default defineNuxtConfig({
     experimental: {
       openAPI: true,
     },
-    prerender: {
-      routes: ["/sitemap.xml", "/robots.txt"],
+    // Настройки для работы с Nginx reverse proxy
+    // Приложение будет слушать на 0.0.0.0:3000 внутри контейнера
+    // Nginx будет проксировать с порта 3025 на порт 3000 контейнера
+    // Переменные окружения доступны напрямую в серверных роутах
+    runtimeConfig: {
+      telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
+      telegramChatId: process.env.TELEGRAM_CHAT_ID,
+      telegramChatId1: process.env.TELEGRAM_CHAT_ID_1 || '1919551727',
+      telegramChatId2: process.env.TELEGRAM_CHAT_ID_2 || '502773482',
     },
+    prerender: {
+      routes: ['/sitemap.xml', '/robots.txt']
+    }
   },
 
   app: {
     head: {
-      charset: "utf-8",
-      viewport: "width=device-width, initial-scale=1",
-    },
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+    }
   },
 });

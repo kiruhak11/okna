@@ -1,182 +1,156 @@
-import nodemailer from "nodemailer";
-
-const DEFAULT_SMTP_HOST = "smtp.yandex.ru";
-const DEFAULT_SMTP_PORT = 465;
-const DEFAULT_RECEIVER_EMAIL = "remdom.22@yandex.com";
-const MAX_EMAIL_LENGTH = 200;
-
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+  const body = await readBody(event)
+
+  // Получаем переменные окружения через runtimeConfig
+  const config = useRuntimeConfig(event)
+  const telegramBotToken = config.telegramBotToken
+  const telegramChatId1 = config.telegramChatId1
+  const telegramChatId2 = config.telegramChatId2
+
   const data =
-    body && typeof body === "object" ? (body as Record<string, unknown>) : {};
+    body && typeof body === 'object' ? (body as Record<string, unknown>) : {}
+  const name = normalizeString(data.name, 80)
+  const phone = normalizeString(data.phone, 30)
+  const service = normalizeString(data.service, 120)
+  const messageText = normalizeString(data.message, 1000)
 
-  const name = normalizeString(data.name, 80) || "Клиент сайта";
-  const phone = normalizeString(data.phone, 30);
-  const email = normalizeString(data.email, 120);
-  const service = normalizeString(data.service, 120);
-  const messageText =
-    normalizeString(data.message, 1000) ||
-    normalizeString(data.comment, 1000) ||
-    normalizeString(data.question, 1000) ||
-    normalizeString(data.details, 1000) ||
-    "Комментарий не указан.";
-
-  if (!phone && !email) {
-    setResponseStatus(event, 400);
+  if (!name || !phone || !messageText) {
+    setResponseStatus(event, 400)
     return {
       success: false,
-      message: "Пожалуйста, укажите телефон или email для связи.",
-    };
+      message: 'Пожалуйста, заполните имя, телефон и сообщение.'
+    }
   }
 
-  const config = useRuntimeConfig(event);
-  const smtpHost =
-    normalizeString(config.smtpHost, MAX_EMAIL_LENGTH) || DEFAULT_SMTP_HOST;
-  const smtpPort = normalizeNumber(config.smtpPort, DEFAULT_SMTP_PORT);
-  const smtpSecure = normalizeBoolean(config.smtpSecure, smtpPort === 465);
-  const smtpUser = normalizeString(config.smtpUser, MAX_EMAIL_LENGTH);
-  const smtpPass = normalizeString(config.smtpPass, MAX_EMAIL_LENGTH);
-  const smtpFrom =
-    normalizeString(config.smtpFrom, MAX_EMAIL_LENGTH) || smtpUser;
-  const smtpTo =
-    normalizeString(config.smtpTo, MAX_EMAIL_LENGTH) || DEFAULT_RECEIVER_EMAIL;
-
-  if (!smtpUser || !smtpPass || !smtpFrom || !smtpTo) {
-    console.error("SMTP configuration is incomplete", {
-      hasSmtpUser: !!smtpUser,
-      hasSmtpPass: !!smtpPass,
-      hasSmtpFrom: !!smtpFrom,
-      hasSmtpTo: !!smtpTo,
-    });
-
-    setResponseStatus(event, 503);
+  // Проверяем наличие обязательных переменных
+  if (!telegramBotToken || (!telegramChatId1 && !telegramChatId2)) {
+    console.error('Telegram configuration missing:', {
+      hasToken: !!telegramBotToken,
+      hasChatId1: !!telegramChatId1,
+      hasChatId2: !!telegramChatId2
+    })
     return {
       success: false,
-      message:
-        "Сервис заявок временно недоступен. Позвоните по номеру на сайте.",
-    };
+      message: 'Telegram бот не настроен. Пожалуйста, свяжитесь с администратором.'
+    }
   }
 
-  const requestIp = getRequestIP(event, { xForwardedFor: true }) || "Неизвестно";
-  const submittedAt = new Intl.DateTimeFormat("ru-RU", {
-    dateStyle: "long",
-    timeStyle: "medium",
-    timeZone: "Asia/Barnaul",
-  }).format(new Date());
+  // Формируем сообщение для Telegram
+  const message = `
+🎯 Новая заявка с сайта
 
-  const plainTextMessage = [
-    "Новая заявка с сайта remdom22.ru",
-    "",
-    `Имя: ${name}`,
-    `Телефон: ${phone || "Не указан"}`,
-    `Email: ${email || "Не указан"}`,
-    `Услуга: ${service || "Не указана"}`,
-    "",
-    "Сообщение:",
-    messageText,
-    "",
-    `IP: ${requestIp}`,
-    `Время: ${submittedAt}`,
-  ].join("\n");
+👤 Имя: ${name}
+📞 Телефон: ${phone}
+🛠️ Услуга: ${service || 'Не указана'}
 
-  const htmlMessage = `
-    <h2>Новая заявка с сайта remdom22.ru</h2>
-    <p><strong>Имя:</strong> ${escapeHtml(name)}</p>
-    <p><strong>Телефон:</strong> ${escapeHtml(phone || "Не указан")}</p>
-    <p><strong>Email:</strong> ${escapeHtml(email || "Не указан")}</p>
-    <p><strong>Услуга:</strong> ${escapeHtml(service || "Не указана")}</p>
-    <p><strong>Сообщение:</strong><br>${escapeHtml(messageText).replace(/\n/g, "<br>")}</p>
-    <hr>
-    <p><strong>IP:</strong> ${escapeHtml(requestIp)}</p>
-    <p><strong>Время:</strong> ${escapeHtml(submittedAt)}</p>
-  `.trim();
+💬 Сообщение:
+${messageText}
+
+⏰ Время: ${new Date().toLocaleString('ru-RU')}
+  `.trim()
+
+  const telegramUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`
+  const results = []
+  let allSuccessful = true
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: smtpHost,
-      port: smtpPort,
-      secure: smtpSecure,
-      auth: {
-        user: smtpUser,
-        pass: smtpPass,
-      },
-    });
+    // Отправляем в первый чат
+    if (telegramChatId1) {
+      console.log(`📤 Отправка заявки в чат ${telegramChatId1}...`)
+      
+      const response1 = await fetch(telegramUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: telegramChatId1,
+          text: message
+        })
+      })
 
-    await transporter.sendMail({
-      from: smtpFrom,
-      to: smtpTo,
-      subject: "Новая заявка с сайта remdom22.ru",
-      text: plainTextMessage,
-      html: htmlMessage,
-    });
+      const data1 = await response1.json()
 
-    return {
-      success: true,
-      message: "Заявка успешно отправлена. Мы скоро свяжемся с вами.",
-    };
+      if (response1.ok && data1.ok) {
+        console.log(`✅ Отправлено в чат ${telegramChatId1}`)
+        results.push({ chatId: telegramChatId1, success: true })
+      } else {
+        console.error(`❌ Ошибка отправки в чат ${telegramChatId1}:`, data1)
+        results.push({ chatId: telegramChatId1, success: false, error: data1.description })
+        allSuccessful = false
+      }
+    }
+
+    // Отправляем во второй чат
+    if (telegramChatId2) {
+      console.log(`📤 Отправка заявки в чат ${telegramChatId2}...`)
+      
+      const response2 = await fetch(telegramUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: telegramChatId2,
+          text: message
+        })
+      })
+
+      const data2 = await response2.json()
+
+      if (response2.ok && data2.ok) {
+        console.log(`✅ Отправлено в чат ${telegramChatId2}`)
+        results.push({ chatId: telegramChatId2, success: true })
+      } else {
+        console.error(`❌ Ошибка отправки в чат ${telegramChatId2}:`, data2)
+        results.push({ chatId: telegramChatId2, success: false, error: data2.description })
+        allSuccessful = false
+      }
+    }
+
+    // Итоговое логирование
+    console.log('📊 Результат отправки:', {
+      total: results.length,
+      successful: results.filter(r => r.success).length,
+      failed: results.filter(r => !r.success).length,
+      details: results
+    })
+
+    if (allSuccessful && results.length > 0) {
+      return {
+        success: true,
+        message: 'Заявка успешно отправлена!',
+        details: results
+      }
+    } else if (results.some(r => r.success)) {
+      return {
+        success: true,
+        message: 'Заявка частично отправлена. Мы получили ваше обращение.',
+        details: results
+      }
+    } else {
+      return {
+        success: false,
+        message: 'Ошибка при отправке заявки. Попробуйте позвонить мне.',
+        details: results
+      }
+    }
   } catch (error: any) {
-    console.error("SMTP send error", {
-      message: error?.message,
-      code: error?.code,
-    });
-
-    setResponseStatus(event, 502);
+    console.error('❌ Критическая ошибка при отправке в Telegram:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    })
     return {
       success: false,
-      message:
-        "Не удалось отправить заявку автоматически. Позвоните по номеру на сайте.",
-    };
+      message: 'Произошла ошибка при отправке заявки. Попробуйте позже или позвоните мне.'
+    }
   }
-});
+})
 
 function normalizeString(value: unknown, maxLength: number): string {
-  if (typeof value === "string") {
-    const trimmed = value.trim();
-    if (!trimmed) return "";
-    return trimmed.slice(0, maxLength);
-  }
-
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      const normalized = normalizeString(item, maxLength);
-      if (normalized) return normalized;
-    }
-  }
-
-  return "";
-}
-
-function normalizeNumber(value: unknown, fallbackValue: number): number {
-  if (typeof value === "number" && Number.isFinite(value) && value > 0) {
-    return Math.trunc(value);
-  }
-
-  if (typeof value === "string" && value.trim()) {
-    const parsed = Number(value);
-    if (Number.isFinite(parsed) && parsed > 0) {
-      return Math.trunc(parsed);
-    }
-  }
-
-  return fallbackValue;
-}
-
-function normalizeBoolean(value: unknown, fallbackValue: boolean): boolean {
-  if (typeof value === "boolean") return value;
-  if (typeof value !== "string") return fallbackValue;
-
-  const normalized = value.trim().toLowerCase();
-  if (["1", "true", "yes", "on"].includes(normalized)) return true;
-  if (["0", "false", "no", "off"].includes(normalized)) return false;
-
-  return fallbackValue;
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+  if (typeof value !== 'string') return ''
+  const trimmed = value.trim()
+  if (!trimmed) return ''
+  return trimmed.slice(0, maxLength)
 }

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Вариант 3: Буква "О" с реалистичным окном -->
+  <defs>
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad3glass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ddd6fe;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#c4b5fd;stop-opacity:0.3" />
+    </linearGradient>
+    <filter id="shadow3">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <!-- Внешнее кольцо буквы О -->
+  <circle cx="100" cy="100" r="65" 
+          stroke="url(#grad3)" stroke-width="14" fill="none"
+          filter="url(#shadow3)"/>
+  
+  <!-- Внутреннее стекло -->
+  <circle cx="100" cy="100" r="52" fill="url(#grad3glass)"/>
+  
+  <!-- Рама окна внутри -->
+  <circle cx="100" cy="100" r="45" 
+          stroke="url(#grad3)" stroke-width="4" fill="none"/>
+  
+  <!-- Крестовина (4 створки) -->
+  <line x1="100" y1="60" x2="100" y2="140" 
+        stroke="url(#grad3)" stroke-width="5"/>
+  <line x1="60" y1="100" x2="140" y2="100" 
+        stroke="url(#grad3)" stroke-width="5"/>
+  
+  <!-- Центральное соединение -->
+  <circle cx="100" cy="100" r="7" fill="url(#grad3)"/>
+  
+  <!-- Ручки на створках -->
+  <g opacity="0.9">
+    <!-- Верхняя -->
+    <rect x="97" y="72" width="6" height="3" rx="1.5" fill="url(#grad3)"/>
+    <!-- Нижняя -->
+    <rect x="97" y="125" width="6" height="3" rx="1.5" fill="url(#grad3)"/>
+    <!-- Левая -->
+    <rect x="72" y="97" width="3" height="6" rx="1.5" fill="url(#grad3)"/>
+    <!-- Правая -->
+    <rect x="125" y="97" width="3" height="6" rx="1.5" fill="url(#grad3)"/>
+  </g>
+  
+  <!-- Блики на стекле для реалистичности -->
+  <path d="M 75 70 Q 70 75 75 80" stroke="white" stroke-width="2.5" 
+        fill="none" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 125 70 Q 120 75 125 80" stroke="white" stroke-width="2.5" 
+        fill="none" stroke-linecap="round" opacity="0.4"/>
+  <circle cx="85" cy="115" r="3" fill="white" opacity="0.5"/>
+  
+  <!-- Декоративные углы -->
+  <circle cx="70" cy="70" r="3" fill="url(#grad3)" opacity="0.7"/>
+  <circle cx="130" cy="70" r="3" fill="url(#grad3)" opacity="0.7"/>
+  <circle cx="70" cy="130" r="3" fill="url(#grad3)" opacity="0.7"/>
+  <circle cx="130" cy="130" r="3" fill="url(#grad3)" opacity="0.7"/>
+</svg>
+
